@@ -1,0 +1,6 @@
+export enum PlayerRole {
+  BATSMAN = "BATSMAN",
+  BOWLER = "BOWLER",
+  ALL_ROUNDER = "ALL_ROUNDER",
+  WICKET_KEEPER = "WICKET_KEEPER",
+}
