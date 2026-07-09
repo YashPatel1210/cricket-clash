@@ -1,0 +1,17 @@
+export enum Country {
+  INDIA = "India",
+  AUSTRALIA = "Australia",
+  ENGLAND = "England",
+  NEW_ZEALAND = "New Zealand",
+  SOUTH_AFRICA = "South Africa",
+  PAKISTAN = "Pakistan",
+  SRI_LANKA = "Sri Lanka",
+  BANGLADESH = "Bangladesh",
+  AFGHANISTAN = "Afghanistan",
+  WEST_INDIES = "West Indies",
+  ZIMBABWE = "Zimbabwe",
+  IRELAND = "Ireland",
+  NETHERLANDS = "Netherlands",
+  NAMIBIA = "Namibia",
+  NEPAL = "Nepal",
+}
