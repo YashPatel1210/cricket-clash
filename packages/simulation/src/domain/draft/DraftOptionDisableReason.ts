@@ -1,0 +1,9 @@
+export enum DraftOptionDisableReason {
+  NONE = "NONE",
+
+  ALREADY_SELECTED = "ALREADY_SELECTED",
+
+  ROLE_LIMIT_REACHED = "ROLE_LIMIT_REACHED",
+
+  EVENT_LOCKED = "EVENT_LOCKED",
+}

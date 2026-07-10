@@ -243,3 +243,160 @@ The draft should feel:
 - Historic Teams
 - Custom Player Pools
 - Limited-Time Events
+
+
+
+
+
+<<<<<<<<<<<New Draft After sprint 4>>>>>>>>>>>
+# 03 - Draft System
+
+## Purpose
+
+The Draft System is the core gameplay mechanic of Cricket Clash.
+
+Instead of selecting an entire squad from a player database, players build their team through multiple draft rounds. Every decision should feel meaningful and create different team combinations.
+
+---
+
+# Draft Overview
+
+Each player participates in an independent draft.
+
+Player A and Player B never compete for the same draft players.
+
+This avoids frustration while still allowing both users to create unique teams.
+
+---
+
+# Draft Flow
+
+Draft begins
+
+↓
+
+Generate Playing XI
+
+↓
+
+Player selects ONE player
+
+↓
+
+Selected player added to team
+
+↓
+
+Generate next Playing XI
+
+↓
+
+Repeat until team complete
+
+---
+
+# Number of Draft Rounds
+
+Each player receives:
+
+- 12 draft opportunities
+- Final team size = 11 players
+
+This allows one skipped draft if desired.
+
+---
+
+# Playing XI Generation
+
+Each draft presents a complete Playing XI.
+
+A Playing XI contains:
+
+- Batters
+- Bowlers
+- All Rounders
+- Wicket Keepers
+
+The Playing XI should resemble a realistic cricket team.
+
+Example:
+
+5 Batters
+
+3 Bowlers
+
+2 All Rounders
+
+1 Wicket Keeper
+
+The country is selected randomly.
+
+---
+
+# Duplicate Players
+
+A player already selected cannot be selected again.
+
+If the same player appears in a future Playing XI:
+
+- Player remains visible
+- Selection is disabled
+- User must choose another player
+
+---
+
+# Role Limits
+
+The draft respects Team Rules.
+
+Current limits:
+
+| Role | Min | Max |
+|------|----:|----:|
+| Batter | 3 | 5 |
+| Bowler | 3 | 5 |
+| All Rounder | 1 | 3 |
+| Wicket Keeper | 1 | 3 |
+
+The UI should disable players that would violate these rules.
+
+---
+
+# Batting Order
+
+When selecting a player, the user immediately assigns:
+
+- Batting Position
+
+This becomes part of Team Selection.
+
+---
+
+# Captain
+
+Once the team reaches eleven players,
+
+the player chooses:
+
+- Captain
+
+Captain affects match strategy during simulation.
+
+---
+
+# Wicket Keeper
+
+The user selects exactly one wicket keeper from the drafted players.
+
+---
+
+# Goals
+
+The draft should feel:
+
+- Random
+- Fair
+- Strategic
+- Replayable
+
+Every draft should produce a different team.
