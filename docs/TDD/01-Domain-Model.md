@@ -408,6 +408,21 @@ Examples:
 
 ---
 
+## Test Infrastructure
+
+The simulation engine includes dedicated test builders to simplify the creation
+of domain objects during unit testing.
+
+Current builders:
+
+- PlayerBuilder
+- TeamBuilder (planned)
+
+These builders are used exclusively in tests and are not part of the production
+domain model.
+
+---
+
 # Future Extensions
 
 This model is designed to support:

@@ -9,29 +9,18 @@ import {
 } from "@cricket-clash/shared";
 
 import { Player } from "./Player";
+import { PlayerBuilder } from "../../test";
 
 describe("Player", () => {
   it("should create an immutable player", () => {
-    const player = new Player(
-      "virat-kohli",
-      "Virat Kohli",
-      Country.INDIA,
-      PlayerRole.BATTER,
-      Handedness.RIGHT,
-      BattingStyle.RIGHT_HAND,
-      BowlingStyle.RIGHT_ARM_MEDIUM,
-      {
-        batting: 96,
-        bowling: 35,
-        fielding: 90,
-        fitness: 92,
-        experience: 98,
-      }
-    );
+const virat = PlayerBuilder
+  .batter()
+  .named("Virat Kohli")
+  .build();
 
-    expect(player.name).toBe("Virat Kohli");
-    expect(player.country).toBe(Country.INDIA);
-    expect(player.role).toBe(PlayerRole.BATTER);
-    expect(player.attributes.batting).toBe(96);
+  expect(virat.name).toBe("Virat Kohli");
+  expect(virat.country).toBe(Country.INDIA);
+  expect(virat.role).toBe(PlayerRole.BATTER);
+  expect(virat.attributes.batting).toBe(88);
   });
 });
