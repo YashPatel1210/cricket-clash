@@ -5,8 +5,8 @@ export class DraftOption {
   constructor(
     private readonly player: Player,
 
-    private readonly status: DraftOptionState =
-      DraftOptionState.AVAILABLE,
+    private readonly state: DraftOptionState =
+    DraftOptionState.AVAILABLE,
   ) {}
 
   public getPlayer(): Player {
@@ -14,10 +14,10 @@ export class DraftOption {
   }
 
   public getStatus(): DraftOptionState {
-    return this.status;
+    return this.state;
   }
 
   public isSelectable(): boolean {
-    return this.status === DraftOptionState.AVAILABLE;
+    return this.state === DraftOptionState.AVAILABLE;
   }
 }
