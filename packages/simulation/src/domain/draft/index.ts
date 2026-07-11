@@ -6,3 +6,4 @@ export * from "./DraftOptionDisableReason"
 export * from "./PlayingXI";
 export * from "./CountrySelectionStrategy";
 export * from "./DefaultCountrySelectionStrategy";
+export * from "./PlayingXIGenerator";

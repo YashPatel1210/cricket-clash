@@ -1,4 +1,5 @@
 import { DraftOption } from "./DraftOption";
+import { Player } from "../player";
 
 export class PlayingXI {
   public constructor(
@@ -14,11 +15,20 @@ export class PlayingXI {
       );
     }
   }
+  
+  public playerCount(): number {
+  return this.options.length;
+  }
 
   public size(): number {
     return this.options.length;
   }
 
+  public getPlayers(): ReadonlyArray<Player> {
+    return this.options.map(
+    option => option.getPlayer(),
+    );
+  }
   public getOptions(): ReadonlyArray<DraftOption> {
     return this.options;
   }
