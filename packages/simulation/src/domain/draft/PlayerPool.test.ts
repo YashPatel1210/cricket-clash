@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { InMemoryPlayerRepository } from "../player";
 import { PlayerPool } from "./PlayerPool";
 import { PlayerBuilder } from "../../test";
+import { Country } from "@cricket-clash/shared";
 
 describe("PlayerPool", () => {
   it("should create player pool from repository", () => {
@@ -195,4 +196,33 @@ describe("PlayerPool", () => {
     // Assert
     expect(pool.isEmpty()).toBe(false);
   });
+
+  it("should return unique countries", () => {
+  const indiaBatter = PlayerBuilder
+    .batter()
+    .fromCountry(Country.INDIA)
+    .build();
+
+  const indiaBowler = PlayerBuilder
+    .bowler()
+    .fromCountry(Country.INDIA)
+    .build();
+
+  const australia = PlayerBuilder
+    .batter()
+    .fromCountry(Country.AUSTRALIA)
+    .build();
+
+  const pool = new PlayerPool([
+    indiaBatter,
+    indiaBowler,
+    australia,
+  ]);
+
+  expect(pool.countries()).toEqual([
+    Country.INDIA,
+    Country.AUSTRALIA,
+  ]);
+});
+
 });

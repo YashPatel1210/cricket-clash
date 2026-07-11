@@ -1,10 +1,19 @@
 import { Player } from "../player";
+import { Country } from "@cricket-clash/shared";
 
 export class PlayerPool {
   public constructor(
     private readonly players: ReadonlyArray<Player>,
   ) {}
 
+  public countries(): ReadonlyArray<Country> {
+  return [...new Set(
+    this.players.map(
+      player => player.country,
+      ),
+    )];
+  }
+  
   public size(): number {
     return this.players.length;
   }
