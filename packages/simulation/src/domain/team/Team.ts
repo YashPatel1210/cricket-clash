@@ -2,24 +2,21 @@ import type { OperationResult } from "../common";
 import type { TeamRules } from "../rules";
 import { TeamSelection } from "./TeamSelection";
 import { PlayerRole } from "@cricket-clash/shared";
+import type { RoleLimit } from "../rules";
 
 export class Team {
   private readonly selections: TeamSelection[] = [];
 
-  constructor(
-    private readonly rules: TeamRules,
-  ) {}
+  constructor(private readonly rules: TeamRules) {}
 
   public getSelections(): ReadonlyArray<TeamSelection> {
     return this.selections;
   }
 
   public selectedPlayerIds(): ReadonlyArray<string> {
-  return this.selections.map(
-    (selection) => selection.player.id,
-  );
+    return this.selections.map((selection) => selection.player.id);
   }
-  
+
   public addSelection(selection: TeamSelection): OperationResult {
     const playerCountValidation = this.validatePlayerCount();
 
@@ -27,21 +24,18 @@ export class Team {
       return playerCountValidation;
     }
 
-    const battingPositionValidation =
-      this.validateBattingPosition(selection);
+    const battingPositionValidation = this.validateBattingPosition(selection);
 
     if (!battingPositionValidation.success) {
       return battingPositionValidation;
     }
 
-    const captainValidation =
-      this.validateCaptain(selection);
+    const captainValidation = this.validateCaptain(selection);
 
     if (!captainValidation.success) {
       return captainValidation;
     }
-    const roleValidation =
-      this.validateRoleLimit(selection);
+    const roleValidation = this.validateRoleLimit(selection);
 
     if (!roleValidation.success) {
       return roleValidation;
@@ -68,39 +62,32 @@ export class Team {
   }
 
   private getRoleCount(role: PlayerRole): number {
-    return this.selections.filter(
-      selection => selection.player.role === role,
-    ).length;
+    return this.selections.filter((selection) => selection.player.role === role)
+      .length;
   }
 
-  private validateRoleLimit(
-  selection: TeamSelection,
-): OperationResult {
+  private validateRoleLimit(selection: TeamSelection): OperationResult {
+    const role = selection.player.role;
 
-  const role = selection.player.role;
+    const currentCount = this.getRoleCount(role);
 
-  const currentCount = this.getRoleCount(role);
+    const limit = this.rules.roleLimits[role];
 
-  const limit = this.rules.roleLimits[role];
+    if (currentCount >= limit.max) {
+      return {
+        success: false,
+        message: `Maximum ${role} limit reached.`,
+      };
+    }
 
-  if (currentCount >= limit.max) {
     return {
-      success: false,
-      message: `Maximum ${role} limit reached.`,
+      success: true,
     };
   }
 
-  return {
-    success: true,
-  };
-}
-
-  private validateBattingPosition(
-    selection: TeamSelection,
-  ): OperationResult {
+  private validateBattingPosition(selection: TeamSelection): OperationResult {
     const battingPositionExists = this.selections.some(
-      existing =>
-        existing.battingPosition === selection.battingPosition,
+      (existing) => existing.battingPosition === selection.battingPosition,
     );
 
     if (battingPositionExists) {
@@ -115,9 +102,7 @@ export class Team {
     };
   }
 
-  private validateCaptain(
-    selection: TeamSelection,
-  ): OperationResult {
+  private validateCaptain(selection: TeamSelection): OperationResult {
     if (!selection.isCaptain) {
       return {
         success: true,
@@ -125,7 +110,7 @@ export class Team {
     }
 
     const captainExists = this.selections.some(
-      existing => existing.isCaptain,
+      (existing) => existing.isCaptain,
     );
 
     if (captainExists) {
@@ -138,5 +123,22 @@ export class Team {
     return {
       success: true,
     };
+  }
+
+  public roleCount(role: PlayerRole): number {
+    return this.selections.filter((selection) => selection.player.role === role)
+      .length;
+  }
+
+  public roleLimit(role: PlayerRole): RoleLimit {
+    return this.rules.roleLimits[role];
+  }
+
+  public minimumRoleCount(role: PlayerRole): number {
+    return this.roleLimit(role).min;
+  }
+
+  public maximumRoleCount(role: PlayerRole): number {
+    return this.roleLimit(role).max;
   }
 }
