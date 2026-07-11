@@ -14,6 +14,12 @@ export class Team {
     return this.selections;
   }
 
+  public selectedPlayerIds(): ReadonlyArray<string> {
+  return this.selections.map(
+    (selection) => selection.player.id,
+  );
+  }
+  
   public addSelection(selection: TeamSelection): OperationResult {
     const playerCountValidation = this.validatePlayerCount();
 
