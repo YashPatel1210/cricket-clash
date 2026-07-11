@@ -1,28 +1,16 @@
 import { Country } from "@cricket-clash/shared";
 
-import { RandomGenerator } from "../../infrastructure/random";
-import { PlayerPool } from "./PlayerPool";
+import { DraftContext } from "./DraftContext";
 import { CountrySelectionStrategy } from "./CountrySelectionStrategy";
 
-export class DefaultCountrySelectionStrategy
-  implements CountrySelectionStrategy {
-
-  public constructor(
-    private readonly random: RandomGenerator,
-  ) {}
-
-  public select(
-    pool: PlayerPool,
-  ): Country {
-
-    const countries = pool.countries();
+export class DefaultCountrySelectionStrategy implements CountrySelectionStrategy {
+  public select(context: DraftContext): Country {
+    const countries = context.getPlayerPool().countries();
 
     if (countries.length === 0) {
-      throw new Error(
-        "No countries available for selection.",
-      );
+      throw new Error("No countries available for selection.");
     }
 
-    return this.random.pick(countries);
+    return context.getRandom().pick(countries);
   }
 }

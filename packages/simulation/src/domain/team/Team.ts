@@ -3,6 +3,7 @@ import type { TeamRules } from "../rules";
 import { TeamSelection } from "./TeamSelection";
 import { PlayerRole } from "@cricket-clash/shared";
 import type { RoleLimit } from "../rules";
+import { Player } from "../player";
 
 export class Team {
   private readonly selections: TeamSelection[] = [];
@@ -61,15 +62,10 @@ export class Team {
     };
   }
 
-  private getRoleCount(role: PlayerRole): number {
-    return this.selections.filter((selection) => selection.player.role === role)
-      .length;
-  }
-
   private validateRoleLimit(selection: TeamSelection): OperationResult {
     const role = selection.player.role;
 
-    const currentCount = this.getRoleCount(role);
+    const currentCount = this.roleCount(role);
 
     const limit = this.rules.roleLimits[role];
 
@@ -140,5 +136,19 @@ export class Team {
 
   public maximumRoleCount(role: PlayerRole): number {
     return this.roleLimit(role).max;
+  }
+  public playerCount(): number {
+    return this.selections.length;
+  }
+  public isComplete(): boolean {
+    return this.playerCount() >= this.rules.maxPlayers;
+  }
+  public nextBattingPosition(): number {
+    return this.selections.length + 1;
+  }
+  public addPlayer(player: Player): OperationResult {
+    return this.addSelection(
+      new TeamSelection(player, this.nextBattingPosition()),
+    );
   }
 }

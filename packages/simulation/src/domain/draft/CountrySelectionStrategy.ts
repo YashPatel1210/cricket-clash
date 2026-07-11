@@ -1,9 +1,7 @@
 import { Country } from "@cricket-clash/shared";
 
-import { PlayerPool } from "./PlayerPool";
+import { DraftContext } from "./DraftContext";
 
 export interface CountrySelectionStrategy {
-  select(
-    pool: PlayerPool,
-  ): Country;
+  select(context: DraftContext): Country;
 }
