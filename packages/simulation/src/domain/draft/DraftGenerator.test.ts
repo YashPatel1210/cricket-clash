@@ -26,10 +26,7 @@ describe("DraftGenerator", () => {
       new RandomGenerator(42),
     );
 
-    const generator = new DraftGenerator(
-      new DefaultCountrySelectionStrategy(),
-      new DefaultRoleEligibilityStrategy(),
-    );
+    const generator = new DraftGenerator(new DefaultRoleEligibilityStrategy());
 
     // Act
 
@@ -53,10 +50,7 @@ describe("DraftGenerator", () => {
       new RandomGenerator(42),
     );
 
-    const generator = new DraftGenerator(
-      new DefaultCountrySelectionStrategy(),
-      new DefaultRoleEligibilityStrategy(),
-    );
+    const generator = new DraftGenerator(new DefaultRoleEligibilityStrategy());
 
     // Act
 
@@ -83,10 +77,7 @@ describe("DraftGenerator", () => {
       new RandomGenerator(42),
     );
 
-    const generator = new DraftGenerator(
-      new DefaultCountrySelectionStrategy(),
-      new DefaultRoleEligibilityStrategy(),
-    );
+    const generator = new DraftGenerator(new DefaultRoleEligibilityStrategy());
 
     // Act
 
@@ -109,6 +100,89 @@ describe("DraftGenerator", () => {
     expect(team.roleCount(PlayerRole.WICKET_KEEPER)).toBeGreaterThanOrEqual(1);
 
     expect(team.roleCount(PlayerRole.WICKET_KEEPER)).toBeLessThanOrEqual(3);
+  });
+  it("should generate identical teams for the same random seed", () => {
+    // Arrange
+
+    const players = [
+      ...createPlayers(Country.INDIA),
+      ...createPlayers(Country.AUSTRALIA),
+    ];
+
+    const firstContext = new DraftContext(
+      new PlayerPool(players),
+      TeamBuilder.standard().build(),
+      new RandomGenerator(42),
+    );
+
+    const secondContext = new DraftContext(
+      new PlayerPool(players),
+      TeamBuilder.standard().build(),
+      new RandomGenerator(42),
+    );
+
+    const generator = new DraftGenerator(new DefaultRoleEligibilityStrategy());
+
+    // Act
+
+    const firstTeam = generator.generate(firstContext);
+
+    const secondTeam = generator.generate(secondContext);
+
+    // Assert
+
+    expect(firstTeam.selectedPlayerIds()).toEqual(
+      secondTeam.selectedPlayerIds(),
+    );
+  });
+  it("should generate different teams for different random seeds", () => {
+    // Arrange
+
+    const players = [
+      ...createPlayers(Country.INDIA),
+      ...createPlayers(Country.AUSTRALIA),
+    ];
+
+    const firstContext = new DraftContext(
+      new PlayerPool(players),
+      TeamBuilder.standard().build(),
+      new RandomGenerator(42),
+    );
+
+    const secondContext = new DraftContext(
+      new PlayerPool(players),
+      TeamBuilder.standard().build(),
+      new RandomGenerator(100),
+    );
+
+    const generator = new DraftGenerator(new DefaultRoleEligibilityStrategy());
+
+    // Act
+
+    const firstTeam = generator.generate(firstContext);
+
+    const secondTeam = generator.generate(secondContext);
+
+    // Assert
+
+    expect(firstTeam.selectedPlayerIds()).not.toEqual(
+      secondTeam.selectedPlayerIds(),
+    );
+  });
+  it("should throw when no eligible players are available", () => {
+    // Arrange
+
+    const context = new DraftContext(
+      new PlayerPool([]),
+      TeamBuilder.standard().build(),
+      new RandomGenerator(42),
+    );
+
+    const generator = new DraftGenerator(new DefaultRoleEligibilityStrategy());
+
+    // Act / Assert
+
+    expect(() => generator.generate(context)).toThrow();
   });
 });
 

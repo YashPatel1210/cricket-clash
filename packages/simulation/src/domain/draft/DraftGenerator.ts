@@ -4,10 +4,7 @@ import { DraftContext } from "./DraftContext";
 import { RoleEligibilityStrategy } from "./RoleEligibilityStrategy";
 
 export class DraftGenerator {
-  public constructor(
-    private readonly countryStrategy: CountrySelectionStrategy,
-    private readonly roleStrategy: RoleEligibilityStrategy,
-  ) {}
+  public constructor(private readonly roleStrategy: RoleEligibilityStrategy) {}
 
   public generate(context: DraftContext): Team {
     const team = context.getTeam();
@@ -20,18 +17,14 @@ export class DraftGenerator {
   }
 
   private generateNextPlayer(context: DraftContext, team: Team): void {
-    const country = this.countryStrategy.select(context);
-
-    const availableRoles = this.roleStrategy.availableRoles(context);
-
-    const role = context.getRandom().pick(availableRoles);
+    const roles = this.roleStrategy.availableRoles(context);
 
     const candidates = context
       .getPlayerPool()
-      .availablePlayers(country, role, team.selectedPlayerIds());
+      .availablePlayers(roles, team.selectedPlayerIds());
 
     if (candidates.length === 0) {
-      throw new Error(`No ${role} available for ${country}.`);
+      throw new Error("No eligible players available.");
     }
 
     const player = context.getRandom().pick(candidates);

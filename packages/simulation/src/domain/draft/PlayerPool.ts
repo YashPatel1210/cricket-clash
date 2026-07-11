@@ -37,15 +37,12 @@ export class PlayerPool {
     return new PlayerPool(filteredPlayers);
   }
   public availablePlayers(
-    country: Country,
-    role: PlayerRole,
+    roles: ReadonlyArray<PlayerRole>,
     excludedPlayerIds: ReadonlyArray<string>,
   ): ReadonlyArray<Player> {
     return this.players.filter(
       (player) =>
-        player.country === country &&
-        player.role === role &&
-        !excludedPlayerIds.includes(player.id),
+        roles.includes(player.role) && !excludedPlayerIds.includes(player.id),
     );
   }
 }
