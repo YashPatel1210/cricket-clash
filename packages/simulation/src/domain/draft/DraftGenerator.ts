@@ -12,7 +12,9 @@ export class DraftGenerator {
   public generate(context: DraftContext): Team {
     const team = context.getTeam();
 
-    this.generateNextPlayer(context, team);
+    while (!team.isComplete()) {
+      this.generateNextPlayer(context, team);
+    }
 
     return team;
   }
