@@ -55,4 +55,27 @@ describe("BattingPair", () => {
 
     expect(swapped.getNonStriker()).toBe(striker);
   });
+  it("should swap strike after odd runs", () => {
+    const striker = PlayerBuilder.batter().build();
+
+    const nonStriker = PlayerBuilder.batter().build();
+
+    const pair = new BattingPair(striker, nonStriker);
+
+    expect(pair.afterRuns(1).getStriker()).toBe(nonStriker);
+
+    expect(pair.afterRuns(3).getStriker()).toBe(nonStriker);
+  });
+
+  it("should not swap strike after even runs", () => {
+    const striker = PlayerBuilder.batter().build();
+
+    const nonStriker = PlayerBuilder.batter().build();
+
+    const pair = new BattingPair(striker, nonStriker);
+
+    expect(pair.afterRuns(2).getStriker()).toBe(striker);
+
+    expect(pair.afterRuns(4).getStriker()).toBe(striker);
+  });
 });

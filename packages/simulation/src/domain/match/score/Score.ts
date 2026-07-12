@@ -44,4 +44,15 @@ export class Score {
   public isAllOut(): boolean {
     return this.wickets === 10;
   }
+  public afterRuns(runs: number): Score {
+    return new Score(this.runs + runs, this.wickets, this.balls);
+  }
+
+  public afterBall(): Score {
+    return new Score(this.runs, this.wickets, this.balls + 1);
+  }
+
+  public afterWicket(): Score {
+    return new Score(this.runs, this.wickets + 1, this.balls);
+  }
 }

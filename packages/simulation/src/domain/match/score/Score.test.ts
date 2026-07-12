@@ -66,4 +66,35 @@ describe("Score", () => {
   it("should reject negative balls", () => {
     expect(() => new Score(0, 0, -1)).toThrow("Balls cannot be negative.");
   });
+  it("should return a new score after adding runs", () => {
+    const score = new Score(100, 2, 60);
+
+    const updated = score.afterRuns(4);
+
+    expect(updated.getRuns()).toBe(104);
+    expect(updated.getWickets()).toBe(2);
+    expect(updated.getBalls()).toBe(60);
+
+    expect(score.getRuns()).toBe(100);
+  });
+
+  it("should return a new score after a ball", () => {
+    const score = new Score(100, 2, 60);
+
+    const updated = score.afterBall();
+
+    expect(updated.getBalls()).toBe(61);
+    expect(updated.getRuns()).toBe(100);
+    expect(updated.getWickets()).toBe(2);
+  });
+
+  it("should return a new score after a wicket", () => {
+    const score = new Score(100, 2, 60);
+
+    const updated = score.afterWicket();
+
+    expect(updated.getWickets()).toBe(3);
+    expect(updated.getRuns()).toBe(100);
+    expect(updated.getBalls()).toBe(60);
+  });
 });

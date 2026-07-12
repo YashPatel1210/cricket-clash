@@ -25,4 +25,7 @@ export class BattingPair {
   public swapStrike(): BattingPair {
     return new BattingPair(this.nonStriker, this.striker);
   }
+  public afterRuns(runs: number): BattingPair {
+    return runs % 2 === 1 ? this.swapStrike() : this;
+  }
 }
