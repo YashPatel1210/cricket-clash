@@ -13,9 +13,14 @@ export class Team {
   public getSelections(): ReadonlyArray<TeamSelection> {
     return this.selections;
   }
-
+  public getPlayers(): ReadonlyArray<Player> {
+    return this.selections.map((selection) => selection.player);
+  }
   public selectedPlayerIds(): ReadonlyArray<string> {
     return this.selections.map((selection) => selection.player.id);
+  }
+  public getCaptain(): Player | undefined {
+    return this.selections.find((selection) => selection.isCaptain)?.player;
   }
 
   public addSelection(selection: TeamSelection): OperationResult {
@@ -150,5 +155,10 @@ export class Team {
     return this.addSelection(
       new TeamSelection(player, this.nextBattingPosition()),
     );
+  }
+  public battingOrder(): ReadonlyArray<Player> {
+    return [...this.selections]
+      .sort((left, right) => left.battingPosition - right.battingPosition)
+      .map((selection) => selection.player);
   }
 }

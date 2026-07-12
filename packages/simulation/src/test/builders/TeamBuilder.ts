@@ -11,7 +11,11 @@ export class TeamBuilder {
   private battingPosition = 1;
 
   public static standard(): TeamBuilder {
-    return new TeamBuilder();
+    return new TeamBuilder()
+      .withBatters(4)
+      .withAllRounders(2)
+      .withBowlers(4)
+      .withWicketKeepers(1);
   }
 
   public withBatters(count: number): TeamBuilder {
