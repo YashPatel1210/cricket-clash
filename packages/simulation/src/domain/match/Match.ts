@@ -1,5 +1,5 @@
 import { Team } from "../team";
-import { MatchConditions } from "./MatchConditions";
+import { MatchConditions } from "./conditions/MatchConditions";
 import { MatchState } from "./MatchState";
 
 export class Match {

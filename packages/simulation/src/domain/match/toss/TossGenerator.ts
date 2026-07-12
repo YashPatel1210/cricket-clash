@@ -1,6 +1,6 @@
-import { RandomGenerator } from "../../infrastructure/random";
+import { RandomGenerator } from "../../../infrastructure/random";
 
-import { Match } from "./Match";
+import { Match } from "../Match";
 import { Toss } from "./Toss";
 import { TossDecision } from "./TossDecision";
 

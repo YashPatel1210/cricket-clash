@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { MatchBuilder, TeamBuilder } from "../../test";
+import { MatchBuilder, TeamBuilder } from "../../../test";
 
 import { Toss } from "./Toss";
 import { TossDecision } from "./TossDecision";

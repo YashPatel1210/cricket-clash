@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { RandomGenerator } from "../../infrastructure/random";
-import { MatchBuilder } from "../../test";
+import { RandomGenerator } from "../../../infrastructure/random";
+import { MatchBuilder } from "../../../test";
 
 import { TossDecision } from "./TossDecision";
 import { TossGenerator } from "./TossGenerator";

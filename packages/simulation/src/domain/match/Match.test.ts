@@ -3,11 +3,11 @@ import { describe, expect, it } from "vitest";
 import { TeamBuilder } from "../../test";
 
 import { Match } from "./Match";
-import { MatchConditions } from "./MatchConditions";
+import { MatchConditions } from "./conditions/MatchConditions";
 import { MatchState } from "./MatchState";
-import { PitchType } from "./PitchType";
-import { Stadium } from "./Stadium";
-import { WeatherCondition } from "./WeatherCondition";
+import { PitchType } from "./conditions/PitchType";
+import { Stadium } from "./conditions/Stadium";
+import { WeatherCondition } from "./conditions/WeatherCondition";
 import { MatchBuilder } from "../../test";
 
 describe("Match", () => {
