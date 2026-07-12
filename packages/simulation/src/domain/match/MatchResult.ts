@@ -5,7 +5,7 @@ export class MatchResult {
   public constructor(
     private readonly firstInnings: InningsResult,
     private readonly secondInnings: InningsResult,
-    private readonly winner: Team,
+    private readonly winner?: Team,
   ) {}
 
   public getFirstInnings(): InningsResult {
@@ -16,7 +16,7 @@ export class MatchResult {
     return this.secondInnings;
   }
 
-  public getWinner(): Team {
+  public getWinner(): Team | undefined {
     return this.winner;
   }
 }

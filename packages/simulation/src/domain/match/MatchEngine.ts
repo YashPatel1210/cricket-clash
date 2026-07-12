@@ -1,67 +1,34 @@
-import { describe, expect, it } from "vitest";
+import { InningsEngine } from "./innings/InningsEngine";
+import { InningsFactory } from "./innings/InningsFactory";
 
-import { InningsBuilder, MatchBuilder } from "../../../test";
+import { Target } from "./target";
 
-import { RandomGenerator } from "../../../infrastructure/random";
-
-import { DeliveryGenerator } from "../delivery";
-import {
-  InningsEngine,
-  InningsProcessor,
-  InningsStateEvaluator,
-} from "../innings";
-import { OverEngine } from "../over";
-
-import { MatchEngine } from "./MatchEngine";
+import { Match } from "./Match";
+import { MatchResult } from "./MatchResult";
 import { WinnerEvaluator } from "./WinnerEvaluator";
 
-function createMatchEngine(): MatchEngine {
-  const evaluator = new InningsStateEvaluator();
+export class MatchEngine {
+  public constructor(
+    private readonly inningsFactory: InningsFactory,
+    private readonly inningsEngine: InningsEngine,
+    private readonly winnerEvaluator: WinnerEvaluator,
+  ) {}
 
-  const inningsEngine = new InningsEngine(
-    new OverEngine(
-      new DeliveryGenerator(new RandomGenerator(42)),
-      new InningsProcessor(),
-      evaluator,
-    ),
-    evaluator,
-  );
+  public simulate(match: Match): MatchResult {
+    const firstInnings = this.inningsFactory.createFirstInnings(match);
 
-  return new MatchEngine(inningsEngine, new WinnerEvaluator());
+    const firstResult = this.inningsEngine.simulate(firstInnings);
+
+    const target = new Target(
+      firstResult.getInnings().getScore().getRuns() + 1,
+    );
+
+    const secondInnings = this.inningsFactory.createSecondInnings(match);
+
+    const secondResult = this.inningsEngine.simulate(secondInnings, target);
+
+    const winner = this.winnerEvaluator.evaluate(firstResult, secondResult);
+
+    return new MatchResult(firstResult, secondResult, winner);
+  }
 }
-
-describe("MatchEngine", () => {
-  it("should simulate a match", () => {
-    const result = createMatchEngine().simulate(
-      MatchBuilder.standard().build(),
-    );
-
-    expect(result).toBeDefined();
-  });
-
-  it("should produce first innings", () => {
-    const result = createMatchEngine().simulate(
-      MatchBuilder.standard().build(),
-    );
-
-    expect(result.getFirstInnings()).toBeDefined();
-  });
-
-  it("should produce second innings", () => {
-    const result = createMatchEngine().simulate(
-      MatchBuilder.standard().build(),
-    );
-
-    expect(result.getSecondInnings()).toBeDefined();
-  });
-
-  it("should determine a winner or tie", () => {
-    const result = createMatchEngine().simulate(
-      MatchBuilder.standard().build(),
-    );
-
-    expect(
-      result.getWinner() === undefined || result.getWinner() !== undefined,
-    ).toBe(true);
-  });
-});
