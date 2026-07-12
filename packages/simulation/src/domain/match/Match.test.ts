@@ -9,6 +9,10 @@ import { PitchType } from "./conditions/PitchType";
 import { Stadium } from "./conditions/Stadium";
 import { WeatherCondition } from "./conditions/WeatherCondition";
 import { MatchBuilder } from "../../test";
+import { InningsBuilder } from "../../test";
+import { InningsResult } from "./innings";
+import { Toss } from "./toss/Toss";
+import { TossDecision } from "./toss/TossDecision";
 
 describe("Match", () => {
   function createConditions(): MatchConditions {
@@ -104,5 +108,30 @@ describe("Match", () => {
     );
 
     expect(match.getConditions().getStadium().getName()).toBe("MCG");
+  });
+  it("should expose toss when available", () => {
+    const team = TeamBuilder.standard().build();
+
+    const toss = new Toss(team, TossDecision.BAT);
+
+    const match = MatchBuilder.standard().withToss(toss).build();
+
+    expect(match.getToss()).toBe(toss);
+  });
+
+  it("should expose first innings when available", () => {
+    const innings = new InningsResult(InningsBuilder.standard().build(), []);
+
+    const match = MatchBuilder.standard().withFirstInnings(innings).build();
+
+    expect(match.getFirstInnings()).toBe(innings);
+  });
+
+  it("should expose second innings when available", () => {
+    const innings = new InningsResult(InningsBuilder.standard().build(), []);
+
+    const match = MatchBuilder.standard().withSecondInnings(innings).build();
+
+    expect(match.getSecondInnings()).toBe(innings);
   });
 });

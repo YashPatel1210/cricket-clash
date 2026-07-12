@@ -1,5 +1,6 @@
 import { Team } from "../../domain/team";
 import { Player } from "../../domain/player";
+import { Match } from "../../domain/match";
 
 import {
   BattingPair,
@@ -121,6 +122,19 @@ export class InningsBuilder {
 
   public withBowlingSpell(spell: BowlingSpell): InningsBuilder {
     this.bowlingSpell = spell;
+    return this;
+  }
+  public forFirstInnings(match: Match): InningsBuilder {
+    this.battingTeam = match.getTeamA();
+    this.bowlingTeam = match.getTeamB();
+
+    return this;
+  }
+
+  public forSecondInnings(match: Match): InningsBuilder {
+    this.battingTeam = match.getTeamB();
+    this.bowlingTeam = match.getTeamA();
+
     return this;
   }
 }

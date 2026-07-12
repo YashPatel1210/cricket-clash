@@ -9,6 +9,7 @@ import { OverEngine } from "../over";
 import { InningsEngine } from "./InningsEngine";
 import { InningsProcessor } from "./InningsProcessor";
 import { InningsStateEvaluator } from "./InningsStateEvaluator";
+import { Target } from "../target";
 
 function createEngine(): InningsEngine {
   const evaluator = new InningsStateEvaluator();
@@ -54,5 +55,28 @@ describe("InningsEngine", () => {
     const result = createEngine().simulate(innings);
 
     expect(result.getInnings()).toBeDefined();
+  });
+  it("should stop when target is reached", () => {
+    const innings = InningsBuilder.standard().build();
+
+    const result = createEngine().simulate(innings, new Target(1));
+
+    expect(result.getInnings().getScore().getRuns()).toBeGreaterThanOrEqual(1);
+  });
+
+  it("should not exceed twenty overs while chasing", () => {
+    const innings = InningsBuilder.standard().build();
+
+    const result = createEngine().simulate(innings, new Target(500));
+
+    expect(result.getInnings().getScore().getBalls()).toBeLessThanOrEqual(120);
+  });
+
+  it("should not exceed ten wickets while chasing", () => {
+    const innings = InningsBuilder.standard().build();
+
+    const result = createEngine().simulate(innings, new Target(500));
+
+    expect(result.getInnings().getScore().getWickets()).toBeLessThanOrEqual(10);
   });
 });

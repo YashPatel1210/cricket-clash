@@ -1,3 +1,4 @@
+import { Target } from "../target";
 import { Over } from "../over";
 import { OverEngine } from "../over";
 
@@ -11,12 +12,12 @@ export class InningsEngine {
     private readonly stateEvaluator: InningsStateEvaluator,
   ) {}
 
-  public simulate(innings: Innings): InningsResult {
+  public simulate(innings: Innings, target?: Target): InningsResult {
     let currentInnings = innings;
 
     const overs: Over[] = [];
 
-    while (this.stateEvaluator.shouldContinue(currentInnings)) {
+    while (this.stateEvaluator.shouldContinue(currentInnings, target)) {
       const result = this.overEngine.simulate(currentInnings);
 
       overs.push(result.getOver());
