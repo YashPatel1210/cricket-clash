@@ -1,5 +1,5 @@
 import { Team } from "../team";
-
+import { MatchConditions } from "./MatchConditions";
 import { MatchState } from "./MatchState";
 
 export class Match {
@@ -8,6 +8,7 @@ export class Match {
   public constructor(
     private readonly teamA: Team,
     private readonly teamB: Team,
+    private readonly conditions: MatchConditions,
   ) {
     this.validate();
   }
@@ -18,6 +19,9 @@ export class Match {
     }
   }
 
+  public getConditions(): MatchConditions {
+    return this.conditions;
+  }
   public getTeamA(): Team {
     return this.teamA;
   }
