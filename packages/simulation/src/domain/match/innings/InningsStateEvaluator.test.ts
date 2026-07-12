@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { InningsBuilder } from "../../../test";
-
+import { Target } from "../target";
 import { Score } from "../score";
 
 import { InningsStateEvaluator } from "./InningsStateEvaluator";
@@ -55,5 +55,34 @@ describe("InningsStateEvaluator", () => {
     const evaluator = new InningsStateEvaluator();
 
     expect(evaluator.shouldContinue(innings)).toBe(false);
+  });
+  it("should stop when the target is reached", () => {
+    const innings = InningsBuilder.standard()
+      .withScore(new Score(158, 3, 85))
+      .build();
+
+    const evaluator = new InningsStateEvaluator();
+
+    expect(evaluator.shouldContinue(innings, new Target(158))).toBe(false);
+  });
+
+  it("should continue when the target is not reached", () => {
+    const innings = InningsBuilder.standard()
+      .withScore(new Score(157, 3, 85))
+      .build();
+
+    const evaluator = new InningsStateEvaluator();
+
+    expect(evaluator.shouldContinue(innings, new Target(158))).toBe(true);
+  });
+
+  it("should stop when the target is exceeded", () => {
+    const innings = InningsBuilder.standard()
+      .withScore(new Score(180, 4, 90))
+      .build();
+
+    const evaluator = new InningsStateEvaluator();
+
+    expect(evaluator.shouldContinue(innings, new Target(158))).toBe(false);
   });
 });

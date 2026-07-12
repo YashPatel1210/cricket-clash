@@ -53,8 +53,24 @@ export class InningsBuilder {
     return this;
   }
 
-  public withScore(score: Score): InningsBuilder {
-    this.score = score;
+  public withScore(score: Score): InningsBuilder;
+  public withScore(
+    runs: number,
+    wickets: number,
+    balls: number,
+  ): InningsBuilder;
+
+  public withScore(
+    scoreOrRuns: Score | number,
+    wickets?: number,
+    balls?: number,
+  ): InningsBuilder {
+    if (scoreOrRuns instanceof Score) {
+      this.score = scoreOrRuns;
+    } else {
+      this.score = new Score(scoreOrRuns, wickets!, balls!);
+    }
+
     return this;
   }
 

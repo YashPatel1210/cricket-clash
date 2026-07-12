@@ -4,3 +4,5 @@ export * from "./conditions/WeatherCondition";
 export * from "./conditions/MatchConditions";
 export * from "./conditions/PitchType";
 export * from "./conditions/Stadium";
+export * from "./MatchResult";
+export * from "./WinnerEvaluator";
