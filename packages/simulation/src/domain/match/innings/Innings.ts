@@ -1,5 +1,6 @@
 import { Team } from "../../team";
 import { Score } from "../score";
+import { BattingOrder } from "./BattingOrder";
 import { BattingPair } from "./BattingPair";
 import { BowlingSpell } from "./BowlingSpell";
 import { InningsState } from "./InningsState";
@@ -13,6 +14,7 @@ export class Innings {
     private readonly score: Score,
     private readonly battingPair: BattingPair,
     private readonly bowlingSpell: BowlingSpell,
+    private readonly battingOrder: BattingOrder,
   ) {
     this.validate();
   }
@@ -31,17 +33,6 @@ export class Innings {
     return this.bowlingTeam;
   }
 
-  public getState(): InningsState {
-    return this.state;
-  }
-
-  public hasStarted(): boolean {
-    return this.state !== InningsState.NOT_STARTED;
-  }
-
-  public isCompleted(): boolean {
-    return this.state === InningsState.COMPLETED;
-  }
   public getScore(): Score {
     return this.score;
   }
@@ -52,5 +43,21 @@ export class Innings {
 
   public getBowlingSpell(): BowlingSpell {
     return this.bowlingSpell;
+  }
+
+  public getBattingOrder(): BattingOrder {
+    return this.battingOrder;
+  }
+
+  public getState(): InningsState {
+    return this.state;
+  }
+
+  public hasStarted(): boolean {
+    return this.state !== InningsState.NOT_STARTED;
+  }
+
+  public isCompleted(): boolean {
+    return this.state === InningsState.COMPLETED;
   }
 }

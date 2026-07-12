@@ -2,6 +2,9 @@ import { Delivery } from "../delivery";
 import { Score } from "../score";
 
 import { Innings } from "./Innings";
+import { BattingPair } from "./BattingPair";
+import { BattingOrder } from "./BattingOrder";
+import { BowlingSpell } from "./BowlingSpell";
 
 export class InningsProcessor {
   public process(innings: Innings, delivery: Delivery): Innings {
@@ -10,13 +13,26 @@ export class InningsProcessor {
       .afterRuns(delivery.runs())
       .afterBall();
 
+    let battingPair: BattingPair = innings
+      .getBattingPair()
+      .afterRuns(delivery.runs());
+
+    let battingOrder: BattingOrder = innings.getBattingOrder();
+
+    const bowlingSpell: BowlingSpell = innings.getBowlingSpell().afterBall();
+
     if (delivery.isWicket()) {
       score = score.afterWicket();
+
+      // Only bring in a new batter if wickets remain.
+      if (score.getWickets() < 10) {
+        const nextBatter = battingOrder.next();
+
+        battingPair = battingPair.replaceStriker(nextBatter);
+
+        battingOrder = battingOrder.afterNext();
+      }
     }
-
-    const battingPair = innings.getBattingPair().afterRuns(delivery.runs());
-
-    const bowlingSpell = innings.getBowlingSpell().afterBall();
 
     return new Innings(
       innings.getBattingTeam(),
@@ -24,6 +40,7 @@ export class InningsProcessor {
       score,
       battingPair,
       bowlingSpell,
+      battingOrder,
     );
   }
 }

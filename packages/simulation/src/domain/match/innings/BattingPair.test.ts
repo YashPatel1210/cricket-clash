@@ -78,4 +78,16 @@ describe("BattingPair", () => {
 
     expect(pair.afterRuns(4).getStriker()).toBe(striker);
   });
+  it("should replace the striker", () => {
+    const striker = PlayerBuilder.batter().build();
+    const nonStriker = PlayerBuilder.batter().build();
+    const next = PlayerBuilder.batter().build();
+
+    const pair = new BattingPair(striker, nonStriker);
+
+    const updated = pair.replaceStriker(next);
+
+    expect(updated.getStriker()).toBe(next);
+    expect(updated.getNonStriker()).toBe(nonStriker);
+  });
 });

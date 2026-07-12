@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import { InningsBuilder } from "../../../test";
-
+import { PlayerBuilder } from "../../../test";
 import { Delivery } from "../delivery";
 import { DeliveryOutcome } from "../delivery";
 import { InningsProcessor } from "./InningsProcessor";
 import { Score } from "../score";
+import { BattingPair } from "./BattingPair";
+import { BattingOrder } from "./BattingOrder";
 
 describe("InningsProcessor", () => {
   it("should return a new innings instance", () => {
@@ -102,5 +104,35 @@ describe("InningsProcessor", () => {
     expect(updated.getScore().getWickets()).toBe(3);
 
     expect(updated.getScore().getBalls()).toBe(61);
+  });
+  it("should replace the striker after a wicket", () => {
+    const processor = new InningsProcessor();
+
+    const striker = PlayerBuilder.batter().named("Rohit").build();
+    const nonStriker = PlayerBuilder.batter().named("Gill").build();
+    const nextBatter = PlayerBuilder.batter().named("Kohli").build();
+
+    const pair = new BattingPair(striker, nonStriker);
+
+    const order = new BattingOrder([nextBatter]);
+
+    const innings = InningsBuilder.standard()
+      .withBattingPair(pair)
+      .withBattingOrder(order)
+      .build();
+
+    const delivery = new Delivery(
+      innings.getBowlingSpell(),
+      innings.getBattingPair(),
+      DeliveryOutcome.WICKET,
+    );
+
+    const updated = processor.process(innings, delivery);
+
+    expect(updated.getBattingPair().getStriker()).toBe(nextBatter);
+
+    expect(updated.getBattingPair().getNonStriker()).toBe(nonStriker);
+
+    expect(updated.getBattingOrder().remaining()).toHaveLength(0);
   });
 });

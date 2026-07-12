@@ -1,13 +1,13 @@
 import { BattingPair } from "../innings";
-import { BowlingSpell } from "../innings/BowlingSpell";
+import { BowlingSpell } from "../innings";
 
-import { DeliveryOutcome } from "./DeliveryOutcome";
+import { DeliveryEvent } from "./DeliveryEvent";
 
 export class Delivery {
   public constructor(
     private readonly bowlingSpell: BowlingSpell,
     private readonly battingPair: BattingPair,
-    private readonly outcome: DeliveryOutcome,
+    private readonly event: DeliveryEvent,
   ) {}
 
   public getBowlingSpell(): BowlingSpell {
@@ -18,47 +18,23 @@ export class Delivery {
     return this.battingPair;
   }
 
-  public getOutcome(): DeliveryOutcome {
-    return this.outcome;
+  public getEvent(): DeliveryEvent {
+    return this.event;
   }
 
   public runs(): number {
-    switch (this.outcome) {
-      case DeliveryOutcome.DOT:
-        return 0;
-
-      case DeliveryOutcome.ONE:
-        return 1;
-
-      case DeliveryOutcome.TWO:
-        return 2;
-
-      case DeliveryOutcome.THREE:
-        return 3;
-
-      case DeliveryOutcome.FOUR:
-        return 4;
-
-      case DeliveryOutcome.SIX:
-        return 6;
-
-      case DeliveryOutcome.WICKET:
-        return 0;
-    }
+    return this.event.getRuns();
   }
 
   public isBoundary(): boolean {
-    return (
-      this.outcome === DeliveryOutcome.FOUR ||
-      this.outcome === DeliveryOutcome.SIX
-    );
+    return this.event.isBoundary();
   }
 
   public isWicket(): boolean {
-    return this.outcome === DeliveryOutcome.WICKET;
+    return this.event.isWicket();
   }
 
   public isDotBall(): boolean {
-    return this.outcome === DeliveryOutcome.DOT;
+    return this.event.getOutcome().toString() === "DOT";
   }
 }

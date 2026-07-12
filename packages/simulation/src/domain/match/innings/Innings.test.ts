@@ -5,7 +5,7 @@ import { InningsBuilder, PlayerBuilder, TeamBuilder } from "../../../test";
 import { Score } from "../score";
 import { BattingPair } from "./BattingPair";
 import { BowlingSpell } from "./BowlingSpell";
-import { Innings } from "./Innings";
+import { BattingOrder } from "./BattingOrder";
 import { InningsState } from "./InningsState";
 
 describe("Innings", () => {
@@ -81,5 +81,12 @@ describe("Innings", () => {
     const innings = InningsBuilder.standard().withBowlingSpell(spell).build();
 
     expect(innings.getBowlingSpell()).toBe(spell);
+  });
+  it("should expose batting order", () => {
+    const order = new BattingOrder([PlayerBuilder.batter().build()]);
+
+    const innings = InningsBuilder.standard().withBattingOrder(order).build();
+
+    expect(innings.getBattingOrder()).toBe(order);
   });
 });

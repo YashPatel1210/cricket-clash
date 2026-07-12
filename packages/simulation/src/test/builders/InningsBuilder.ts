@@ -1,7 +1,12 @@
 import { Team } from "../../domain/team";
 import { Player } from "../../domain/player";
 
-import { BattingPair, BowlingSpell, Innings } from "../../domain/match/innings";
+import {
+  BattingPair,
+  BowlingSpell,
+  Innings,
+  BattingOrder,
+} from "../../domain/match/innings";
 
 import { Score } from "../../domain/match/score";
 
@@ -20,11 +25,24 @@ export class InningsBuilder {
   );
 
   private bowlingSpell = new BowlingSpell(PlayerBuilder.bowler().build(), 0);
-
+  private battingOrder = new BattingOrder([
+    PlayerBuilder.batter().build(),
+    PlayerBuilder.batter().build(),
+    PlayerBuilder.batter().build(),
+    PlayerBuilder.batter().build(),
+    PlayerBuilder.batter().build(),
+    PlayerBuilder.batter().build(),
+    PlayerBuilder.batter().build(),
+    PlayerBuilder.batter().build(),
+    PlayerBuilder.batter().build(),
+  ]);
   public static standard(): InningsBuilder {
     return new InningsBuilder();
   }
-
+  public withBattingOrder(order: BattingOrder): InningsBuilder {
+    this.battingOrder = order;
+    return this;
+  }
   public withBattingTeam(team: Team): InningsBuilder {
     this.battingTeam = team;
     return this;
@@ -77,6 +95,7 @@ export class InningsBuilder {
       this.score,
       this.battingPair,
       this.bowlingSpell,
+      this.battingOrder,
     );
   }
   public withBattingPair(pair: BattingPair): InningsBuilder {
