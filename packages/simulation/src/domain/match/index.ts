@@ -6,3 +6,4 @@ export * from "./conditions/PitchType";
 export * from "./conditions/Stadium";
 export * from "./MatchResult";
 export * from "./WinnerEvaluator";
+export * from "./MatchEngine";
