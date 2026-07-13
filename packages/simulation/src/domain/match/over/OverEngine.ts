@@ -1,4 +1,5 @@
 import { DeliveryGenerator } from "../delivery/DeliveryGenerator";
+
 import { Innings, InningsProcessor, InningsStateEvaluator } from "../innings";
 
 import { Over } from "./Over";
@@ -13,6 +14,7 @@ export class OverEngine {
 
   public simulate(innings: Innings): OverResult {
     let currentInnings = innings;
+
     let over = new Over([]);
 
     while (

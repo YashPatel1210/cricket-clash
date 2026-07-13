@@ -44,6 +44,6 @@ describe("InningsFactory", () => {
       new InningsOrder(match.getTeamA(), match.getTeamB()),
     );
 
-    expect(innings.getBowlingSpell()).toBeDefined();
+    expect(innings.getBowlingAttack().getCurrentSpell()).toBeDefined();
   });
 });

@@ -1,8 +1,10 @@
 import { Team } from "../../team";
+
 import { Score } from "../score";
+
 import { BattingOrder } from "./BattingOrder";
 import { BattingPair } from "./BattingPair";
-import { BowlingSpell } from "./BowlingSpell";
+import { BowlingAttack } from "./BowlingAttack";
 import { InningsState } from "./InningsState";
 
 export class Innings {
@@ -13,7 +15,7 @@ export class Innings {
     private readonly bowlingTeam: Team,
     private readonly score: Score,
     private readonly battingPair: BattingPair,
-    private readonly bowlingSpell: BowlingSpell,
+    private readonly bowlingAttack: BowlingAttack,
     private readonly battingOrder: BattingOrder,
   ) {
     this.validate();
@@ -41,8 +43,8 @@ export class Innings {
     return this.battingPair;
   }
 
-  public getBowlingSpell(): BowlingSpell {
-    return this.bowlingSpell;
+  public getBowlingAttack(): BowlingAttack {
+    return this.bowlingAttack;
   }
 
   public getBattingOrder(): BattingOrder {
