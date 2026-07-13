@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-
+import { TossEngine } from "./toss";
+import { MatchOrderResolver } from "./MatchOrderResolver";
 import { MatchBuilder } from "../../test";
 
 import { RandomGenerator } from "../../infrastructure/random";
@@ -17,18 +18,20 @@ import { MatchEngine } from "./MatchEngine";
 import { WinnerEvaluator } from "./WinnerEvaluator";
 
 function createEngine(): MatchEngine {
-  const stateEvaluator = new InningsStateEvaluator();
+  const evaluator = new InningsStateEvaluator();
 
   const inningsEngine = new InningsEngine(
     new OverEngine(
       new DeliveryGenerator(new RandomGenerator(42)),
       new InningsProcessor(),
-      stateEvaluator,
+      evaluator,
     ),
-    stateEvaluator,
+    evaluator,
   );
 
   return new MatchEngine(
+    new TossEngine(new RandomGenerator(42)),
+    new MatchOrderResolver(),
     new InningsFactory(),
     inningsEngine,
     new WinnerEvaluator(),

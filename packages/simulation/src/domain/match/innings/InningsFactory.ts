@@ -1,6 +1,6 @@
-import { Match } from "../Match";
-import { Team } from "../../team";
 import { Score } from "../score";
+
+import { InningsOrder } from "../InningsOrder";
 
 import { BattingOrder } from "./BattingOrder";
 import { BattingPair } from "./BattingPair";
@@ -17,15 +17,11 @@ export class InningsFactory {
     private readonly openingBowlerSelector: OpeningBowlerSelector = new DefaultOpeningBowlerSelector(),
   ) {}
 
-  public createFirstInnings(match: Match): Innings {
-    return this.create(match.getTeamA(), match.getTeamB());
-  }
+  public create(order: InningsOrder): Innings {
+    const battingTeam = order.getBattingTeam();
 
-  public createSecondInnings(match: Match): Innings {
-    return this.create(match.getTeamB(), match.getTeamA());
-  }
+    const bowlingTeam = order.getBowlingTeam();
 
-  private create(battingTeam: Team, bowlingTeam: Team): Innings {
     const openingPair = this.openingPairSelector.select(battingTeam);
 
     const openingBowler = this.openingBowlerSelector.select(bowlingTeam);
