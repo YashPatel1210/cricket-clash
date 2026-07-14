@@ -5,7 +5,15 @@ export class DeliveryEvent {
     private readonly outcome: DeliveryOutcome,
     private readonly runs: number,
     private readonly legal: boolean,
-  ) {}
+  ) {
+    this.validate();
+  }
+
+  private validate(): void {
+    if (this.runs < 0) {
+      throw new Error("Runs cannot be negative.");
+    }
+  }
 
   public getOutcome(): DeliveryOutcome {
     return this.outcome;
@@ -26,7 +34,40 @@ export class DeliveryEvent {
     );
   }
 
+  /**
+   * Bowler gets credit.
+   */
   public isWicket(): boolean {
     return this.outcome === DeliveryOutcome.WICKET;
+  }
+
+  /**
+   * Any batter dismissal.
+   */
+  public isDismissal(): boolean {
+    return (
+      this.outcome === DeliveryOutcome.WICKET ||
+      this.outcome === DeliveryOutcome.RUN_OUT
+    );
+  }
+
+  public isWide(): boolean {
+    return this.outcome === DeliveryOutcome.WIDE;
+  }
+
+  public isNoBall(): boolean {
+    return this.outcome === DeliveryOutcome.NO_BALL;
+  }
+
+  public isBye(): boolean {
+    return this.outcome === DeliveryOutcome.BYE;
+  }
+
+  public isLegBye(): boolean {
+    return this.outcome === DeliveryOutcome.LEG_BYE;
+  }
+
+  public isExtra(): boolean {
+    return this.isWide() || this.isNoBall() || this.isBye() || this.isLegBye();
   }
 }

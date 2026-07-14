@@ -5,7 +5,7 @@ import { Match } from "../../domain/match";
 import {
   BattingOrder,
   BattingPair,
-  BowlingAttack,
+  BowlingSpell,
   BowlingOrder,
   Innings,
 } from "../../domain/match/innings";
@@ -26,8 +26,11 @@ export class InningsBuilder {
     PlayerBuilder.batter().build(),
   );
 
-  private bowlingAttack = BowlingAttack.create(
-    new BowlingOrder([PlayerBuilder.bowler().build()]),
+  private bowlingSpell = new BowlingSpell(
+    PlayerBuilder.bowler().build(),
+    0,
+    0,
+    0,
   );
 
   private battingOrder = new BattingOrder([
@@ -66,8 +69,8 @@ export class InningsBuilder {
     return this;
   }
 
-  public withBowlingAttack(attack: BowlingAttack): InningsBuilder {
-    this.bowlingAttack = attack;
+  public withBowlingSpell(spell: BowlingSpell): InningsBuilder {
+    this.bowlingSpell = spell;
     return this;
   }
 
@@ -130,7 +133,7 @@ export class InningsBuilder {
       this.bowlingTeam,
       this.score,
       this.battingPair,
-      this.bowlingAttack,
+      this.bowlingSpell,
       this.battingOrder,
     );
   }

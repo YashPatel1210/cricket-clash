@@ -51,4 +51,44 @@ describe("DeliveryEvent", () => {
       false,
     );
   });
+  it("should identify wides", () => {
+    expect(new DeliveryEvent(DeliveryOutcome.WIDE, 1, false).isWide()).toBe(
+      true,
+    );
+  });
+
+  it("should identify no balls", () => {
+    expect(
+      new DeliveryEvent(DeliveryOutcome.NO_BALL, 1, false).isNoBall(),
+    ).toBe(true);
+  });
+
+  it("should identify byes", () => {
+    expect(new DeliveryEvent(DeliveryOutcome.BYE, 1, true).isBye()).toBe(true);
+  });
+
+  it("should identify leg byes", () => {
+    expect(new DeliveryEvent(DeliveryOutcome.LEG_BYE, 1, true).isLegBye()).toBe(
+      true,
+    );
+  });
+
+  it("should identify extras", () => {
+    expect(new DeliveryEvent(DeliveryOutcome.WIDE, 1, false).isExtra()).toBe(
+      true,
+    );
+  });
+
+  it("should identify dismissals", () => {
+    expect(
+      new DeliveryEvent(DeliveryOutcome.RUN_OUT, 0, true).isDismissal(),
+    ).toBe(true);
+  });
+
+  it("should distinguish wickets from dismissals", () => {
+    const runOut = new DeliveryEvent(DeliveryOutcome.RUN_OUT, 0, true);
+
+    expect(runOut.isDismissal()).toBe(true);
+    expect(runOut.isWicket()).toBe(false);
+  });
 });

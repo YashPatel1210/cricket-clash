@@ -1,10 +1,6 @@
 import { Delivery } from "../delivery";
-import { Score } from "../score";
 
 import { Innings } from "./Innings";
-import { BattingPair } from "./BattingPair";
-import { BattingOrder } from "./BattingOrder";
-import { BowlingAttack } from "./BowlingAttack";
 
 export class InningsProcessor {
   public process(innings: Innings, delivery: Delivery): Innings {
@@ -14,7 +10,7 @@ export class InningsProcessor {
 
     let battingOrder = innings.getBattingOrder();
 
-    const bowlingAttack = innings.getBowlingAttack().afterBall();
+    const bowlingSpell = innings.getBowlingSpell().afterDelivery(delivery);
 
     if (delivery.isWicket()) {
       score = score.afterWicket();
@@ -28,13 +24,10 @@ export class InningsProcessor {
       }
     }
 
-    return new Innings(
-      innings.getBattingTeam(),
-      innings.getBowlingTeam(),
-      score,
-      battingPair,
-      bowlingAttack,
-      battingOrder,
-    );
+    return innings
+      .withScore(score)
+      .withBattingPair(battingPair)
+      .withBowlingSpell(bowlingSpell)
+      .withBattingOrder(battingOrder);
   }
 }
