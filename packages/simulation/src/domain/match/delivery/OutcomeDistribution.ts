@@ -36,4 +36,21 @@ export class OutcomeDistribution {
       (weight) => weight.getOutcome() === outcome,
     );
   }
+  public withWeight(
+    outcome: DeliveryOutcome,
+    weight: number,
+  ): OutcomeDistribution {
+    const updatedWeights = this.outcomeWeights.map((current) => {
+      if (current.getOutcome() !== outcome) {
+        return current;
+      }
+
+      return new OutcomeWeight(outcome, weight);
+    });
+
+    return new OutcomeDistribution(updatedWeights);
+  }
+  public contains(outcome: DeliveryOutcome): boolean {
+    return this.getWeightFor(outcome) !== undefined;
+  }
 }
