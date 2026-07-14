@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-
   "dependencies": {
     "@cricket-clash/shared": "workspace:*"
   },
-
   "scripts": {
     "build": "tsc",
     "test": "vitest",
@@ -16,10 +14,12 @@
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit"
   },
-
   "devDependencies": {
     "@vitest/coverage-v8": "^4.1.10",
     "typescript": "5.9.2",
     "vitest": "^4.1.10"
+  },
+  "scripts": {
+    "lab": "tsx scripts/runSimulation.ts"
   }
 }

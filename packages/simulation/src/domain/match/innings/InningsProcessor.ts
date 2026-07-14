@@ -24,10 +24,20 @@ export class InningsProcessor {
       }
     }
 
-    return innings
+    let updated = innings
       .withScore(score)
       .withBattingPair(battingPair)
       .withBowlingSpell(bowlingSpell)
       .withBattingOrder(battingOrder);
+
+    if (!updated.hasStarted()) {
+      updated = updated.start();
+    }
+
+    if (updated.getScore().getWickets() === 10) {
+      updated = updated.complete();
+    }
+
+    return updated;
   }
 }

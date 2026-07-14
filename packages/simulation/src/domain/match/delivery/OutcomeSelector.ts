@@ -4,16 +4,12 @@ import { DeliveryOutcome } from "./DeliveryOutcome";
 import { OutcomeDistribution } from "./OutcomeDistribution";
 
 export class OutcomeSelector {
-  public constructor(
-    private readonly random: RandomGenerator,
-    private readonly distribution: OutcomeDistribution,
-  ) {}
+  public constructor(private readonly random: RandomGenerator) {}
 
-  public select(): DeliveryOutcome {
-    let randomWeight =
-      this.random.nextFloat() * this.distribution.getTotalWeight();
+  public select(distribution: OutcomeDistribution): DeliveryOutcome {
+    let randomWeight = this.random.nextFloat() * distribution.getTotalWeight();
 
-    for (const weight of this.distribution.getWeights()) {
+    for (const weight of distribution.getWeights()) {
       randomWeight -= weight.getWeight();
 
       if (randomWeight < 0) {

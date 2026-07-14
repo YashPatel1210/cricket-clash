@@ -53,7 +53,11 @@ export class InningsBuilder {
     this.battingTeam = team;
     return this;
   }
+  public withBowler(player: Player): InningsBuilder {
+    this.bowlingSpell = new BowlingSpell(player, 0, 0, 0);
 
+    return this;
+  }
   public withBowlingTeam(team: Team): InningsBuilder {
     this.bowlingTeam = team;
     return this;

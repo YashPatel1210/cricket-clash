@@ -8,8 +8,6 @@ import { BowlingSpell } from "./BowlingSpell";
 import { InningsState } from "./InningsState";
 
 export class Innings {
-  private state: InningsState = InningsState.NOT_STARTED;
-
   public constructor(
     private readonly battingTeam: Team,
     private readonly bowlingTeam: Team,
@@ -17,6 +15,7 @@ export class Innings {
     private readonly battingPair: BattingPair,
     private readonly bowlingSpell: BowlingSpell,
     private readonly battingOrder: BattingOrder,
+    private readonly state: InningsState = InningsState.NOT_STARTED,
   ) {
     this.validate();
   }
@@ -63,6 +62,30 @@ export class Innings {
     return this.state === InningsState.COMPLETED;
   }
 
+  public start(): Innings {
+    return new Innings(
+      this.battingTeam,
+      this.bowlingTeam,
+      this.score,
+      this.battingPair,
+      this.bowlingSpell,
+      this.battingOrder,
+      InningsState.IN_PROGRESS,
+    );
+  }
+
+  public complete(): Innings {
+    return new Innings(
+      this.battingTeam,
+      this.bowlingTeam,
+      this.score,
+      this.battingPair,
+      this.bowlingSpell,
+      this.battingOrder,
+      InningsState.COMPLETED,
+    );
+  }
+
   public withScore(score: Score): Innings {
     return new Innings(
       this.battingTeam,
@@ -71,6 +94,7 @@ export class Innings {
       this.battingPair,
       this.bowlingSpell,
       this.battingOrder,
+      this.state,
     );
   }
 
@@ -82,6 +106,7 @@ export class Innings {
       battingPair,
       this.bowlingSpell,
       this.battingOrder,
+      this.state,
     );
   }
 
@@ -93,6 +118,7 @@ export class Innings {
       this.battingPair,
       bowlingSpell,
       this.battingOrder,
+      this.state,
     );
   }
 
@@ -104,6 +130,7 @@ export class Innings {
       this.battingPair,
       this.bowlingSpell,
       battingOrder,
+      this.state,
     );
   }
 }

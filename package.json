@@ -6,10 +6,12 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "check-types": "turbo run check-types",
+    "lab": "tsx scripts/runSimulation.ts"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
+    "tsx": "^4.23.1",
     "turbo": "^2.10.4",
     "typescript": "5.9.2"
   },

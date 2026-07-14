@@ -13,7 +13,7 @@ describe("OutcomeSelector", () => {
       new OutcomeWeight(DeliveryOutcome.FOUR, 1),
     ]);
 
-    const selector = new OutcomeSelector(new RandomGenerator(42), distribution);
+    const selector = new OutcomeSelector(random);
 
     expect(selector.select()).toBe(DeliveryOutcome.FOUR);
   });
