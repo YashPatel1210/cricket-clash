@@ -7,7 +7,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "lab": "tsx scripts/runSimulation.ts"
+    "lab": "tsx scripts/runSimulation.ts",
+    "benchmark": "tsx scripts/runBenchmark.ts"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
