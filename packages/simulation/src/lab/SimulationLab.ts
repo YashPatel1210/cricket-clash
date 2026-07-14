@@ -1,8 +1,9 @@
 import { DeliveryGenerator } from "../domain/match/delivery/DeliveryGenerator";
+
 import { Innings, InningsProcessor } from "../domain/match/innings";
 
 import { SimulationReport } from "./SimulationReport";
-import { SimulationScenario } from "./SimulationScenario";
+import { SimulationScenario } from "../lab/SimulationScenario";
 
 export class SimulationLab {
   public constructor(
@@ -11,15 +12,15 @@ export class SimulationLab {
   ) {}
 
   public run(scenario: SimulationScenario): SimulationReport {
-    const report = new SimulationReport();
+    const rules = scenario.configuration.getRules();
 
-    let innings: Innings = scenario.innings;
+    const report = new SimulationReport(rules);
 
-    for (
-      let ball = 0;
-      ball < scenario.deliveries && !innings.isCompleted();
-      ball++
-    ) {
+    let innings = scenario.createInnings();
+
+    const maximumBalls = rules.getMaximumBalls();
+
+    for (let ball = 0; ball < maximumBalls && !innings.isCompleted(); ball++) {
       const delivery = this.deliveryGenerator.generate(innings);
 
       report.record(delivery);

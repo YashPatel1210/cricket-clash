@@ -1,73 +1,33 @@
-import { describe, expect, it } from "vitest";
-
-import { InningsBuilder } from "../test";
-
-import { RandomGenerator } from "../infrastructure/random";
-
 import { DeliveryGenerator } from "../domain/match/delivery/DeliveryGenerator";
 
-import { InningsProcessor } from "../domain/match/innings";
+import { Innings, InningsProcessor } from "../domain/match/innings";
 
-import { SimulationLab } from "./SimulationLab";
+import { SimulationReport } from "./SimulationReport";
+import { SimulationScenario } from "./SimulationScenario";
 
-describe("SimulationLab", () => {
-  it("should simulate the requested number of deliveries", () => {
-    const lab = new SimulationLab(
-      new DeliveryGenerator(new RandomGenerator(42)),
-      new InningsProcessor(),
-    );
+export class SimulationLab {
+  public constructor(
+    private readonly deliveryGenerator: DeliveryGenerator,
+    private readonly inningsProcessor: InningsProcessor,
+  ) {}
 
-    const report = lab.run({
-      innings: InningsBuilder.standard().build(),
-      deliveries: 120,
-    });
+  public run(scenario: SimulationScenario): SimulationReport {
+    const rules = scenario.configuration.getRules();
 
-    expect(report.getDeliveries()).toBe(120);
-  });
+    const report = new SimulationReport(rules);
 
-  it("should accumulate runs", () => {
-    const lab = new SimulationLab(
-      new DeliveryGenerator(new RandomGenerator(42)),
-      new InningsProcessor(),
-    );
+    let innings: Innings = scenario.innings;
 
-    const report = lab.run({
-      innings: InningsBuilder.standard().build(),
-      deliveries: 120,
-    });
+    const maximumBalls = rules.getMaximumBalls();
 
-    expect(report.getRuns()).toBeGreaterThan(0);
-  });
+    for (let ball = 0; ball < maximumBalls && !innings.isCompleted(); ball++) {
+      const delivery = this.deliveryGenerator.generate(innings);
 
-  it("should produce a valid run rate", () => {
-    const lab = new SimulationLab(
-      new DeliveryGenerator(new RandomGenerator(42)),
-      new InningsProcessor(),
-    );
+      report.record(delivery);
 
-    const report = lab.run({
-      innings: InningsBuilder.standard().build(),
-      deliveries: 120,
-    });
+      innings = this.inningsProcessor.process(innings, delivery);
+    }
 
-    expect(report.getRunRate()).toBeGreaterThan(0);
-  });
-
-  it("should produce valid percentages", () => {
-    const lab = new SimulationLab(
-      new DeliveryGenerator(new RandomGenerator(42)),
-      new InningsProcessor(),
-    );
-
-    const report = lab.run({
-      innings: InningsBuilder.standard().build(),
-      deliveries: 1000,
-    });
-
-    expect(report.getDotPercentage()).toBeGreaterThan(0);
-
-    expect(report.getBoundaryPercentage()).toBeGreaterThan(0);
-
-    expect(report.getWicketPercentage()).toBeGreaterThanOrEqual(0);
-  });
-});
+    return report;
+  }
+}

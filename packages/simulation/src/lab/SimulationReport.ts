@@ -1,5 +1,6 @@
-import { Delivery } from "../domain/match/delivery";
-import { DeliveryOutcome } from "../domain/match/delivery";
+import { MatchRules } from "../domain/match/configuration";
+
+import { Delivery, DeliveryOutcome } from "../domain/match/delivery";
 
 export class SimulationReport {
   private deliveries = 0;
@@ -19,6 +20,8 @@ export class SimulationReport {
   private fours = 0;
 
   private sixes = 0;
+
+  public constructor(private readonly rules: MatchRules) {}
 
   public record(delivery: Delivery): void {
     this.deliveries++;
@@ -60,6 +63,10 @@ export class SimulationReport {
     return this.deliveries;
   }
 
+  public getOvers(): number {
+    return this.deliveries / this.rules.getBallsPerOver();
+  }
+
   public getRuns(): number {
     return this.runs;
   }
@@ -93,11 +100,7 @@ export class SimulationReport {
   }
 
   public getRunsPerBall(): number {
-    if (this.deliveries === 0) {
-      return 0;
-    }
-
-    return this.runs / this.deliveries;
+    return this.deliveries === 0 ? 0 : this.runs / this.deliveries;
   }
 
   public getRunRate(): number {
@@ -105,26 +108,16 @@ export class SimulationReport {
   }
 
   public getDotPercentage(): number {
-    if (this.deliveries === 0) {
-      return 0;
-    }
-
-    return (this.dots / this.deliveries) * 100;
+    return this.deliveries === 0 ? 0 : (this.dots / this.deliveries) * 100;
   }
 
   public getBoundaryPercentage(): number {
-    if (this.deliveries === 0) {
-      return 0;
-    }
-
-    return ((this.fours + this.sixes) / this.deliveries) * 100;
+    return this.deliveries === 0
+      ? 0
+      : ((this.fours + this.sixes) / this.deliveries) * 100;
   }
 
   public getWicketPercentage(): number {
-    if (this.deliveries === 0) {
-      return 0;
-    }
-
-    return (this.wickets / this.deliveries) * 100;
+    return this.deliveries === 0 ? 0 : (this.wickets / this.deliveries) * 100;
   }
 }

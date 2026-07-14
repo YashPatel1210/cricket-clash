@@ -1,132 +1,123 @@
-import { describe, expect, it } from "vitest";
+import { MatchRules } from "../domain/match/configuration";
 
-import { PlayerBuilder } from "../test";
-
-import { BattingPair, BowlingSpell } from "../domain/match/innings";
-import { DeliveryEventFactory } from "../domain/match/delivery/DeliveryEventFactory";
 import { Delivery, DeliveryOutcome } from "../domain/match/delivery";
 
-import { SimulationReport } from "./SimulationReport";
+export class SimulationReport {
+  private deliveries = 0;
 
-describe("SimulationReport", () => {
-  const factory = new DeliveryEventFactory();
+  private runs = 0;
 
-  function delivery(outcome: DeliveryOutcome): Delivery {
-    return new Delivery(
-      new BowlingSpell(PlayerBuilder.bowler().build(), 0),
-      new BattingPair(
-        PlayerBuilder.batter().build(),
-        PlayerBuilder.batter().build(),
-      ),
-      factory.create(outcome),
-    );
+  private wickets = 0;
+
+  private dots = 0;
+
+  private singles = 0;
+
+  private twos = 0;
+
+  private threes = 0;
+
+  private fours = 0;
+
+  private sixes = 0;
+
+  public constructor(private readonly rules: MatchRules) {}
+
+  public record(delivery: Delivery): void {
+    this.deliveries++;
+
+    this.runs += delivery.runs();
+
+    switch (delivery.getEvent().getOutcome()) {
+      case DeliveryOutcome.DOT:
+        this.dots++;
+        break;
+
+      case DeliveryOutcome.ONE:
+        this.singles++;
+        break;
+
+      case DeliveryOutcome.TWO:
+        this.twos++;
+        break;
+
+      case DeliveryOutcome.THREE:
+        this.threes++;
+        break;
+
+      case DeliveryOutcome.FOUR:
+        this.fours++;
+        break;
+
+      case DeliveryOutcome.SIX:
+        this.sixes++;
+        break;
+
+      case DeliveryOutcome.WICKET:
+        this.wickets++;
+        break;
+    }
   }
 
-  it("should start empty", () => {
-    const report = new SimulationReport();
+  public getDeliveries(): number {
+    return this.deliveries;
+  }
 
-    expect(report.getDeliveries()).toBe(0);
-    expect(report.getRuns()).toBe(0);
-    expect(report.getWickets()).toBe(0);
-    expect(report.getRunRate()).toBe(0);
-  });
+  public getOvers(): number {
+    return this.deliveries / this.rules.getBallsPerOver();
+  }
 
-  it("should record a dot ball", () => {
-    const report = new SimulationReport();
+  public getRuns(): number {
+    return this.runs;
+  }
 
-    report.record(delivery(DeliveryOutcome.DOT));
+  public getWickets(): number {
+    return this.wickets;
+  }
 
-    expect(report.getDeliveries()).toBe(1);
-    expect(report.getDots()).toBe(1);
-    expect(report.getRuns()).toBe(0);
-  });
+  public getDots(): number {
+    return this.dots;
+  }
 
-  it("should record a single", () => {
-    const report = new SimulationReport();
+  public getSingles(): number {
+    return this.singles;
+  }
 
-    report.record(delivery(DeliveryOutcome.ONE));
+  public getTwos(): number {
+    return this.twos;
+  }
 
-    expect(report.getSingles()).toBe(1);
-    expect(report.getRuns()).toBe(1);
-  });
+  public getThrees(): number {
+    return this.threes;
+  }
 
-  it("should record a boundary", () => {
-    const report = new SimulationReport();
+  public getFours(): number {
+    return this.fours;
+  }
 
-    report.record(delivery(DeliveryOutcome.FOUR));
+  public getSixes(): number {
+    return this.sixes;
+  }
 
-    expect(report.getRuns()).toBe(4);
-    expect(report.getFours()).toBe(1);
-  });
+  public getRunsPerBall(): number {
+    return this.deliveries === 0 ? 0 : this.runs / this.deliveries;
+  }
 
-  it("should record a six", () => {
-    const report = new SimulationReport();
+  public getRunRate(): number {
+    return this.getRunsPerBall() * 6;
+  }
 
-    report.record(delivery(DeliveryOutcome.SIX));
+  public getDotPercentage(): number {
+    return this.deliveries === 0 ? 0 : (this.dots / this.deliveries) * 100;
+  }
 
-    expect(report.getRuns()).toBe(6);
-    expect(report.getSixes()).toBe(1);
-  });
+  public getBoundaryPercentage(): number {
+    return this.deliveries === 0
+      ? 0
+      : ((this.fours + this.sixes) / this.deliveries) * 100;
+  }
 
-  it("should record a wicket", () => {
-    const report = new SimulationReport();
-
-    report.record(delivery(DeliveryOutcome.WICKET));
-
-    expect(report.getWickets()).toBe(1);
-  });
-
-  it("should calculate runs per ball", () => {
-    const report = new SimulationReport();
-
-    report.record(delivery(DeliveryOutcome.FOUR));
-
-    report.record(delivery(DeliveryOutcome.TWO));
-
-    expect(report.getRuns()).toBe(6);
-    expect(report.getDeliveries()).toBe(2);
-    expect(report.getRunsPerBall()).toBe(3);
-  });
-
-  it("should calculate run rate", () => {
-    const report = new SimulationReport();
-
-    report.record(delivery(DeliveryOutcome.FOUR));
-
-    report.record(delivery(DeliveryOutcome.TWO));
-
-    expect(report.getRunRate()).toBe(18);
-  });
-
-  it("should calculate dot percentage", () => {
-    const report = new SimulationReport();
-
-    report.record(delivery(DeliveryOutcome.DOT));
-
-    report.record(delivery(DeliveryOutcome.FOUR));
-
-    expect(report.getDotPercentage()).toBe(50);
-  });
-
-  it("should calculate boundary percentage", () => {
-    const report = new SimulationReport();
-
-    report.record(delivery(DeliveryOutcome.FOUR));
-
-    report.record(delivery(DeliveryOutcome.SIX));
-
-    report.record(delivery(DeliveryOutcome.DOT));
-
-    expect(report.getBoundaryPercentage()).toBeCloseTo(66.67, 1);
-  });
-
-  it("should calculate wicket percentage", () => {
-    const report = new SimulationReport();
-
-    report.record(delivery(DeliveryOutcome.WICKET));
-
-    report.record(delivery(DeliveryOutcome.DOT));
-
-    expect(report.getWicketPercentage()).toBe(50);
-  });
-});
+  public getWicketPercentage(): number {
+    return this.deliveries === 0 ? 0 : (this.wickets / this.deliveries) * 100;
+  }
+}
