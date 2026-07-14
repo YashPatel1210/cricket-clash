@@ -1,4 +1,5 @@
 import type { PlayerAttributes } from "./PlayerAttributes";
+import { Player } from "./Player";
 
 export class PlayerStrength {
   private static readonly MAX_ATTRIBUTE = 99;
@@ -27,5 +28,8 @@ export class PlayerStrength {
 
   private normalize(value: number): number {
     return value / PlayerStrength.MAX_ATTRIBUTE;
+  }
+  public static of(player: Player): PlayerStrength {
+    return new PlayerStrength(player.attributes);
   }
 }
