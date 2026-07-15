@@ -1,0 +1,5 @@
+export enum InningsPhase {
+  POWERPLAY = "POWERPLAY",
+  MIDDLE_OVERS = "MIDDLE_OVERS",
+  DEATH_OVERS = "DEATH_OVERS",
+}
