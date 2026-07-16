@@ -13,9 +13,9 @@ describe("OutcomeSelector", () => {
       new OutcomeWeight(DeliveryOutcome.FOUR, 1),
     ]);
 
-    const selector = new OutcomeSelector(random);
+    const selector = new OutcomeSelector(new RandomGenerator(42));
 
-    expect(selector.select()).toBe(DeliveryOutcome.FOUR);
+    expect(selector.select(distribution)).toBe(DeliveryOutcome.FOUR);
   });
 
   it("should always return a configured outcome", () => {
@@ -24,9 +24,8 @@ describe("OutcomeSelector", () => {
       new OutcomeWeight(DeliveryOutcome.FOUR, 1),
     ]);
 
-    const selector = new OutcomeSelector(new RandomGenerator(42), distribution);
-
-    const outcome = selector.select();
+    const selector = new OutcomeSelector(new RandomGenerator(42));
+    const outcome = selector.select(distribution);
 
     expect([DeliveryOutcome.ONE, DeliveryOutcome.FOUR]).toContain(outcome);
   });
@@ -38,20 +37,15 @@ describe("OutcomeSelector", () => {
       new OutcomeWeight(DeliveryOutcome.WICKET, 1),
     ]);
 
-    const selector = new OutcomeSelector(new RandomGenerator(42), distribution);
-
+    const selector = new OutcomeSelector(new RandomGenerator(42));
     const outcomes = new Set<DeliveryOutcome>();
 
     for (let i = 0; i < 200; i++) {
-      outcomes.add(selector.select());
+      outcomes.add(selector.select(distribution));
     }
 
     expect(outcomes).toEqual(
-      new Set([
-        DeliveryOutcome.ONE,
-        DeliveryOutcome.FOUR,
-        DeliveryOutcome.WICKET,
-      ]),
+      new Set([DeliveryOutcome.ONE, DeliveryOutcome.FOUR, DeliveryOutcome.WICKET]),
     );
   });
 
@@ -61,13 +55,12 @@ describe("OutcomeSelector", () => {
       new OutcomeWeight(DeliveryOutcome.SIX, 10),
     ]);
 
-    const selector = new OutcomeSelector(new RandomGenerator(42), distribution);
-
+    const selector = new OutcomeSelector(new RandomGenerator(42));
     let dots = 0;
     let sixes = 0;
 
     for (let i = 0; i < 1000; i++) {
-      if (selector.select() === DeliveryOutcome.DOT) {
+      if (selector.select(distribution) === DeliveryOutcome.DOT) {
         dots++;
       } else {
         sixes++;

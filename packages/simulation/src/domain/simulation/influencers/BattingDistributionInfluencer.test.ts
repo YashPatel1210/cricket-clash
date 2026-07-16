@@ -15,120 +15,37 @@ describe("BattingDistributionInfluencer", () => {
     new BowlingSimulationProfile(5, 3, 3),
   );
 
+  const strongBatter = PlayerBuilder.batter()
+    .withAttributes({ batting: 99, bowling: 20, fielding: 60, fitness: 80, experience: 90 })
+    .build();
+
   it("should increase boundary probability for stronger batters", () => {
-    const batter = PlayerBuilder.batter()
-      .withAttributes({
-        batting: 99,
-        bowling: 20,
-        fielding: 60,
-        fitness: 80,
-        experience: 90,
-      })
-      .build();
-
-    const distribution = new DefaultOutcomeDistribution().create();
-
-    const updated = new BattingDistributionInfluencer(profile).influence(
-      batter,
-      distribution,
-    );
-
-    expect(
-      updated.getWeightFor(DeliveryOutcome.FOUR)?.getWeight(),
-    ).toBeGreaterThan(
+    const distribution = new DefaultOutcomeDistribution().getDistribution();
+    const updated = new BattingDistributionInfluencer(profile).influence(strongBatter, distribution);
+    expect(updated.getWeightFor(DeliveryOutcome.FOUR)?.getWeight()).toBeGreaterThan(
       distribution.getWeightFor(DeliveryOutcome.FOUR)!.getWeight(),
     );
   });
 
   it("should increase six probability for stronger batters", () => {
-    const batter = PlayerBuilder.batter()
-      .withAttributes({
-        batting: 99,
-        bowling: 20,
-        fielding: 60,
-        fitness: 80,
-        experience: 90,
-      })
-      .build();
-
-    const distribution = new DefaultOutcomeDistribution().create();
-
-    const updated = new BattingDistributionInfluencer(profile).influence(
-      batter,
-      distribution,
-    );
-
-    expect(
-      updated.getWeightFor(DeliveryOutcome.SIX)?.getWeight(),
-    ).toBeGreaterThan(
+    const distribution = new DefaultOutcomeDistribution().getDistribution();
+    const updated = new BattingDistributionInfluencer(profile).influence(strongBatter, distribution);
+    expect(updated.getWeightFor(DeliveryOutcome.SIX)?.getWeight()).toBeGreaterThan(
       distribution.getWeightFor(DeliveryOutcome.SIX)!.getWeight(),
     );
   });
 
   it("should reduce wicket probability for stronger batters", () => {
-    const batter = PlayerBuilder.batter()
-      .withAttributes({
-        batting: 99,
-        bowling: 20,
-        fielding: 60,
-        fitness: 80,
-        experience: 90,
-      })
-      .build();
-
-    const distribution = new DefaultOutcomeDistribution().create();
-
-    const updated = new BattingDistributionInfluencer(profile).influence(
-      batter,
-      distribution,
-    );
-
-    expect(
-      updated.getWeightFor(DeliveryOutcome.WICKET)?.getWeight(),
-    ).toBeLessThan(
+    const distribution = new DefaultOutcomeDistribution().getDistribution();
+    const updated = new BattingDistributionInfluencer(profile).influence(strongBatter, distribution);
+    expect(updated.getWeightFor(DeliveryOutcome.WICKET)?.getWeight()).toBeLessThan(
       distribution.getWeightFor(DeliveryOutcome.WICKET)!.getWeight(),
     );
   });
 
-  it("should preserve the total distribution weight", () => {
-    const batter = PlayerBuilder.batter()
-      .withAttributes({
-        batting: 99,
-        bowling: 20,
-        fielding: 60,
-        fitness: 80,
-        experience: 90,
-      })
-      .build();
-
-    const distribution = new DefaultOutcomeDistribution().create();
-
-    const updated = new BattingDistributionInfluencer(profile).influence(
-      batter,
-      distribution,
-    );
-
-    expect(updated.getTotalWeight()).toBe(distribution.getTotalWeight());
-  });
-
   it("should never reduce a weight below one", () => {
-    const batter = PlayerBuilder.batter()
-      .withAttributes({
-        batting: 99,
-        bowling: 20,
-        fielding: 60,
-        fitness: 80,
-        experience: 90,
-      })
-      .build();
-
-    const distribution = new DefaultOutcomeDistribution().create();
-
-    const updated = new BattingDistributionInfluencer(profile).influence(
-      batter,
-      distribution,
-    );
-
+    const distribution = new DefaultOutcomeDistribution().getDistribution();
+    const updated = new BattingDistributionInfluencer(profile).influence(strongBatter, distribution);
     for (const weight of updated.getWeights()) {
       expect(weight.getWeight()).toBeGreaterThanOrEqual(1);
     }

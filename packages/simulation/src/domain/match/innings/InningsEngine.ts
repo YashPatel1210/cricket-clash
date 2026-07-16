@@ -18,7 +18,7 @@ export class InningsEngine {
     const overs: Over[] = [];
 
     while (this.stateEvaluator.shouldContinue(currentInnings, target)) {
-      const result = this.overEngine.simulate(currentInnings);
+      const result = this.overEngine.simulate(currentInnings, target);
 
       overs.push(result.getOver());
 

@@ -1,16 +1,34 @@
 import { Player } from "../../player";
+import { Delivery } from "../delivery/Delivery";
 
+import { BowlerLedger } from "./BowlerLedger";
 import { BowlingOrder } from "./BowlingOrder";
 import { BowlingSpell } from "./BowlingSpell";
 
+/**
+ * BowlingAttack orchestrates the bowling rotation across an innings.
+ *
+ * It maintains the current BowlingSpell, the rotation order, and a
+ * BowlerLedger to enforce per-bowler over quotas.
+ */
 export class BowlingAttack {
   private constructor(
     private readonly currentSpell: BowlingSpell,
     private readonly currentOrder: BowlingOrder,
+    private readonly ledger: BowlerLedger,
+    private readonly maxBallsPerBowler: number,
   ) {}
 
-  public static create(order: BowlingOrder): BowlingAttack {
-    return new BowlingAttack(new BowlingSpell(order.current(), 0), order);
+  public static create(
+    order: BowlingOrder,
+    maxBallsPerBowler: number = 24,
+  ): BowlingAttack {
+    return new BowlingAttack(
+      new BowlingSpell(order.current(), 0),
+      order,
+      BowlerLedger.empty(),
+      maxBallsPerBowler,
+    );
   }
 
   public getCurrentSpell(): BowlingSpell {
@@ -25,11 +43,58 @@ export class BowlingAttack {
     return this.currentOrder;
   }
 
-  public afterBall(): BowlingAttack {
-    return new BowlingAttack(this.currentSpell.afterBall(), this.currentOrder);
+  public getLedger(): BowlerLedger {
+    return this.ledger;
+  }
+
+  public afterDelivery(delivery: Delivery): BowlingAttack {
+    return new BowlingAttack(
+      this.currentSpell.afterDelivery(delivery),
+      this.currentOrder,
+      this.ledger,
+      this.maxBallsPerBowler,
+    );
   }
 
   public afterOver(): BowlingAttack {
-    return BowlingAttack.create(this.currentOrder.next());
+    const currentBowler = this.currentSpell.getBowler();
+    const ballsBowledThisSpell = this.currentSpell.getBallsBowled();
+
+    // Update ledger with actual balls bowled this spell
+    const updatedLedger = this.ledger.withBalls(
+      currentBowler,
+      ballsBowledThisSpell,
+    );
+
+    // Find the next eligible bowler (skip exhausted bowlers)
+    const nextOrder = this.findNextEligibleOrder(
+      this.currentOrder.next(),
+      updatedLedger,
+    );
+
+    return new BowlingAttack(
+      new BowlingSpell(nextOrder.current(), 0),
+      nextOrder,
+      updatedLedger,
+      this.maxBallsPerBowler,
+    );
+  }
+
+  private findNextEligibleOrder(
+    startOrder: BowlingOrder,
+    ledger: BowlerLedger,
+  ): BowlingOrder {
+    const totalBowlers = startOrder.getBowlers().length;
+    let order = startOrder;
+
+    for (let i = 0; i < totalBowlers; i++) {
+      if (!ledger.hasReachedQuota(order.current(), this.maxBallsPerBowler)) {
+        return order;
+      }
+      order = order.next();
+    }
+
+    // Fallback: all bowlers exhausted (should not happen in a valid match)
+    return startOrder;
   }
 }

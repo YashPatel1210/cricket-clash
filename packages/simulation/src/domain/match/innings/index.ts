@@ -19,3 +19,4 @@ export * from "./BowlingOrder";
 export * from "./BowlingOrderSelector";
 export * from "./DefaultBowlingOrderSelector";
 export * from "./BowlingAttack";
+export * from "./BowlerLedger";;

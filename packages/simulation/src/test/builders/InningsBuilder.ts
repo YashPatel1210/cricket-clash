@@ -5,8 +5,9 @@ import { Match } from "../../domain/match";
 import {
   BattingOrder,
   BattingPair,
-  BowlingSpell,
+  BowlingAttack,
   BowlingOrder,
+  BowlingSpell,
   Innings,
 } from "../../domain/match/innings";
 
@@ -26,11 +27,9 @@ export class InningsBuilder {
     PlayerBuilder.batter().build(),
   );
 
-  private bowlingSpell = new BowlingSpell(
-    PlayerBuilder.bowler().build(),
-    0,
-    0,
-    0,
+  private bowlingAttack = BowlingAttack.create(
+    new BowlingOrder([PlayerBuilder.bowler().build()]),
+    24, // T20 default: 4 overs per bowler
   );
 
   private battingOrder = new BattingOrder([
@@ -53,11 +52,15 @@ export class InningsBuilder {
     this.battingTeam = team;
     return this;
   }
-  public withBowler(player: Player): InningsBuilder {
-    this.bowlingSpell = new BowlingSpell(player, 0, 0, 0);
 
+  public withBowler(player: Player): InningsBuilder {
+    this.bowlingAttack = BowlingAttack.create(
+      new BowlingOrder([player]),
+      24,
+    );
     return this;
   }
+
   public withBowlingTeam(team: Team): InningsBuilder {
     this.bowlingTeam = team;
     return this;
@@ -73,8 +76,12 @@ export class InningsBuilder {
     return this;
   }
 
+  /** @deprecated Use withBowler() instead. Kept for backward compatibility. */
   public withBowlingSpell(spell: BowlingSpell): InningsBuilder {
-    this.bowlingSpell = spell;
+    this.bowlingAttack = BowlingAttack.create(
+      new BowlingOrder([spell.getBowler()]),
+      24,
+    );
     return this;
   }
 
@@ -137,7 +144,7 @@ export class InningsBuilder {
       this.bowlingTeam,
       this.score,
       this.battingPair,
-      this.bowlingSpell,
+      this.bowlingAttack,
       this.battingOrder,
     );
   }

@@ -2,6 +2,7 @@ import { BattingPair } from "../innings";
 import { BowlingSpell } from "../innings";
 
 import { DeliveryEvent } from "./DeliveryEvent";
+import { DeliveryOutcome } from "./DeliveryOutcome";
 
 export class Delivery {
   public constructor(
@@ -35,6 +36,6 @@ export class Delivery {
   }
 
   public isDotBall(): boolean {
-    return this.event.getOutcome().toString() === "DOT";
+    return this.event.getOutcome() === DeliveryOutcome.DOT;
   }
 }

@@ -1,17 +1,18 @@
 import { Team } from "../team";
 
 import { MatchConditions } from "./conditions/MatchConditions";
+import { MatchConfiguration } from "./configuration/MatchConfiguration";
 import { InningsResult } from "./innings";
-import { Toss } from "./toss/Toss";
 import { MatchState } from "./MatchState";
+import { Toss } from "./toss/Toss";
 
 export class Match {
-  private state: MatchState = MatchState.NOT_STARTED;
-
   public constructor(
     private readonly teamA: Team,
     private readonly teamB: Team,
     private readonly conditions: MatchConditions,
+    private readonly configuration: MatchConfiguration,
+    private readonly state: MatchState = MatchState.NOT_STARTED,
     private readonly toss?: Toss,
     private readonly firstInnings?: InningsResult,
     private readonly secondInnings?: InningsResult,
@@ -37,6 +38,14 @@ export class Match {
     return this.conditions;
   }
 
+  public getConfiguration(): MatchConfiguration {
+    return this.configuration;
+  }
+
+  public getState(): MatchState {
+    return this.state;
+  }
+
   public getToss(): Toss | undefined {
     return this.toss;
   }
@@ -49,15 +58,52 @@ export class Match {
     return this.secondInnings;
   }
 
-  public getState(): MatchState {
-    return this.state;
-  }
-
   public hasStarted(): boolean {
     return this.state !== MatchState.NOT_STARTED;
   }
 
   public isCompleted(): boolean {
     return this.state === MatchState.COMPLETED;
+  }
+
+  // ── Immutable state transitions ──────────────────────────────────────
+
+  public withToss(toss: Toss): Match {
+    return new Match(
+      this.teamA,
+      this.teamB,
+      this.conditions,
+      this.configuration,
+      MatchState.TOSS,
+      toss,
+      this.firstInnings,
+      this.secondInnings,
+    );
+  }
+
+  public withFirstInnings(result: InningsResult): Match {
+    return new Match(
+      this.teamA,
+      this.teamB,
+      this.conditions,
+      this.configuration,
+      MatchState.INNINGS_BREAK,
+      this.toss,
+      result,
+      this.secondInnings,
+    );
+  }
+
+  public withSecondInnings(result: InningsResult): Match {
+    return new Match(
+      this.teamA,
+      this.teamB,
+      this.conditions,
+      this.configuration,
+      MatchState.COMPLETED,
+      this.toss,
+      this.firstInnings,
+      result,
+    );
   }
 }

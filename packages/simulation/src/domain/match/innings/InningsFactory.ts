@@ -15,6 +15,7 @@ export class InningsFactory {
   public constructor(
     private readonly openingPairSelector: OpeningPairSelector = new DefaultOpeningPairSelector(),
     private readonly bowlingOrderSelector: BowlingOrderSelector = new DefaultBowlingOrderSelector(),
+    private readonly maxBallsPerBowler: number = 24, // T20 default: 4 overs
   ) {}
 
   public create(order: InningsOrder): Innings {
@@ -32,7 +33,7 @@ export class InningsFactory {
       bowlingTeam,
       new Score(0, 0, 0),
       new BattingPair(openingPair[0], openingPair[1]),
-      BowlingAttack.create(bowlingOrder),
+      BowlingAttack.create(bowlingOrder, this.maxBallsPerBowler),
       battingOrder,
     );
   }

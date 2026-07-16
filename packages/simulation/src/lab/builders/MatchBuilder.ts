@@ -8,9 +8,8 @@ import {
   WeatherCondition,
 } from "../../domain/match";
 
-import { InningsResult } from "../../domain/match/innings";
-import { Toss } from "../../domain/match/toss/Toss";
-
+import { MatchConfiguration } from "../../domain/match/configuration/MatchConfiguration";
+import { T20Configuration } from "../../domain/match/configuration/T20Configuration";
 import { TeamBuilder } from "./TeamBuilder";
 
 export class MatchBuilder {
@@ -19,16 +18,12 @@ export class MatchBuilder {
   private teamB: Team = TeamBuilder.standard().build();
 
   private conditions = new MatchConditions(
-    PitchType.GREEN,
+    PitchType.FLAT,
     WeatherCondition.SUNNY,
     new Stadium("MCG"),
   );
 
-  private toss?: Toss;
-
-  private firstInnings?: InningsResult;
-
-  private secondInnings?: InningsResult;
+  private configuration: MatchConfiguration = new T20Configuration();
 
   public static standard(): MatchBuilder {
     return new MatchBuilder();
@@ -49,18 +44,8 @@ export class MatchBuilder {
     return this;
   }
 
-  public withToss(toss: Toss): MatchBuilder {
-    this.toss = toss;
-    return this;
-  }
-
-  public withFirstInnings(innings: InningsResult): MatchBuilder {
-    this.firstInnings = innings;
-    return this;
-  }
-
-  public withSecondInnings(innings: InningsResult): MatchBuilder {
-    this.secondInnings = innings;
+  public withConfiguration(configuration: MatchConfiguration): MatchBuilder {
+    this.configuration = configuration;
     return this;
   }
 
@@ -69,9 +54,7 @@ export class MatchBuilder {
       this.teamA,
       this.teamB,
       this.conditions,
-      this.toss,
-      this.firstInnings,
-      this.secondInnings,
+      this.configuration,
     );
   }
 }

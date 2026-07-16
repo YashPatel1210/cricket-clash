@@ -5,7 +5,10 @@ import { BattingPair } from "../innings/BattingPair";
 import { BowlingSpell } from "../innings/BowlingSpell";
 
 import { Delivery } from "./Delivery";
+import { DeliveryEventFactory } from "./DeliveryEventFactory";
 import { DeliveryOutcome } from "./DeliveryOutcome";
+
+const factory = new DeliveryEventFactory();
 
 describe("Delivery", () => {
   function createDelivery(outcome: DeliveryOutcome): Delivery {
@@ -15,7 +18,7 @@ describe("Delivery", () => {
         PlayerBuilder.batter().build(),
         PlayerBuilder.batter().build(),
       ),
-      outcome,
+      factory.create(outcome),
     );
   }
 
@@ -32,7 +35,7 @@ describe("Delivery", () => {
         PlayerBuilder.batter().build(),
         PlayerBuilder.batter().build(),
       ),
-      DeliveryOutcome.DOT,
+      factory.create(DeliveryOutcome.DOT),
     );
 
     expect(delivery.getBowlingSpell()).toBe(spell);
@@ -47,14 +50,14 @@ describe("Delivery", () => {
     const delivery = new Delivery(
       new BowlingSpell(PlayerBuilder.bowler().build(), 0),
       pair,
-      DeliveryOutcome.DOT,
+      factory.create(DeliveryOutcome.DOT),
     );
 
     expect(delivery.getBattingPair()).toBe(pair);
   });
 
-  it("should expose outcome", () => {
-    expect(createDelivery(DeliveryOutcome.FOUR).getOutcome()).toBe(
+  it("should expose outcome via event", () => {
+    expect(createDelivery(DeliveryOutcome.FOUR).getEvent().getOutcome()).toBe(
       DeliveryOutcome.FOUR,
     );
   });
@@ -71,21 +74,17 @@ describe("Delivery", () => {
 
   it("should identify boundaries", () => {
     expect(createDelivery(DeliveryOutcome.FOUR).isBoundary()).toBe(true);
-
     expect(createDelivery(DeliveryOutcome.SIX).isBoundary()).toBe(true);
-
     expect(createDelivery(DeliveryOutcome.ONE).isBoundary()).toBe(false);
   });
 
   it("should identify wickets", () => {
     expect(createDelivery(DeliveryOutcome.WICKET).isWicket()).toBe(true);
-
     expect(createDelivery(DeliveryOutcome.ONE).isWicket()).toBe(false);
   });
 
   it("should identify dot balls", () => {
     expect(createDelivery(DeliveryOutcome.DOT).isDotBall()).toBe(true);
-
     expect(createDelivery(DeliveryOutcome.ONE).isDotBall()).toBe(false);
   });
 });

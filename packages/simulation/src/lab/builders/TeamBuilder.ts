@@ -50,6 +50,11 @@ export class TeamBuilder {
     return this;
   }
 
+  public withPlayer(selection: TeamSelection): TeamBuilder {
+    this.selections.push(selection);
+    return this;
+  }
+
   public build(): Team {
     const team = new Team(STANDARD_T20_TEAM_RULES);
 

@@ -1,9 +1,12 @@
 import { Team } from "../../team";
 
 import { Score } from "../score";
+import { InningsStatistics } from "../statistics/InningsStatistics";
+import { Partnership } from "../context/Partnership";
 
 import { BattingOrder } from "./BattingOrder";
 import { BattingPair } from "./BattingPair";
+import { BowlingAttack } from "./BowlingAttack";
 import { BowlingSpell } from "./BowlingSpell";
 import { InningsState } from "./InningsState";
 
@@ -13,9 +16,11 @@ export class Innings {
     private readonly bowlingTeam: Team,
     private readonly score: Score,
     private readonly battingPair: BattingPair,
-    private readonly bowlingSpell: BowlingSpell,
+    private readonly bowlingAttack: BowlingAttack,
     private readonly battingOrder: BattingOrder,
     private readonly state: InningsState = InningsState.NOT_STARTED,
+    private readonly statistics: InningsStatistics = InningsStatistics.empty(),
+    private readonly partnership: Partnership = Partnership.empty(),
   ) {
     this.validate();
   }
@@ -42,8 +47,14 @@ export class Innings {
     return this.battingPair;
   }
 
+  /** Returns the current bowler's spell (current over stats only). */
   public getBowlingSpell(): BowlingSpell {
-    return this.bowlingSpell;
+    return this.bowlingAttack.getCurrentSpell();
+  }
+
+  /** Returns the full bowling attack (spell + rotation + quota ledger). */
+  public getBowlingAttack(): BowlingAttack {
+    return this.bowlingAttack;
   }
 
   public getBattingOrder(): BattingOrder {
@@ -54,6 +65,14 @@ export class Innings {
     return this.state;
   }
 
+  public getStatistics(): InningsStatistics {
+    return this.statistics;
+  }
+
+  public getPartnership(): Partnership {
+    return this.partnership;
+  }
+
   public hasStarted(): boolean {
     return this.state !== InningsState.NOT_STARTED;
   }
@@ -62,75 +81,59 @@ export class Innings {
     return this.state === InningsState.COMPLETED;
   }
 
+  // ── Immutable state transitions ──────────────────────────────────────
+
   public start(): Innings {
-    return new Innings(
-      this.battingTeam,
-      this.bowlingTeam,
-      this.score,
-      this.battingPair,
-      this.bowlingSpell,
-      this.battingOrder,
-      InningsState.IN_PROGRESS,
-    );
+    return this.with({ state: InningsState.IN_PROGRESS });
   }
 
   public complete(): Innings {
-    return new Innings(
-      this.battingTeam,
-      this.bowlingTeam,
-      this.score,
-      this.battingPair,
-      this.bowlingSpell,
-      this.battingOrder,
-      InningsState.COMPLETED,
-    );
+    return this.with({ state: InningsState.COMPLETED });
   }
 
   public withScore(score: Score): Innings {
-    return new Innings(
-      this.battingTeam,
-      this.bowlingTeam,
-      score,
-      this.battingPair,
-      this.bowlingSpell,
-      this.battingOrder,
-      this.state,
-    );
+    return this.with({ score });
   }
 
   public withBattingPair(battingPair: BattingPair): Innings {
-    return new Innings(
-      this.battingTeam,
-      this.bowlingTeam,
-      this.score,
-      battingPair,
-      this.bowlingSpell,
-      this.battingOrder,
-      this.state,
-    );
+    return this.with({ battingPair });
   }
 
-  public withBowlingSpell(bowlingSpell: BowlingSpell): Innings {
-    return new Innings(
-      this.battingTeam,
-      this.bowlingTeam,
-      this.score,
-      this.battingPair,
-      bowlingSpell,
-      this.battingOrder,
-      this.state,
-    );
+  public withBowlingAttack(bowlingAttack: BowlingAttack): Innings {
+    return this.with({ bowlingAttack });
   }
 
   public withBattingOrder(battingOrder: BattingOrder): Innings {
+    return this.with({ battingOrder });
+  }
+
+  public withStatistics(statistics: InningsStatistics): Innings {
+    return this.with({ statistics });
+  }
+
+  public withPartnership(partnership: Partnership): Innings {
+    return this.with({ partnership });
+  }
+
+  private with(overrides: {
+    score?: Score;
+    battingPair?: BattingPair;
+    bowlingAttack?: BowlingAttack;
+    battingOrder?: BattingOrder;
+    state?: InningsState;
+    statistics?: InningsStatistics;
+    partnership?: Partnership;
+  }): Innings {
     return new Innings(
       this.battingTeam,
       this.bowlingTeam,
-      this.score,
-      this.battingPair,
-      this.bowlingSpell,
-      battingOrder,
-      this.state,
+      overrides.score ?? this.score,
+      overrides.battingPair ?? this.battingPair,
+      overrides.bowlingAttack ?? this.bowlingAttack,
+      overrides.battingOrder ?? this.battingOrder,
+      overrides.state ?? this.state,
+      overrides.statistics ?? this.statistics,
+      overrides.partnership ?? this.partnership,
     );
   }
 }
