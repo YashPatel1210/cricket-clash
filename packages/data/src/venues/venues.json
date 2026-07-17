@@ -1,0 +1,148 @@
+{
+  "version": "2026-07",
+  "venues": [
+    {
+      "id": "mcg",
+      "name": "Melbourne Cricket Ground",
+      "city": "Melbourne",
+      "country": "Australia",
+      "boundarySize": "LARGE",
+      "typicalPitch": "FLAT",
+      "altitude": 40,
+      "capacity": 100024,
+      "knownFor": "World's largest cricket stadium, big boundaries, pacers love it"
+    },
+    {
+      "id": "scg",
+      "name": "Sydney Cricket Ground",
+      "city": "Sydney",
+      "country": "Australia",
+      "boundarySize": "MEDIUM",
+      "typicalPitch": "FLAT",
+      "altitude": 39,
+      "capacity": 48000,
+      "knownFor": "Historic venue, spin can be effective in later stages"
+    },
+    {
+      "id": "wankhede",
+      "name": "Wankhede Stadium",
+      "city": "Mumbai",
+      "country": "India",
+      "boundarySize": "MEDIUM",
+      "typicalPitch": "FLAT",
+      "altitude": 14,
+      "capacity": 33108,
+      "knownFor": "High-scoring ground, Mumbai sea breeze helps swing early"
+    },
+    {
+      "id": "chinnaswamy",
+      "name": "M. Chinnaswamy Stadium",
+      "city": "Bengaluru",
+      "country": "India",
+      "boundarySize": "SMALL",
+      "typicalPitch": "FLAT",
+      "altitude": 920,
+      "capacity": 40000,
+      "knownFor": "Smallest boundaries in India, altitude aids ball flight. Highest T20 scores"
+    },
+    {
+      "id": "eden-gardens",
+      "name": "Eden Gardens",
+      "city": "Kolkata",
+      "country": "India",
+      "boundarySize": "SMALL",
+      "typicalPitch": "DUSTY",
+      "altitude": 9,
+      "capacity": 66349,
+      "knownFor": "Spin-friendly from day 1, iconic atmosphere, dew factor at night"
+    },
+    {
+      "id": "narendra-modi",
+      "name": "Narendra Modi Stadium",
+      "city": "Ahmedabad",
+      "country": "India",
+      "boundarySize": "LARGE",
+      "typicalPitch": "FLAT",
+      "altitude": 53,
+      "capacity": 132000,
+      "knownFor": "World's largest stadium, dry pitch, big boundaries"
+    },
+    {
+      "id": "lords",
+      "name": "Lord's Cricket Ground",
+      "city": "London",
+      "country": "England",
+      "boundarySize": "LARGE",
+      "typicalPitch": "GREEN",
+      "altitude": 35,
+      "capacity": 30000,
+      "knownFor": "Home of cricket, famous slope, overcast = massive swing"
+    },
+    {
+      "id": "edgbaston",
+      "name": "Edgbaston",
+      "city": "Birmingham",
+      "country": "England",
+      "boundarySize": "MEDIUM",
+      "typicalPitch": "GREEN",
+      "altitude": 141,
+      "capacity": 25000,
+      "knownFor": "Boisterous crowd, swing in English conditions, seamer heaven"
+    },
+    {
+      "id": "wanderers",
+      "name": "New Wanderers Stadium",
+      "city": "Johannesburg",
+      "country": "South Africa",
+      "boundarySize": "MEDIUM",
+      "typicalPitch": "FLAT",
+      "altitude": 1753,
+      "capacity": 34000,
+      "knownFor": "Bullring — highest altitude major venue, ball travels 15% further"
+    },
+    {
+      "id": "newlands",
+      "name": "Newlands Cricket Ground",
+      "city": "Cape Town",
+      "country": "South Africa",
+      "boundarySize": "MEDIUM",
+      "typicalPitch": "GREEN",
+      "altitude": 42,
+      "capacity": 25000,
+      "knownFor": "Beautiful setting, good pace and bounce, can swing under clouds"
+    },
+    {
+      "id": "lahore-qaddafi",
+      "name": "Gaddafi Stadium",
+      "city": "Lahore",
+      "country": "Pakistan",
+      "boundarySize": "MEDIUM",
+      "typicalPitch": "FLAT",
+      "altitude": 217,
+      "capacity": 27000,
+      "knownFor": "Flat, high-scoring, spin effective in later overs"
+    },
+    {
+      "id": "eden-park",
+      "name": "Eden Park",
+      "city": "Auckland",
+      "country": "New Zealand",
+      "boundarySize": "SMALL",
+      "typicalPitch": "GREEN",
+      "altitude": 20,
+      "capacity": 50000,
+      "knownFor": "Smallest boundaries, unique oval shape, NZ fortress"
+    },
+    {
+      "id": "sharjah",
+      "name": "Sharjah Cricket Stadium",
+      "city": "Sharjah",
+      "country": "Pakistan",
+      "boundarySize": "SMALL",
+      "typicalPitch": "DUSTY",
+      "altitude": 5,
+      "capacity": 16000,
+      "knownFor": "Tiny ground, batters paradise, high scores very common"
+    }
+  ]
+}

@@ -9,15 +9,10 @@
  *   pnpm --filter @cricket-clash/simulation simulate:draft 99
  */
 
-import {
-  BattingStyle,
-  BowlingStyle,
-  Country,
-  Handedness,
-  PlayerRole,
-} from "@cricket-clash/shared";
+import { Country, PlayerRole } from "@cricket-clash/shared";
+import { PlayerLoader } from "@cricket-clash/data";
 
-import { Player } from "../src/domain/player/Player";
+import { PlayerFactory } from "../src/domain/player/PlayerFactory";
 import { PlayerPool } from "../src/domain/draft/PlayerPool";
 import { BattingPosition } from "../src/domain/draft/BattingPosition";
 import { PositionRange } from "../src/domain/draft/PositionRange";
@@ -30,112 +25,9 @@ import { DraftSessionStatus } from "../src/domain/draft/DraftSessionStatus";
 import { DEFAULT_DRAFT_CONFIG } from "../src/domain/draft/DraftSessionConfig";
 import { RandomGenerator } from "../src/infrastructure/random";
 
-// ── Player database ────────────────────────────────────────────────────────────
+// ── Player pool loaded from @cricket-clash/data ────────────────────────────────
 
-type PlayerDef = {
-  id: string; name: string; country: Country; role: PlayerRole;
-  style: BattingStyle; bowling?: BowlingStyle; bat: number; bowl: number;
-  deathHitting?: number; deathBowling?: number; againstPace?: number; againstSpin?: number;
-};
-
-function p(def: PlayerDef): Player {
-  return new Player(
-    def.id, def.name, def.country, def.role,
-    Handedness.RIGHT, def.style, def.bowling ?? null,
-    {
-      batting: def.bat, bowling: def.bowl,
-      fielding: 75, fitness: 85, experience: 70,
-      deathHitting: def.deathHitting,
-      deathBowling: def.deathBowling,
-      againstPace: def.againstPace,
-      againstSpin: def.againstSpin,
-    },
-  );
-}
-
-const DB: Player[] = [
-  // ── INDIA ────────────────────────────────────────────────────────────
-  p({ id:"ind-01", name:"Rohit Sharma",     country:Country.INDIA, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:88, bowl:10, deathHitting:82, againstPace:86 }),
-  p({ id:"ind-02", name:"Virat Kohli",      country:Country.INDIA, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:95, bowl:8,  deathHitting:85, againstPace:90, againstSpin:88 }),
-  p({ id:"ind-03", name:"Shubman Gill",     country:Country.INDIA, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:82, bowl:5,  againstPace:80 }),
-  p({ id:"ind-04", name:"Suryakumar Yadav", country:Country.INDIA, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:90, bowl:5,  deathHitting:94 }),
-  p({ id:"ind-05", name:"KL Rahul",         country:Country.INDIA, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.RIGHT_HAND, bat:84, bowl:5,  deathHitting:80 }),
-  p({ id:"ind-06", name:"Rishabh Pant",     country:Country.INDIA, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.LEFT_HAND,  bat:86, bowl:5,  deathHitting:88 }),
-  p({ id:"ind-07", name:"Hardik Pandya",    country:Country.INDIA, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_MEDIUM,  bat:80, bowl:82, deathHitting:86, deathBowling:80 }),
-  p({ id:"ind-08", name:"Ravindra Jadeja",  country:Country.INDIA, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_ORTHODOX, bat:75, bowl:85 }),
-  p({ id:"ind-09", name:"Jasprit Bumrah",   country:Country.INDIA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,    bat:18, bowl:95, deathBowling:97 }),
-  p({ id:"ind-10", name:"Mohammed Siraj",   country:Country.INDIA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,    bat:16, bowl:87, deathBowling:82 }),
-  p({ id:"ind-11", name:"Kuldeep Yadav",    country:Country.INDIA, role:PlayerRole.BOWLER,        style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_WRIST_SPIN,bat:20, bowl:85 }),
-  p({ id:"ind-12", name:"Yuzvendra Chahal", country:Country.INDIA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_LEG_SPIN, bat:15, bowl:83 }),
-  p({ id:"ind-13", name:"Arshdeep Singh",   country:Country.INDIA, role:PlayerRole.BOWLER,        style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_FAST,     bat:15, bowl:81, deathBowling:84 }),
-
-  // ── AUSTRALIA ─────────────────────────────────────────────────────────
-  p({ id:"aus-01", name:"David Warner",     country:Country.AUSTRALIA, role:PlayerRole.BATTER,        style:BattingStyle.LEFT_HAND,  bat:88, bowl:10, deathHitting:82 }),
-  p({ id:"aus-02", name:"Travis Head",      country:Country.AUSTRALIA, role:PlayerRole.BATTER,        style:BattingStyle.LEFT_HAND,  bat:85, bowl:20, deathHitting:88 }),
-  p({ id:"aus-03", name:"Steve Smith",      country:Country.AUSTRALIA, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:90, bowl:35, againstSpin:88 }),
-  p({ id:"aus-04", name:"Josh Inglis",      country:Country.AUSTRALIA, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.RIGHT_HAND, bat:78, bowl:5 }),
-  p({ id:"aus-05", name:"Matthew Wade",     country:Country.AUSTRALIA, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.LEFT_HAND,  bat:76, bowl:5,  deathHitting:78 }),
-  p({ id:"aus-06", name:"Glenn Maxwell",    country:Country.AUSTRALIA, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_OFF_SPIN, bat:85, bowl:78, deathHitting:92 }),
-  p({ id:"aus-07", name:"Mitchell Marsh",   country:Country.AUSTRALIA, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,     bat:80, bowl:75 }),
-  p({ id:"aus-08", name:"Pat Cummins",      country:Country.AUSTRALIA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,     bat:25, bowl:93, deathBowling:90 }),
-  p({ id:"aus-09", name:"Mitchell Starc",   country:Country.AUSTRALIA, role:PlayerRole.BOWLER,        style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_FAST,      bat:20, bowl:91, deathBowling:88 }),
-  p({ id:"aus-10", name:"Josh Hazlewood",   country:Country.AUSTRALIA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,     bat:15, bowl:89 }),
-  p({ id:"aus-11", name:"Adam Zampa",       country:Country.AUSTRALIA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_LEG_SPIN, bat:18, bowl:85 }),
-  p({ id:"aus-12", name:"Nathan Ellis",     country:Country.AUSTRALIA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,     bat:16, bowl:80, deathBowling:82 }),
-
-  // ── ENGLAND ───────────────────────────────────────────────────────────
-  p({ id:"eng-01", name:"Jos Buttler",      country:Country.ENGLAND, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.RIGHT_HAND, bat:88, bowl:5,  deathHitting:90 }),
-  p({ id:"eng-02", name:"Jason Roy",        country:Country.ENGLAND, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:84, bowl:5,  deathHitting:82 }),
-  p({ id:"eng-03", name:"Dawid Malan",      country:Country.ENGLAND, role:PlayerRole.BATTER,        style:BattingStyle.LEFT_HAND,  bat:83, bowl:5 }),
-  p({ id:"eng-04", name:"Ben Stokes",       country:Country.ENGLAND, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.RIGHT_ARM_FAST,    bat:84, bowl:82 }),
-  p({ id:"eng-05", name:"Liam Livingstone", country:Country.ENGLAND, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_LEG_SPIN,bat:82, bowl:75, deathHitting:90 }),
-  p({ id:"eng-06", name:"Sam Curran",       country:Country.ENGLAND, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_FAST,     bat:75, bowl:82 }),
-  p({ id:"eng-07", name:"Chris Woakes",     country:Country.ENGLAND, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_MEDIUM,  bat:28, bowl:84 }),
-  p({ id:"eng-08", name:"Jofra Archer",     country:Country.ENGLAND, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,    bat:22, bowl:91, deathBowling:89 }),
-  p({ id:"eng-09", name:"Mark Wood",        country:Country.ENGLAND, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,    bat:18, bowl:87 }),
-  p({ id:"eng-10", name:"Adil Rashid",      country:Country.ENGLAND, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_LEG_SPIN,bat:22, bowl:86 }),
-  p({ id:"eng-11", name:"Chris Jordan",     country:Country.ENGLAND, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,    bat:20, bowl:82, deathBowling:84 }),
-  p({ id:"eng-12", name:"Phil Salt",        country:Country.ENGLAND, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.RIGHT_HAND, bat:80, bowl:5 }),
-
-  // ── PAKISTAN ──────────────────────────────────────────────────────────
-  p({ id:"pak-01", name:"Babar Azam",       country:Country.PAKISTAN, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:93, bowl:5,  againstPace:88 }),
-  p({ id:"pak-02", name:"Mohammad Rizwan",  country:Country.PAKISTAN, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.RIGHT_HAND, bat:86, bowl:5,  deathHitting:80 }),
-  p({ id:"pak-03", name:"Fakhar Zaman",     country:Country.PAKISTAN, role:PlayerRole.BATTER,        style:BattingStyle.LEFT_HAND,  bat:84, bowl:5 }),
-  p({ id:"pak-04", name:"Shadab Khan",      country:Country.PAKISTAN, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_LEG_SPIN, bat:72, bowl:84 }),
-  p({ id:"pak-05", name:"Iftikhar Ahmed",   country:Country.PAKISTAN, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_OFF_SPIN, bat:78, bowl:72, deathHitting:84 }),
-  p({ id:"pak-06", name:"Wasim Jr",         country:Country.PAKISTAN, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_FAST,      bat:70, bowl:80 }),
-  p({ id:"pak-07", name:"Shaheen Afridi",   country:Country.PAKISTAN, role:PlayerRole.BOWLER,        style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_FAST,      bat:18, bowl:91, deathBowling:86 }),
-  p({ id:"pak-08", name:"Naseem Shah",      country:Country.PAKISTAN, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,     bat:16, bowl:87 }),
-  p({ id:"pak-09", name:"Haris Rauf",       country:Country.PAKISTAN, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,     bat:15, bowl:86, deathBowling:88 }),
-  p({ id:"pak-10", name:"Usman Qadir",      country:Country.PAKISTAN, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_LEG_SPIN, bat:18, bowl:82 }),
-  p({ id:"pak-11", name:"Agha Salman",      country:Country.PAKISTAN, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:78, bowl:30 }),
-
-  // ── SOUTH AFRICA ──────────────────────────────────────────────────────
-  p({ id:"sa-01",  name:"Quinton de Kock",  country:Country.SOUTH_AFRICA, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.LEFT_HAND,  bat:87, bowl:5 }),
-  p({ id:"sa-02",  name:"Temba Bavuma",     country:Country.SOUTH_AFRICA, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:80, bowl:5 }),
-  p({ id:"sa-03",  name:"Rilee Rossouw",    country:Country.SOUTH_AFRICA, role:PlayerRole.BATTER,        style:BattingStyle.LEFT_HAND,  bat:83, bowl:5,  deathHitting:86 }),
-  p({ id:"sa-04",  name:"David Miller",     country:Country.SOUTH_AFRICA, role:PlayerRole.BATTER,        style:BattingStyle.LEFT_HAND,  bat:85, bowl:5,  deathHitting:92 }),
-  p({ id:"sa-05",  name:"Aiden Markram",    country:Country.SOUTH_AFRICA, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_OFF_SPIN, bat:82, bowl:72 }),
-  p({ id:"sa-06",  name:"Dwaine Pretorius", country:Country.SOUTH_AFRICA, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_MEDIUM,   bat:72, bowl:78 }),
-  p({ id:"sa-07",  name:"Kagiso Rabada",    country:Country.SOUTH_AFRICA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,     bat:22, bowl:92, deathBowling:88 }),
-  p({ id:"sa-08",  name:"Anrich Nortje",    country:Country.SOUTH_AFRICA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,     bat:16, bowl:89 }),
-  p({ id:"sa-09",  name:"Tabraiz Shamsi",   country:Country.SOUTH_AFRICA, role:PlayerRole.BOWLER,        style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_WRIST_SPIN,bat:15, bowl:85 }),
-  p({ id:"sa-10",  name:"Lungi Ngidi",      country:Country.SOUTH_AFRICA, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,     bat:18, bowl:83 }),
-  p({ id:"sa-11",  name:"Tristan Stubbs",   country:Country.SOUTH_AFRICA, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.RIGHT_HAND, bat:78, bowl:5 }),
-
-  // ── NEW ZEALAND ────────────────────────────────────────────────────────
-  p({ id:"nz-01",  name:"Kane Williamson",  country:Country.NEW_ZEALAND, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:89, bowl:25, againstPace:85, againstSpin:88 }),
-  p({ id:"nz-02",  name:"Devon Conway",     country:Country.NEW_ZEALAND, role:PlayerRole.WICKET_KEEPER, style:BattingStyle.LEFT_HAND,  bat:84, bowl:5 }),
-  p({ id:"nz-03",  name:"Glenn Phillips",   country:Country.NEW_ZEALAND, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:82, bowl:30, deathHitting:86 }),
-  p({ id:"nz-04",  name:"Finn Allen",       country:Country.NEW_ZEALAND, role:PlayerRole.BATTER,        style:BattingStyle.RIGHT_HAND, bat:80, bowl:5,  deathHitting:84 }),
-  p({ id:"nz-05",  name:"Daryl Mitchell",   country:Country.NEW_ZEALAND, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_MEDIUM, bat:80, bowl:72, deathHitting:85 }),
-  p({ id:"nz-06",  name:"Mitchell Santner", country:Country.NEW_ZEALAND, role:PlayerRole.ALL_ROUNDER,   style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_ORTHODOX, bat:72, bowl:82 }),
-  p({ id:"nz-07",  name:"Trent Boult",      country:Country.NEW_ZEALAND, role:PlayerRole.BOWLER,        style:BattingStyle.LEFT_HAND,  bowling:BowlingStyle.LEFT_ARM_FAST,     bat:18, bowl:90 }),
-  p({ id:"nz-08",  name:"Tim Southee",      country:Country.NEW_ZEALAND, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_MEDIUM,  bat:22, bowl:85 }),
-  p({ id:"nz-09",  name:"Lockie Ferguson",  country:Country.NEW_ZEALAND, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,    bat:16, bowl:88 }),
-  p({ id:"nz-10",  name:"Ish Sodhi",        country:Country.NEW_ZEALAND, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_LEG_SPIN,bat:18, bowl:84 }),
-  p({ id:"nz-11",  name:"Adam Milne",       country:Country.NEW_ZEALAND, role:PlayerRole.BOWLER,        style:BattingStyle.RIGHT_HAND, bowling:BowlingStyle.RIGHT_ARM_FAST,    bat:14, bowl:82 }),
-];
+const DB = PlayerFactory.fromDataList(PlayerLoader.loadAll());
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 

@@ -1,0 +1,137 @@
+{
+  "$schema": "../schemas/profile.schema.json",
+  "version": "1.0.0",
+  "format": "T20",
+  "name": "t20-standard",
+  "description": "Standard T20 tuning profile. Calibrated to match real T20I statistics: ~158 avg runs, ~5.5 avg wickets, ~35% all-out rate.",
+
+  "baseWeights": {
+    "dot": 31, "one": 25, "two": 9, "three": 1,
+    "four": 13, "six": 6, "wicket": 4, "runOut": 1,
+    "wide": 5, "noBall": 2, "bye": 1, "legBye": 2
+  },
+
+  "phase": {
+    "POWERPLAY":    { "four": 3,  "six": 1, "dot": -2 },
+    "MIDDLE_OVERS": {},
+    "DEATH_OVERS":  { "six": 2, "four": 1, "wicket": 1, "dot": -1 }
+  },
+
+  "batterIntent": {
+    "DEFEND":      { "dot": 6,  "one": 2,  "wicket": -2, "four": -3, "six": -3 },
+    "ROTATE":      { "dot": -2, "one": 3,  "wicket": -1 },
+    "ATTACK":      { "four": 4, "six": 1,  "dot": -3, "wicket": 1 },
+    "ACCELERATE":  { "six": 4,  "four": 3, "dot": -4, "wicket": 2 }
+  },
+
+  "bowlerIntent": {
+    "CONTAIN":  { "dot": 3,  "four": -2, "six": -1 },
+    "ATTACK":   { "wicket": 2, "dot": 1, "four": -1 },
+    "YORKER":   { "wicket": 3, "dot": 4, "four": -3, "six": -3 },
+    "BOUNCER":  { "wicket": 1, "six": 1, "dot": 1,   "four": -1 }
+  },
+
+  "pitch": {
+    "GREEN":  { "wicket": 2,  "dot": 2,  "four": -1 },
+    "FLAT":   {},
+    "DUSTY":  { "wicket": 1,  "dot": 2,  "four": -1, "six": -1 },
+    "DRY":    { "four": 1,    "six": 1 }
+  },
+
+  "weather": {
+    "OVERCAST": { "dot": 2, "wicket": 1 },
+    "CLOUDY":   { "dot": 1, "wicket": 1 },
+    "SUNNY":    {},
+    "RAINY":    {}
+  },
+
+  "pressure": {
+    "thresholds": { "high": 0.65, "medium": 0.35, "low": 0.2 },
+    "high":   { "wicket": 3, "six": 2,  "four": 1,  "dot": -2 },
+    "medium": { "wicket": 1, "four": 1, "dot": -1 },
+    "low":    { "wicket": -1, "dot": 2, "one": 1 }
+  },
+
+  "momentum": {
+    "thresholds": { "veryHigh": 14, "high": 11, "low": 5, "veryLow": 3 },
+    "veryHigh": { "four": 3,  "six": 1,  "dot": -2, "wicket": -1 },
+    "high":     { "four": 1,  "dot": -1 },
+    "low":      { "dot": 2,   "wicket": 1, "four": -1 },
+    "veryLow":  { "dot": 4,   "wicket": 1, "four": -2, "one": -1 }
+  },
+
+  "partnership": {
+    "thresholds": { "dominant": 56, "established": 26, "fresh": 8 },
+    "dominant":    { "wicket": -2, "four": 2,  "dot": -1 },
+    "established": { "wicket": -1, "four": 1 },
+    "fresh":       { "wicket": 1 }
+  },
+
+  "battingPosition": {
+    "newBatterThreshold":    15,
+    "tailOrderThreshold":     9,
+    "lowerMiddleThreshold":   7,
+    "tailOrder":    { "wicket": 5, "dot": 4,  "four": -3, "six": -3, "one": -1 },
+    "lowerMiddle":  { "wicket": 2, "dot": 2,  "four": -1, "six": -1 }
+  },
+
+  "ballCondition": {
+    "newBallOversMax": 6,
+    "flatPhaseOversMax": 14,
+    "newBall": {
+      "pace": { "wicket": 2, "dot": 1, "four": -1 },
+      "spin": { "wicket": -1, "four": 1 }
+    },
+    "flatPhase": {
+      "pace": { "four": 1, "dot": -1 },
+      "spin": { "wicket": 1, "dot": 2, "four": -1 }
+    },
+    "oldBall": {
+      "pace": { "wicket": 1 },
+      "spin": { "wicket": 2, "dot": 2, "four": -1 }
+    }
+  },
+
+  "playerStrength": {
+    "batting": {
+      "maxDotReduction":    4,
+      "maxBoundaryIncrease": 3,
+      "maxSixIncrease":     2,
+      "maxWicketReduction": 2
+    },
+    "bowling": {
+      "maxDotIncrease":       4,
+      "maxBoundaryReduction": 2,
+      "maxWicketIncrease":    2
+    }
+  },
+
+  "wicketClustering": {
+    "recentWicketBallThreshold": 12,
+    "veryRecent": { "wicket": 2, "dot": 1 },
+    "recent":     { "wicket": 1 }
+  },
+
+  "bowlerFatigue": {
+    "thirdOverThreshold":  12,
+    "fourthOverThreshold": 18,
+    "thirdOver":  { "dot": -1, "four": 1 },
+    "fourthOver": { "dot": -2, "four": 1, "six": 1 }
+  },
+
+  "groundSize": {
+    "small":  { "six": 3,  "four": 2,  "dot": -1 },
+    "medium": {},
+    "large":  { "six": -2, "four": -1, "dot": 1 }
+  },
+
+  "calibration": {
+    "targetAvgRuns":        158,
+    "targetStdDevRuns":      30,
+    "targetAvgWickets":       5.5,
+    "targetAllOutRate":       0.35,
+    "targetDotRate":          0.33,
+    "targetBoundaryRate":     0.22,
+    "targetExtrasPerInnings": 12
+  }
+}

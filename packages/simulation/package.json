@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@cricket-clash/shared": "workspace:*"
+    "@cricket-clash/shared": "workspace:*",
+    "@cricket-clash/data": "workspace:*"
   },
   "scripts": {
     "build": "tsc",

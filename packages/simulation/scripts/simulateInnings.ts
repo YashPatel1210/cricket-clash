@@ -12,15 +12,10 @@
  *   tsx packages/simulation/scripts/simulateInnings.ts [seed]
  */
 
-import {
-  BattingStyle,
-  BowlingStyle,
-  Country,
-  Handedness,
-  PlayerRole,
-} from "@cricket-clash/shared";
+import { Country } from "@cricket-clash/shared";
+import { PlayerLoader } from "@cricket-clash/data";
 
-import { Player } from "../src/domain/player/Player";
+import { PlayerFactory } from "../src/domain/player/PlayerFactory";
 import { Team } from "../src/domain/team/Team";
 import { TeamSelection } from "../src/domain/team/TeamSelection";
 import { STANDARD_T20_TEAM_RULES } from "../src/domain/rules";
@@ -39,30 +34,8 @@ import { T20TuningProfile } from "../src/domain/simulation/config/T20TuningProfi
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function makePlayer(
-  id: string,
-  name: string,
-  role: PlayerRole,
-  batting: number,
-  bowling: number,
-): Player {
-  return new Player(
-    id,
-    name,
-    Country.INDIA,
-    role,
-    Handedness.RIGHT,
-    BattingStyle.RIGHT_HAND,
-    role === PlayerRole.BATTER || role === PlayerRole.WICKET_KEEPER
-      ? null
-      : BowlingStyle.RIGHT_ARM_FAST,
-    { batting, bowling, fielding: 75, fitness: 85, experience: 70 },
-  );
-}
-
 function buildTeam(
-  name: string,
-  players: Array<{ player: Player; position: number; isCaptain?: boolean }>,
+  players: Array<{ player: ReturnType<typeof PlayerFactory.fromData>; position: number; isCaptain?: boolean }>,
 ): Team {
   const team = new Team(STANDARD_T20_TEAM_RULES);
   for (const { player, position, isCaptain } of players) {
@@ -88,62 +61,44 @@ const OUTCOME_DISPLAY: Record<DeliveryOutcome, string> = {
   [DeliveryOutcome.RUN_OUT]:"ro",
 };
 
-// ── Team Definitions ──────────────────────────────────────────────────────────
+// ── Team Definitions ───────────────────────────────────────────────────────────
+// Players loaded from @cricket-clash/data — no hardcoded attributes here.
 
-const indiaPlayers = [
-  makePlayer("ind-1",  "Rohit Sharma",    PlayerRole.BATTER,       88, 10),
-  makePlayer("ind-2",  "Virat Kohli",     PlayerRole.BATTER,       95, 10),
-  makePlayer("ind-3",  "Shubman Gill",    PlayerRole.BATTER,       82, 10),
-  makePlayer("ind-4",  "Hardik Pandya",   PlayerRole.ALL_ROUNDER,  80, 82),
-  makePlayer("ind-5",  "Ravindra Jadeja", PlayerRole.ALL_ROUNDER,  75, 85),
-  makePlayer("ind-6",  "KL Rahul",        PlayerRole.WICKET_KEEPER,84, 10),
-  makePlayer("ind-7",  "Jasprit Bumrah",  PlayerRole.BOWLER,       18, 95),
-  makePlayer("ind-8",  "Mohammed Siraj",  PlayerRole.BOWLER,       16, 87),
-  makePlayer("ind-9",  "Kuldeep Yadav",   PlayerRole.BOWLER,       20, 85),
-  makePlayer("ind-10", "Yuzvendra Chahal",PlayerRole.BOWLER,       15, 83),
-  makePlayer("ind-11", "Arshdeep Singh",  PlayerRole.BOWLER,       15, 81),
-];
+const indiaData = PlayerLoader.loadCountry("india");
+const ausData   = PlayerLoader.loadCountry("australia");
 
-const ausPlayers = [
-  makePlayer("aus-1",  "David Warner",    PlayerRole.BATTER,       88, 10),
-  makePlayer("aus-2",  "Travis Head",     PlayerRole.BATTER,       85, 20),
-  makePlayer("aus-3",  "Steve Smith",     PlayerRole.BATTER,       90, 35),
-  makePlayer("aus-4",  "Glen Maxwell",    PlayerRole.ALL_ROUNDER,  85, 78),
-  makePlayer("aus-5",  "Mitchell Marsh",  PlayerRole.ALL_ROUNDER,  80, 75),
-  makePlayer("aus-6",  "Matthew Wade",    PlayerRole.WICKET_KEEPER,78, 10),
-  makePlayer("aus-7",  "Pat Cummins",     PlayerRole.BOWLER,       25, 93),
-  makePlayer("aus-8",  "Mitchell Starc",  PlayerRole.BOWLER,       20, 91),
-  makePlayer("aus-9",  "Josh Hazlewood",  PlayerRole.BOWLER,       15, 89),
-  makePlayer("aus-10", "Adam Zampa",      PlayerRole.BOWLER,       18, 85),
-  makePlayer("aus-11", "Nathan Ellis",    PlayerRole.BOWLER,       16, 80),
-];
+const byId = (data: ReturnType<typeof PlayerLoader.loadCountry>, id: string) => {
+  const d = data.find((p) => p.id === id);
+  if (!d) throw new Error(`Player ${id} not found`);
+  return PlayerFactory.fromData(d);
+};
 
-const india = buildTeam("India", [
-  { player: indiaPlayers[0],  position: 1, isCaptain: true },
-  { player: indiaPlayers[1],  position: 2 },
-  { player: indiaPlayers[2],  position: 3 },
-  { player: indiaPlayers[5],  position: 4 },  // KL Rahul (keeper)
-  { player: indiaPlayers[3],  position: 5 },  // Hardik
-  { player: indiaPlayers[4],  position: 6 },  // Jadeja
-  { player: indiaPlayers[6],  position: 7 },  // Bumrah
-  { player: indiaPlayers[7],  position: 8 },  // Siraj
-  { player: indiaPlayers[8],  position: 9 },  // Kuldeep
-  { player: indiaPlayers[9],  position: 10 }, // Chahal
-  { player: indiaPlayers[10], position: 11 }, // Arshdeep
+const india = buildTeam([
+  { player: byId(indiaData, "ind-rohit-sharma"),     position: 1, isCaptain: true },
+  { player: byId(indiaData, "ind-virat-kohli"),       position: 2 },
+  { player: byId(indiaData, "ind-shubman-gill"),      position: 3 },
+  { player: byId(indiaData, "ind-kl-rahul"),          position: 4 },
+  { player: byId(indiaData, "ind-suryakumar-yadav"),  position: 5 },
+  { player: byId(indiaData, "ind-hardik-pandya"),     position: 6 },
+  { player: byId(indiaData, "ind-ravindra-jadeja"),   position: 7 },
+  { player: byId(indiaData, "ind-jasprit-bumrah"),    position: 8 },
+  { player: byId(indiaData, "ind-mohammed-siraj"),    position: 9 },
+  { player: byId(indiaData, "ind-kuldeep-yadav"),     position: 10 },
+  { player: byId(indiaData, "ind-arshdeep-singh"),    position: 11 },
 ]);
 
-const australia = buildTeam("Australia", [
-  { player: ausPlayers[0],  position: 1, isCaptain: true },
-  { player: ausPlayers[1],  position: 2 },
-  { player: ausPlayers[2],  position: 3 },
-  { player: ausPlayers[5],  position: 4 },  // Wade (keeper)
-  { player: ausPlayers[3],  position: 5 },  // Maxwell
-  { player: ausPlayers[4],  position: 6 },  // Marsh
-  { player: ausPlayers[6],  position: 7 },  // Cummins
-  { player: ausPlayers[7],  position: 8 },  // Starc
-  { player: ausPlayers[8],  position: 9 },  // Hazlewood
-  { player: ausPlayers[9],  position: 10 }, // Zampa
-  { player: ausPlayers[10], position: 11 }, // Ellis
+const australia = buildTeam([
+  { player: byId(ausData, "aus-david-warner"),    position: 1, isCaptain: true },
+  { player: byId(ausData, "aus-travis-head"),      position: 2 },
+  { player: byId(ausData, "aus-steve-smith"),      position: 3 },
+  { player: byId(ausData, "aus-josh-inglis"),      position: 4 },
+  { player: byId(ausData, "aus-glenn-maxwell"),    position: 5 },
+  { player: byId(ausData, "aus-mitchell-marsh"),   position: 6 },
+  { player: byId(ausData, "aus-pat-cummins"),      position: 7 },
+  { player: byId(ausData, "aus-mitchell-starc"),   position: 8 },
+  { player: byId(ausData, "aus-josh-hazlewood"),   position: 9 },
+  { player: byId(ausData, "aus-adam-zampa"),       position: 10 },
+  { player: byId(ausData, "aus-nathan-ellis"),     position: 11 },
 ]);
 
 // ── Match ─────────────────────────────────────────────────────────────────────
