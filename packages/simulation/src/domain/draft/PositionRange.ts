@@ -24,9 +24,9 @@ export class PositionRange {
   ) {}
 
   private static readonly RANGES: Record<PlayerRole, PositionRange> = {
-    [PlayerRole.BATTER]:        new PositionRange(1, 7),
-    [PlayerRole.WICKET_KEEPER]: new PositionRange(1, 7),
-    [PlayerRole.ALL_ROUNDER]:   new PositionRange(4, 9),
+    [PlayerRole.BATTER]:        new PositionRange(1, 6),
+    [PlayerRole.WICKET_KEEPER]: new PositionRange(1, 6),
+    [PlayerRole.ALL_ROUNDER]:   new PositionRange(4, 8),
     [PlayerRole.BOWLER]:        new PositionRange(7, 11),
   };
 
