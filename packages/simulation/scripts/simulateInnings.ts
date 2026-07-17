@@ -29,11 +29,13 @@ import { MatchConditions } from "../src/domain/match/conditions/MatchConditions"
 import { PitchType } from "../src/domain/match/conditions/PitchType";
 import { WeatherCondition } from "../src/domain/match/conditions/WeatherCondition";
 import { Stadium } from "../src/domain/match/conditions/Stadium";
+import { BoundarySize } from "../src/domain/match/conditions/BoundarySize";
 import { T20Configuration } from "../src/domain/match/configuration/T20Configuration";
 import { InningsResult } from "../src/domain/match/innings/InningsResult";
 import { InningsStatistics } from "../src/domain/match/statistics/InningsStatistics";
 import { SimulationEngine } from "../src/SimulationEngine";
 import { DeliveryOutcome } from "../src/domain/match/delivery/DeliveryOutcome";
+import { T20TuningProfile } from "../src/domain/simulation/config/T20TuningProfile";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -151,14 +153,14 @@ const seed = parseInt(process.argv[2] ?? "42");
 const conditions = new MatchConditions(
   PitchType.FLAT,
   WeatherCondition.SUNNY,
-  new Stadium("Melbourne Cricket Ground"),
+  new Stadium("Melbourne Cricket Ground", BoundarySize.LARGE),
 );
 
 const match = new Match(india, australia, conditions, new T20Configuration());
 
 // ── Simulate ──────────────────────────────────────────────────────────────────
 
-const result = SimulationEngine.standard(seed).simulate(match);
+const result = SimulationEngine.standard(seed, T20TuningProfile).simulate(match);
 const scorecard = result.getScorecard();
 
 // ── Printing helpers ──────────────────────────────────────────────────────────

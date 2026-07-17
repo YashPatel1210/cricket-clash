@@ -1,92 +1,88 @@
+import { BowlingStyle } from "@cricket-clash/shared";
+
 import { OutcomeDistribution } from "../../match/delivery/OutcomeDistribution";
-import { DeliveryOutcome } from "../../match/delivery/DeliveryOutcome";
 import { Player } from "../../player";
-import { PlayerStrength } from "../../player/PlayerStrength";
+import { effectiveBatting, effectiveBowling } from "../../player/PlayerAttributes";
+import { InningsPhase } from "../../match/configuration/InningsPhase";
 
 import { ModifierContext } from "./ModifierContext";
 import { OutcomeModifier } from "./OutcomeModifier";
+import { applyAdjustments } from "./applyAdjustments";
 
 /**
- * Adjusts distribution weights based on batter and bowler strength.
+ * PlayerStrengthModifier
  *
- * Extracted from the original BattingDistributionInfluencer and
- * BowlingDistributionInfluencer into the unified modifier pipeline.
+ * Adjusts distribution based on player quality using the expanded
+ * PlayerAttributes (against-pace, against-spin, death-hitting, etc).
  *
- * A stronger batter reduces dots and wickets; increases boundaries.
- * A stronger bowler increases dots and wickets; reduces boundaries.
+ * A batting rating of 0.5 = average (no adjustment).
+ * Above 0.5 = better than average → more boundaries, fewer wickets.
+ * Below 0.5 = weaker → more wickets, fewer boundaries.
  */
 export class PlayerStrengthModifier implements OutcomeModifier {
-  // Batter tuning knobs
-  private static readonly MAX_DOT_REDUCTION = 5;
-  private static readonly MAX_BOUNDARY_INCREASE = 3;
-  private static readonly MAX_SIX_INCREASE = 3;
-  private static readonly MAX_WICKET_REDUCTION = 3;
-
-  // Bowler tuning knobs
-  private static readonly MAX_DOT_INCREASE = 5;
-  private static readonly MAX_BOUNDARY_REDUCTION = 3;
-  private static readonly MAX_WICKET_INCREASE = 3;
-
-  public modify(
-    distribution: OutcomeDistribution,
-    context: ModifierContext,
-  ): OutcomeDistribution {
-    let dist = distribution;
-    dist = this.applyBatterStrength(dist, context.striker);
-    dist = this.applyBowlerStrength(dist, context.bowler);
-    return dist;
+  public modify(dist: OutcomeDistribution, ctx: ModifierContext): OutcomeDistribution {
+    let result = dist;
+    result = this.applyBatterStrength(result, ctx);
+    result = this.applyBowlerStrength(result, ctx);
+    return result;
   }
 
   private applyBatterStrength(
-    distribution: OutcomeDistribution,
-    batter: Player,
+    dist: OutcomeDistribution,
+    ctx: ModifierContext,
   ): OutcomeDistribution {
-    const strength = PlayerStrength.of(batter).batting();
-    const modifier = strength - 0.5;
+    const phase   = ctx.matchContext.getPhase();
+    const bowler  = ctx.bowler;
+    const isPace  = this.isPace(bowler.bowlingStyle);
+    const isSpin  = this.isSpin(bowler.bowlingStyle);
 
-    const dotAdj = Math.round(modifier * PlayerStrengthModifier.MAX_DOT_REDUCTION);
-    const fourAdj = Math.round(modifier * PlayerStrengthModifier.MAX_BOUNDARY_INCREASE);
-    const sixAdj = Math.round(modifier * PlayerStrengthModifier.MAX_SIX_INCREASE);
-    const wicketAdj = Math.round(modifier * PlayerStrengthModifier.MAX_WICKET_REDUCTION);
+    const effective = effectiveBatting(ctx.striker.attributes, {
+      isPaceBowler:  isPace,
+      isSpinBowler:  isSpin,
+      isDeathOvers:  phase === InningsPhase.DEATH_OVERS,
+      isPowerplay:   phase === InningsPhase.POWERPLAY,
+    });
 
-    return this.applyBalancedAdjustments(distribution, [
-      { outcome: DeliveryOutcome.DOT, delta: -dotAdj },
-      { outcome: DeliveryOutcome.FOUR, delta: fourAdj },
-      { outcome: DeliveryOutcome.SIX, delta: sixAdj },
-      { outcome: DeliveryOutcome.WICKET, delta: -wicketAdj },
-    ]);
+    const modifier = (effective / 99) - 0.5;
+    const cfg      = ctx.config.playerStrength.batting;
+
+    return applyAdjustments(dist, {
+      dot:    -Math.round(modifier * cfg.maxDotReduction),
+      four:    Math.round(modifier * cfg.maxBoundaryIncrease),
+      six:     Math.round(modifier * cfg.maxSixIncrease),
+      wicket: -Math.round(modifier * cfg.maxWicketReduction),
+    });
   }
 
   private applyBowlerStrength(
-    distribution: OutcomeDistribution,
-    bowler: Player,
+    dist: OutcomeDistribution,
+    ctx: ModifierContext,
   ): OutcomeDistribution {
-    const strength = PlayerStrength.of(bowler).bowling();
-    const modifier = strength - 0.5;
+    const phase    = ctx.matchContext.getPhase();
+    const isNewBall = phase === InningsPhase.POWERPLAY;
 
-    const dotAdj = Math.round(modifier * PlayerStrengthModifier.MAX_DOT_INCREASE);
-    const fourAdj = Math.round(modifier * PlayerStrengthModifier.MAX_BOUNDARY_REDUCTION);
-    const wicketAdj = Math.round(modifier * PlayerStrengthModifier.MAX_WICKET_INCREASE);
+    const effective = effectiveBowling(ctx.bowler.attributes, {
+      isDeathOvers: phase === InningsPhase.DEATH_OVERS,
+      isPowerplay:  isNewBall,
+    });
 
-    return this.applyBalancedAdjustments(distribution, [
-      { outcome: DeliveryOutcome.DOT, delta: dotAdj },
-      { outcome: DeliveryOutcome.FOUR, delta: -fourAdj },
-      { outcome: DeliveryOutcome.WICKET, delta: wicketAdj },
-    ]);
+    const modifier = (effective / 99) - 0.5;
+    const cfg      = ctx.config.playerStrength.bowling;
+
+    return applyAdjustments(dist, {
+      dot:    Math.round(modifier * cfg.maxDotIncrease),
+      four:  -Math.round(modifier * cfg.maxBoundaryReduction),
+      wicket: Math.round(modifier * cfg.maxWicketIncrease),
+    });
   }
 
-  private applyBalancedAdjustments(
-    distribution: OutcomeDistribution,
-    adjustments: { outcome: DeliveryOutcome; delta: number }[],
-  ): OutcomeDistribution {
-    let result = distribution;
+  private isPace(s: BowlingStyle | null): boolean {
+    return s === BowlingStyle.RIGHT_ARM_FAST || s === BowlingStyle.LEFT_ARM_FAST ||
+           s === BowlingStyle.RIGHT_ARM_MEDIUM || s === BowlingStyle.LEFT_ARM_MEDIUM;
+  }
 
-    for (const { outcome, delta } of adjustments) {
-      const current = result.getWeightFor(outcome)?.getWeight() ?? 0;
-      const updated = Math.max(1, current + delta);
-      result = result.withWeight(outcome, updated);
-    }
-
-    return result;
+  private isSpin(s: BowlingStyle | null): boolean {
+    return s === BowlingStyle.RIGHT_ARM_OFF_SPIN  || s === BowlingStyle.LEFT_ARM_ORTHODOX ||
+           s === BowlingStyle.RIGHT_ARM_LEG_SPIN   || s === BowlingStyle.LEFT_ARM_WRIST_SPIN;
   }
 }

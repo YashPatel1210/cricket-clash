@@ -23,6 +23,12 @@ export class Innings {
     private readonly partnership: Partnership = Partnership.empty(),
     /** Runs scored in the last completed over. Updated by OverEngine. */
     private readonly lastOverRuns: number = 0,
+    /**
+     * Legal balls since the last wicket fell.
+     * 0 = wicket just fell, 999 = no wicket yet this innings.
+     * Used for wicket-clustering modifier.
+     */
+    private readonly ballsSinceLastWicket: number = 999,
   ) {
     this.validate();
   }
@@ -50,6 +56,7 @@ export class Innings {
   public getStatistics(): InningsStatistics { return this.statistics; }
   public getPartnership(): Partnership { return this.partnership; }
   public getLastOverRuns(): number { return this.lastOverRuns; }
+  public getBallsSinceLastWicket(): number { return this.ballsSinceLastWicket; }
 
   public hasStarted(): boolean { return this.state !== InningsState.NOT_STARTED; }
   public isCompleted(): boolean { return this.state === InningsState.COMPLETED; }
@@ -65,6 +72,7 @@ export class Innings {
   public withStatistics(statistics: InningsStatistics): Innings { return this.with({ statistics }); }
   public withPartnership(partnership: Partnership): Innings { return this.with({ partnership }); }
   public withLastOverRuns(lastOverRuns: number): Innings { return this.with({ lastOverRuns }); }
+  public withBallsSinceLastWicket(ballsSinceLastWicket: number): Innings { return this.with({ ballsSinceLastWicket }); }
 
   private with(overrides: {
     score?: Score;
@@ -75,6 +83,7 @@ export class Innings {
     statistics?: InningsStatistics;
     partnership?: Partnership;
     lastOverRuns?: number;
+    ballsSinceLastWicket?: number;
   }): Innings {
     return new Innings(
       this.battingTeam,
@@ -87,6 +96,7 @@ export class Innings {
       overrides.statistics     ?? this.statistics,
       overrides.partnership    ?? this.partnership,
       overrides.lastOverRuns   ?? this.lastOverRuns,
+      overrides.ballsSinceLastWicket ?? this.ballsSinceLastWicket,
     );
   }
 }

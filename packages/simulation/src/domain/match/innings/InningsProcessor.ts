@@ -111,6 +111,13 @@ export class InningsProcessor {
       partnership = partnership.reset();
     }
 
+    // ── Wicket clustering tracker ──────────────────────────────────────
+    // Increment counter each legal delivery; reset to 0 on dismissal.
+    let ballsSinceLastWicket = innings.getBallsSinceLastWicket();
+    if (event.isLegal() && !isDismissal) {
+      ballsSinceLastWicket = Math.min(ballsSinceLastWicket + 1, 999);
+    }
+
     // ── Assemble updated innings ───────────────────────────────────────
     let updated = innings
       .withScore(score)
@@ -118,7 +125,8 @@ export class InningsProcessor {
       .withBowlingAttack(bowlingAttack)
       .withBattingOrder(battingOrder)
       .withStatistics(statistics)
-      .withPartnership(partnership);
+      .withPartnership(partnership)
+      .withBallsSinceLastWicket(isDismissal ? 0 : ballsSinceLastWicket);
 
     if (!updated.hasStarted()) updated = updated.start();
 

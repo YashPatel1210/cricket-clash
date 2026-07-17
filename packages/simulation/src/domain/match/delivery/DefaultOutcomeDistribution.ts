@@ -1,41 +1,35 @@
 import { DeliveryOutcome } from "./DeliveryOutcome";
 import { OutcomeDistribution } from "./OutcomeDistribution";
 import { OutcomeWeight } from "./OutcomeWeight";
+import { SimulationConfig } from "../../simulation/config/SimulationConfig";
+import { T20TuningProfile } from "../../simulation/config/T20TuningProfile";
 
 /**
- * Default T20 outcome distribution including all legal extras.
+ * Builds the base outcome distribution from SimulationConfig.baseWeights.
  *
- * Total weight = 100.
- *
- * Extras rates reflect real T20 cricket:
- *   Wide:    ~3–5 per innings  → weight 5
- *   No-ball: ~1–2 per innings  → weight 2
- *   Bye:     ~1 per innings    → weight 1
- *   Leg-bye: ~2–3 per innings  → weight 2
- *   Run-out: ~0–1 per innings  → weight 1
- *
- * All probability modifiers (phase, intent, conditions, pressure, etc.)
- * operate on top of these base weights.
+ * This means base probabilities are tunable without code changes:
+ * load a different profile and the entire simulation recalibrates.
  */
 export class DefaultOutcomeDistribution {
-  private readonly distribution = new OutcomeDistribution([
-    // ── Batting outcomes ──────────────────────────────────────────
-    new OutcomeWeight(DeliveryOutcome.DOT,    28),
-    new OutcomeWeight(DeliveryOutcome.ONE,    25),
-    new OutcomeWeight(DeliveryOutcome.TWO,     9),
-    new OutcomeWeight(DeliveryOutcome.THREE,   1),
-    new OutcomeWeight(DeliveryOutcome.FOUR,   14),
-    new OutcomeWeight(DeliveryOutcome.SIX,     6),
-    new OutcomeWeight(DeliveryOutcome.WICKET,  6),
-    // ── Dismissal ─────────────────────────────────────────────────
-    new OutcomeWeight(DeliveryOutcome.RUN_OUT, 1),
-    // ── Extras ───────────────────────────────────────────────────
-    new OutcomeWeight(DeliveryOutcome.WIDE,    5),
-    new OutcomeWeight(DeliveryOutcome.NO_BALL, 2),
-    new OutcomeWeight(DeliveryOutcome.BYE,     1),
-    new OutcomeWeight(DeliveryOutcome.LEG_BYE, 2),
-    // Total: 100
-  ]);
+  private readonly distribution: OutcomeDistribution;
+
+  public constructor(config: SimulationConfig = T20TuningProfile) {
+    const w = config.baseWeights;
+    this.distribution = new OutcomeDistribution([
+      new OutcomeWeight(DeliveryOutcome.DOT,    w.dot),
+      new OutcomeWeight(DeliveryOutcome.ONE,    w.one),
+      new OutcomeWeight(DeliveryOutcome.TWO,    w.two),
+      new OutcomeWeight(DeliveryOutcome.THREE,  w.three),
+      new OutcomeWeight(DeliveryOutcome.FOUR,   w.four),
+      new OutcomeWeight(DeliveryOutcome.SIX,    w.six),
+      new OutcomeWeight(DeliveryOutcome.WICKET, w.wicket),
+      new OutcomeWeight(DeliveryOutcome.RUN_OUT,w.runOut),
+      new OutcomeWeight(DeliveryOutcome.WIDE,   w.wide),
+      new OutcomeWeight(DeliveryOutcome.NO_BALL,w.noBall),
+      new OutcomeWeight(DeliveryOutcome.BYE,    w.bye),
+      new OutcomeWeight(DeliveryOutcome.LEG_BYE,w.legBye),
+    ]);
+  }
 
   public getDistribution(): OutcomeDistribution {
     return this.distribution;
