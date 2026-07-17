@@ -21,6 +21,8 @@ export class Innings {
     private readonly state: InningsState = InningsState.NOT_STARTED,
     private readonly statistics: InningsStatistics = InningsStatistics.empty(),
     private readonly partnership: Partnership = Partnership.empty(),
+    /** Runs scored in the last completed over. Updated by OverEngine. */
+    private readonly lastOverRuns: number = 0,
   ) {
     this.validate();
   }
@@ -31,21 +33,10 @@ export class Innings {
     }
   }
 
-  public getBattingTeam(): Team {
-    return this.battingTeam;
-  }
-
-  public getBowlingTeam(): Team {
-    return this.bowlingTeam;
-  }
-
-  public getScore(): Score {
-    return this.score;
-  }
-
-  public getBattingPair(): BattingPair {
-    return this.battingPair;
-  }
+  public getBattingTeam(): Team { return this.battingTeam; }
+  public getBowlingTeam(): Team { return this.bowlingTeam; }
+  public getScore(): Score { return this.score; }
+  public getBattingPair(): BattingPair { return this.battingPair; }
 
   /** Returns the current bowler's spell (current over stats only). */
   public getBowlingSpell(): BowlingSpell {
@@ -53,67 +44,27 @@ export class Innings {
   }
 
   /** Returns the full bowling attack (spell + rotation + quota ledger). */
-  public getBowlingAttack(): BowlingAttack {
-    return this.bowlingAttack;
-  }
+  public getBowlingAttack(): BowlingAttack { return this.bowlingAttack; }
+  public getBattingOrder(): BattingOrder { return this.battingOrder; }
+  public getState(): InningsState { return this.state; }
+  public getStatistics(): InningsStatistics { return this.statistics; }
+  public getPartnership(): Partnership { return this.partnership; }
+  public getLastOverRuns(): number { return this.lastOverRuns; }
 
-  public getBattingOrder(): BattingOrder {
-    return this.battingOrder;
-  }
-
-  public getState(): InningsState {
-    return this.state;
-  }
-
-  public getStatistics(): InningsStatistics {
-    return this.statistics;
-  }
-
-  public getPartnership(): Partnership {
-    return this.partnership;
-  }
-
-  public hasStarted(): boolean {
-    return this.state !== InningsState.NOT_STARTED;
-  }
-
-  public isCompleted(): boolean {
-    return this.state === InningsState.COMPLETED;
-  }
+  public hasStarted(): boolean { return this.state !== InningsState.NOT_STARTED; }
+  public isCompleted(): boolean { return this.state === InningsState.COMPLETED; }
 
   // ── Immutable state transitions ──────────────────────────────────────
 
-  public start(): Innings {
-    return this.with({ state: InningsState.IN_PROGRESS });
-  }
-
-  public complete(): Innings {
-    return this.with({ state: InningsState.COMPLETED });
-  }
-
-  public withScore(score: Score): Innings {
-    return this.with({ score });
-  }
-
-  public withBattingPair(battingPair: BattingPair): Innings {
-    return this.with({ battingPair });
-  }
-
-  public withBowlingAttack(bowlingAttack: BowlingAttack): Innings {
-    return this.with({ bowlingAttack });
-  }
-
-  public withBattingOrder(battingOrder: BattingOrder): Innings {
-    return this.with({ battingOrder });
-  }
-
-  public withStatistics(statistics: InningsStatistics): Innings {
-    return this.with({ statistics });
-  }
-
-  public withPartnership(partnership: Partnership): Innings {
-    return this.with({ partnership });
-  }
+  public start(): Innings { return this.with({ state: InningsState.IN_PROGRESS }); }
+  public complete(): Innings { return this.with({ state: InningsState.COMPLETED }); }
+  public withScore(score: Score): Innings { return this.with({ score }); }
+  public withBattingPair(battingPair: BattingPair): Innings { return this.with({ battingPair }); }
+  public withBowlingAttack(bowlingAttack: BowlingAttack): Innings { return this.with({ bowlingAttack }); }
+  public withBattingOrder(battingOrder: BattingOrder): Innings { return this.with({ battingOrder }); }
+  public withStatistics(statistics: InningsStatistics): Innings { return this.with({ statistics }); }
+  public withPartnership(partnership: Partnership): Innings { return this.with({ partnership }); }
+  public withLastOverRuns(lastOverRuns: number): Innings { return this.with({ lastOverRuns }); }
 
   private with(overrides: {
     score?: Score;
@@ -123,17 +74,19 @@ export class Innings {
     state?: InningsState;
     statistics?: InningsStatistics;
     partnership?: Partnership;
+    lastOverRuns?: number;
   }): Innings {
     return new Innings(
       this.battingTeam,
       this.bowlingTeam,
-      overrides.score ?? this.score,
-      overrides.battingPair ?? this.battingPair,
-      overrides.bowlingAttack ?? this.bowlingAttack,
-      overrides.battingOrder ?? this.battingOrder,
-      overrides.state ?? this.state,
-      overrides.statistics ?? this.statistics,
-      overrides.partnership ?? this.partnership,
+      overrides.score          ?? this.score,
+      overrides.battingPair    ?? this.battingPair,
+      overrides.bowlingAttack  ?? this.bowlingAttack,
+      overrides.battingOrder   ?? this.battingOrder,
+      overrides.state          ?? this.state,
+      overrides.statistics     ?? this.statistics,
+      overrides.partnership    ?? this.partnership,
+      overrides.lastOverRuns   ?? this.lastOverRuns,
     );
   }
 }

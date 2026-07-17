@@ -28,11 +28,15 @@ export class OverEngine {
       over = over.afterDelivery(delivery);
     }
 
-    // After a completed over:
-    // 1. Rotate strike (non-striker becomes striker)
-    // 2. Rotate bowling attack (next eligible bowler takes over)
+    // After a completed over apply end-of-over transitions:
+    //  1. Record runs scored in this over for momentum tracking
+    //  2. Rotate strike (non-striker becomes striker)
+    //  3. Rotate bowling attack (next eligible bowler)
     if (over.isCompleted()) {
+      const overRuns = over.getDeliveries().reduce((sum, d) => sum + d.runs(), 0);
+
       currentInnings = currentInnings
+        .withLastOverRuns(overRuns)
         .withBattingPair(currentInnings.getBattingPair().swapStrike())
         .withBowlingAttack(currentInnings.getBowlingAttack().afterOver());
     }
