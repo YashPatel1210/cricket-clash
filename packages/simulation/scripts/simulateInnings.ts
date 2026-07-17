@@ -192,7 +192,7 @@ function printBallByBall(inningsResult: InningsResult, inningsNo: number): void 
     const deliveries   = over.getDeliveries();
     const overBalls    = deliveries.map(d => OUTCOME_DISPLAY[d.getEvent().getOutcome()]);
     const overRuns     = deliveries.reduce((s, d) => s + d.runs(), 0);
-    const overWickets  = deliveries.filter(d => d.isWicket()).length;
+    const overWickets  = deliveries.filter(d => d.getEvent().isDismissal()).length;
 
     runningRuns    += overRuns;
     runningWickets += overWickets;
@@ -208,41 +208,52 @@ function printBallByBall(inningsResult: InningsResult, inningsNo: number): void 
   console.log(`  Final Score: ${score.getRuns()}/${score.getWickets()} (${score.getOvers()} overs)`);
 }
 
-function printBattingCard(stats: InningsStatistics): void {
+function printBattingCard(stats: InningsStatistics, score: ReturnType<typeof result.getFirstInnings>["getInnings"]): void {
   console.log();
-  console.log(`  ${"BATTER".padEnd(22)} ${"R".padStart(4)} ${"B".padStart(4)} ${"4s".padStart(3)} ${"6s".padStart(3)} ${"SR".padStart(6)}`);
-  console.log(`  ${line("-", 46)}`);
+  console.log(`  ${"BATTER".padEnd(24)} ${"DISMISSAL".padEnd(28)} ${"R".padStart(4)} ${"B".padStart(4)} ${"4s".padStart(3)} ${"6s".padStart(3)} ${"SR".padStart(6)}`);
+  console.log(`  ${line("-", 76)}`);
 
   const records = stats.getAllBatterRecords()
     .filter(r => r.getBalls() > 0 || r.isOut());
 
   for (const r of records) {
-    const name    = r.getBatter().name.padEnd(22).slice(0, 22);
-    const status  = r.isOut() ? " out" : " not out";
-    const runs    = colR(r.getRuns(), 4);
-    const balls   = colR(r.getBalls(), 4);
-    const fours   = colR(r.getFours(), 3);
-    const sixes   = colR(r.getSixes(), 3);
-    const sr      = colR(r.getStrikeRate().toFixed(1), 6);
-    console.log(`  ${name} ${runs} ${balls} ${fours} ${sixes} ${sr}${status}`);
+    const name       = r.getBatter().name.padEnd(24).slice(0, 24);
+    const dismissal  = r.getDismissalDisplay().padEnd(28).slice(0, 28);
+    const runs       = colR(r.getRuns(), 4);
+    const balls      = colR(r.getBalls(), 4);
+    const fours      = colR(r.getFours(), 3);
+    const sixes      = colR(r.getSixes(), 3);
+    const sr         = colR(r.getStrikeRate().toFixed(1), 6);
+    console.log(`  ${name} ${dismissal} ${runs} ${balls} ${fours} ${sixes} ${sr}`);
   }
+
+  // Extras + total
+  const extras = stats.getExtras();
+  const total  = score.getScore();
+  console.log();
+  if (extras.getTotal() > 0) {
+    console.log(`  ${"Extras".padEnd(24)} (${extras.toDisplay()})${"".padEnd(18)} ${colR(extras.getTotal(), 4)}`);
+  }
+  console.log(`  ${"TOTAL".padEnd(24)} ${total.getWickets()} wkts  (${total.getOvers()} ov)        ${colR(total.getRuns(), 4)}`);
 }
 
 function printBowlingCard(stats: InningsStatistics): void {
   console.log();
-  console.log(`  ${"BOWLER".padEnd(22)} ${"O".padStart(5)} ${"R".padStart(4)} ${"W".padStart(3)} ${"ECO".padStart(6)}`);
-  console.log(`  ${line("-", 44)}`);
+  console.log(`  ${"BOWLER".padEnd(24)} ${"O".padStart(5)} ${"R".padStart(4)} ${"W".padStart(3)} ${"WD".padStart(4)} ${"NB".padStart(4)} ${"ECO".padStart(6)}`);
+  console.log(`  ${line("-", 55)}`);
 
   const records = stats.getAllBowlerRecords()
-    .filter(r => r.getBalls() > 0);
+    .filter(r => r.getBalls() > 0 || r.getWides() > 0 || r.getNoBalls() > 0);
 
   for (const r of records) {
-    const name   = r.getBowler().name.padEnd(22).slice(0, 22);
+    const name   = r.getBowler().name.padEnd(24).slice(0, 24);
     const overs  = colR(r.getOvers(), 5);
     const runs   = colR(r.getRuns(), 4);
     const wkts   = colR(r.getWickets(), 3);
+    const wd     = colR(r.getWides(), 4);
+    const nb     = colR(r.getNoBalls(), 4);
     const eco    = colR(r.getEconomy().toFixed(2), 6);
-    console.log(`  ${name} ${overs} ${runs} ${wkts} ${eco}`);
+    console.log(`  ${name} ${overs} ${runs} ${wkts} ${wd} ${nb} ${eco}`);
   }
 }
 
@@ -254,7 +265,7 @@ function printScorecard(
   console.log(`\n${line("═")}`);
   console.log(`  ${title} — SCORECARD`);
   console.log(line("═"));
-  printBattingCard(stats);
+  printBattingCard(stats, inningsResult.getInnings());
   console.log();
   printBowlingCard(stats);
 }

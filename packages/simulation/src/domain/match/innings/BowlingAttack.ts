@@ -58,13 +58,10 @@ export class BowlingAttack {
 
   public afterOver(): BowlingAttack {
     const currentBowler = this.currentSpell.getBowler();
-    const ballsBowledThisSpell = this.currentSpell.getBallsBowled();
 
-    // Update ledger with actual balls bowled this spell
-    const updatedLedger = this.ledger.withBalls(
-      currentBowler,
-      ballsBowledThisSpell,
-    );
+    // A completed over = exactly 6 legal deliveries.
+    // Use 6 for quota tracking regardless of wides/no-balls bowled.
+    const updatedLedger = this.ledger.withBalls(currentBowler, 6);
 
     // Find the next eligible bowler (skip exhausted bowlers)
     const nextOrder = this.findNextEligibleOrder(

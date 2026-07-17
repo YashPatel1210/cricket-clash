@@ -24,9 +24,12 @@ export class SimulationReport {
   public constructor(private readonly rules: MatchRules) {}
 
   public record(delivery: Delivery): void {
-    this.deliveries++;
-
     this.runs += delivery.runs();
+
+    // Only count legal deliveries toward overs/balls
+    if (delivery.getEvent().isLegal()) {
+      this.deliveries++;
+    }
 
     switch (delivery.getEvent().getOutcome()) {
       case DeliveryOutcome.DOT:
@@ -54,6 +57,7 @@ export class SimulationReport {
         break;
 
       case DeliveryOutcome.WICKET:
+      case DeliveryOutcome.RUN_OUT:
         this.wickets++;
         break;
     }
