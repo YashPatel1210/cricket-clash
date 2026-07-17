@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit",
     "benchmark": "tsx scripts/runBenchmark.ts",
     "simulate": "tsx scripts/simulateInnings.ts",
-    "simulate:draft": "tsx scripts/simulateDraft.ts"
+    "simulate:draft": "tsx scripts/simulateDraft.ts",
+    "draft": "tsx scripts/interactiveDraft.ts"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^4.1.10",
