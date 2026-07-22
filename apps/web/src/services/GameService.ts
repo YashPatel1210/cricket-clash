@@ -5,7 +5,7 @@
  * Owns the lifecycle of a game session: draft → match simulation → result.
  */
 
-import { Country, PlayerRole } from "@cricket-clash/shared";
+import { Country } from "@cricket-clash/shared";
 import type { PlayerData } from "@cricket-clash/data";
 
 import { PlayerFactory }      from "@cricket-clash/simulation/domain/player/PlayerFactory";
@@ -82,14 +82,15 @@ export function simulateMatchFromDraft(
 // ── Squad → Team conversion ────────────────────────────────────────────────────
 
 function squadToTeam(participant: DraftParticipant): Team {
-  // Permissive rules for simulation — draft already validated composition
+  // Permissive rules — draft already validated composition.
+  // Use literal string keys (not enum refs) to avoid ESM init issues.
   const permissiveRules = {
     maxPlayers: 11,
     roleLimits: {
-      [PlayerRole.BATTER]:        { min: 0, max: 11 },
-      [PlayerRole.BOWLER]:        { min: 0, max: 11 },
-      [PlayerRole.ALL_ROUNDER]:   { min: 0, max: 11 },
-      [PlayerRole.WICKET_KEEPER]: { min: 0, max: 11 },
+      "BATTER":        { min: 0, max: 11 },
+      "BOWLER":        { min: 0, max: 11 },
+      "ALL_ROUNDER":   { min: 0, max: 11 },
+      "WICKET_KEEPER": { min: 0, max: 11 },
     },
   };
 

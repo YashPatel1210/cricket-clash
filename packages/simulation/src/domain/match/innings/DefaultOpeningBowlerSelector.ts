@@ -1,5 +1,3 @@
-import { PlayerRole } from "@cricket-clash/shared";
-
 import { Player } from "../../player";
 import { Team } from "../../team";
 
@@ -7,12 +5,13 @@ import { OpeningBowlerSelector } from "./OpeningBowlerSelector";
 
 export class DefaultOpeningBowlerSelector implements OpeningBowlerSelector {
   public select(team: Team): Player {
+    // Use literal strings — avoids ESM static init issues with PlayerRole enum
     const bowler = team
       .getPlayers()
       .find(
         (player) =>
-          player.role === PlayerRole.BOWLER ||
-          player.role === PlayerRole.ALL_ROUNDER,
+          (player.role as string) === "BOWLER" ||
+          (player.role as string) === "ALL_ROUNDER",
       );
 
     if (!bowler) {
