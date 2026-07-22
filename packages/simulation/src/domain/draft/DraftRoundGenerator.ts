@@ -91,22 +91,35 @@ export class DraftRoundGenerator {
     const selected: Player[] = [];
     const usedIds = new Set<string>();
 
-    const pickRole = (role: PlayerRole, count: number): void => {
+    const pickRole = (roleStr: string, count: number): void => {
       let picked = 0;
       for (const player of shuffled) {
         if (picked >= count) break;
         if (usedIds.has(player.id)) continue;
-        if (player.role === role) {
+        if ((player.role as string) === roleStr) {
           selected.push(player);
           usedIds.add(player.id);
           picked++;
         }
       }
-
-      // If not enough of this exact role, pick any remaining (flexible fallback)
+      // Fallback if not enough of this exact role
       if (picked < count) {
         for (const player of shuffled) {
           if (picked >= count) break;
+          if (!usedIds.has(player.id)) {
+            selected.push(player);
+            usedIds.add(player.id);
+            picked++;
+          }
+        }
+      }
+    };
+
+    // Fill in role order — use literal strings (not enum refs) to avoid ESM init issues
+    pickRole("WICKET_KEEPER", composition.wicketKeepers);
+    pickRole("BATTER",        composition.batters);
+    pickRole("ALL_ROUNDER",   composition.allRounders);
+    pickRole("BOWLER",        composition.bowlers);
           if (!usedIds.has(player.id)) {
             selected.push(player);
             usedIds.add(player.id);
