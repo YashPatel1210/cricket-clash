@@ -103,7 +103,8 @@ function squadToTeam(participant: DraftParticipant): Team {
     (best.player.attributes.batting + best.player.attributes.bowling) ? p : best
   );
 
-  const keeper = picks.find((p) => p.player.role === PlayerRole.WICKET_KEEPER);
+  // Use literal string — avoids ESM init issues with PlayerRole enum
+  const keeper = picks.find((p) => (p.player.role as string) === "WICKET_KEEPER");
 
   for (const { position, player } of picks) {
     team.addSelection(new TeamSelection(
