@@ -5,17 +5,8 @@ import { BattingPosition } from "./BattingPosition";
 /**
  * PositionRange defines the valid batting positions for each player role.
  *
- * These ranges encode real cricket batting conventions:
- *
- *   BATTER        → 1–7  (top order specialists, no lower than 7)
- *   WICKET_KEEPER → 1–7  (keepers bat in top/middle order)
- *   ALL_ROUNDER   → 4–9  (middle/lower order flexibility)
- *   BOWLER        → 7–11 (lower order, tail-enders)
- *
- * A player CANNOT be placed outside their range:
- *   - Bumrah (BOWLER) cannot bat at #1
- *   - Kohli (BATTER) cannot bat at #11
- *   - Maxwell (ALL_ROUNDER) cannot bat at #1 or #10
+ * Uses literal string keys (not computed enum keys) to avoid ESM
+ * static initialisation order issues in the browser bundle.
  */
 export class PositionRange {
   private constructor(
@@ -23,15 +14,19 @@ export class PositionRange {
     public readonly max: number,
   ) {}
 
-  private static readonly RANGES: Record<PlayerRole, PositionRange> = {
-    [PlayerRole.BATTER]:        new PositionRange(1, 6),
-    [PlayerRole.WICKET_KEEPER]: new PositionRange(1, 6),
-    [PlayerRole.ALL_ROUNDER]:   new PositionRange(4, 8),
-    [PlayerRole.BOWLER]:        new PositionRange(7, 11),
+  public static readonly RANGES: Record<string, PositionRange> = {
+    "BATTER":        new PositionRange(1, 6),
+    "WICKET_KEEPER": new PositionRange(1, 6),
+    "ALL_ROUNDER":   new PositionRange(4, 8),
+    "BOWLER":        new PositionRange(7, 11),
   };
 
-  public static forRole(role: PlayerRole): PositionRange {
-    return PositionRange.RANGES[role];
+  public static forRole(role: PlayerRole | string): PositionRange {
+    const range = PositionRange.RANGES[role as string];
+    if (!range) {
+      throw new Error(`No position range defined for role: "${role}"`);
+    }
+    return range;
   }
 
   /** Returns all BattingPositions valid for this range. */

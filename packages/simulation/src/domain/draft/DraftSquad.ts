@@ -80,18 +80,16 @@ export class DraftSquad {
    * considering: role range, occupied slots, and remaining composition space.
    */
   public eligiblePositionsFor(player: Player): ReadonlyArray<BattingPosition> {
-    const range = PositionRange.forRole(player.role);
+    const range = PositionRange.RANGES[player.role as string];
+    if (!range) return [];
+
+    const roleLimit = this.rules.limits[player.role as string];
+    const roleMax   = roleLimit?.max ?? 99;
 
     return range.eligiblePositions().filter((pos) => {
-      // Position must be vacant
       if (this.slots.has(pos.getValue())) return false;
-
-      // Role must not be at max
-      if (this.roleCount(player.role) >= this.rules.limits[player.role].max) return false;
-
-      // Must not exceed squad size
-      if (this.isFull()) return false;
-
+      if (this.roleCount(player.role) >= roleMax)   return false;
+      if (this.isFull())                             return false;
       return true;
     });
   }
@@ -111,13 +109,14 @@ export class DraftSquad {
       return { valid: false, reason: "POSITION_OCCUPIED" };
     }
 
-    const range = PositionRange.forRole(player.role);
-    if (!range.includes(position)) {
+    const range = PositionRange.RANGES[player.role as string];
+    if (range && !range.includes(position)) {
       return { valid: false, reason: "POSITION_OUT_OF_RANGE" };
     }
 
+    const roleLimit   = this.rules.limits[player.role as string];
     const roleCurrent = this.roleCount(player.role);
-    if (roleCurrent >= this.rules.limits[player.role].max) {
+    if (roleLimit && roleCurrent >= roleLimit.max) {
       return { valid: false, reason: "ROLE_LIMIT_REACHED" };
     }
 
@@ -144,18 +143,14 @@ export class DraftSquad {
   }
 
   /**
-   * Checks if the squad needs more of a specific role to satisfy minimums.
-   * Used to determine which roles are still required.
+   * Returns role strings that still need more players to reach their minimum.
    */
-  public requiredRoles(): ReadonlyArray<PlayerRole> {
-    const spotsLeft = this.rules.squadSize - this.slots.size;
-    const required: PlayerRole[] = [];
-
-    for (const [role, limit] of Object.entries(this.rules.limits) as [PlayerRole, { min: number }][]) {
-      const deficit = limit.min - this.roleCount(role);
+  public requiredRoles(): ReadonlyArray<string> {
+    const required: string[] = [];
+    for (const [role, limit] of Object.entries(this.rules.limits)) {
+      const deficit = limit.min - this.roleCount(role as PlayerRole);
       if (deficit > 0) required.push(role);
     }
-
     return required;
   }
 }
