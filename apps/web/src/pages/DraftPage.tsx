@@ -22,9 +22,15 @@ const ROUND_COMPOSITION_LABEL = (comp: {
 }) => `${comp.batters}B  ${comp.allRounders}AR  ${comp.bowlers}BOW  ${comp.wicketKeepers}WK`;
 
 const COUNTRY_FLAG: Record<string, string> = {
-  "India": "🇮🇳", "Australia": "🇦🇺", "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Pakistan": "🇵🇰",
-  "South Africa": "🇿🇦", "New Zealand": "🇳🇿", "Bangladesh": "🇧🇩",
-  "Afghanistan": "🇦🇫", "Ireland": "🇮🇪",
+  "India":        "\uD83C\uDDEE\uD83C\uDDF3",
+  "Australia":    "\uD83C\uDDE6\uD83C\uDDFA",
+  "England":      "ENG",
+  "Pakistan":     "\uD83C\uDDF5\uD83C\uDDF0",
+  "South Africa": "\uD83C\uDDFF\uD83C\uDDE6",
+  "New Zealand":  "\uD83C\uDDF3\uD83C\uDDFF",
+  "Bangladesh":   "\uD83C\uDDE7\uD83C\uDDE9",
+  "Afghanistan":  "\uD83C\uDDE6\uD83C\uDDEB",
+  "Ireland":      "\uD83C\uDDEE\uD83C\uDDEA",
 };
 
 // ── Props ─────────────────────────────────────────────────────────────────────

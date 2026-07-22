@@ -2,7 +2,6 @@ import type { DraftPickOption } from "@cricket-clash/simulation/domain/draft/Dra
 import { DraftPickStatus } from "@cricket-clash/simulation/domain/draft/DraftPickStatus";
 import type { BattingPosition } from "@cricket-clash/simulation/domain/draft/BattingPosition";
 
-// Use literal string keys — avoids ESM init order issues with PlayerRole enum
 const ROLE_COLOR: Record<string, string> = {
   BATTER:        "bg-blue-500/20 text-blue-300 border-blue-500/30",
   WICKET_KEEPER: "bg-purple-500/20 text-purple-300 border-purple-500/30",
@@ -14,29 +13,29 @@ const ROLE_LABEL: Record<string, string> = {
   BATTER: "BAT", WICKET_KEEPER: "WK", ALL_ROUNDER: "AR", BOWLER: "BOW",
 };
 
+// England flag uses Unicode tag chars that break some parsers — use text fallback
 const COUNTRY_FLAG: Record<string, string> = {
-  "India": "🇮🇳", "Australia": "🇦🇺", "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Pakistan": "🇵🇰",
-  "South Africa": "🇿🇦", "New Zealand": "🇳🇿", "Bangladesh": "🇧🇩",
-  "Afghanistan": "🇦🇫", "Ireland": "🇮🇪",
+  "India":        "\uD83C\uDDEE\uD83C\uDDF3",  // 🇮🇳
+  "Australia":    "\uD83C\uDDE6\uD83C\uDDFA",  // 🇦🇺
+  "England":      "ENG",                        // avoid tag-emoji parser issues
+  "Pakistan":     "\uD83C\uDDF5\uD83C\uDDF0",  // 🇵🇰
+  "South Africa": "\uD83C\uDDFF\uD83C\uDDE6",  // 🇿🇦
+  "New Zealand":  "\uD83C\uDDF3\uD83C\uDDFF",  // 🇳🇿
+  "Bangladesh":   "\uD83C\uDDE7\uD83C\uDDE9",  // 🇧🇩
+  "Afghanistan":  "\uD83C\uDDE6\uD83C\uDDEB",  // 🇦🇫
+  "Ireland":      "\uD83C\uDDEE\uD83C\uDDEA",  // 🇮🇪
 };
 
 function unavailableReason(status: DraftPickStatus): string {
   switch (status) {
-    case DraftPickStatus.ALREADY_PICKED:         return "✓ picked";
-    case DraftPickStatus.ROLE_LIMIT_REACHED:     return "role full";
-    case DraftPickStatus.NO_ELIGIBLE_POSITION:   return "no position";
-    case DraftPickStatus.SQUAD_FULL:             return "squad full";
-    case DraftPickStatus.MUST_FILL_MINIMUM:      return "⚠ fill minimum first";
+    case DraftPickStatus.ALREADY_PICKED:        return "picked";
+    case DraftPickStatus.ROLE_LIMIT_REACHED:    return "role full";
+    case DraftPickStatus.NO_ELIGIBLE_POSITION:  return "no position";
+    case DraftPickStatus.SQUAD_FULL:            return "squad full";
+    case DraftPickStatus.MUST_FILL_MINIMUM:     return "fill min first";
     default: return "unavailable";
   }
 }
-  "Pakistan":     "🇵🇰",
-  "South Africa": "🇿🇦",
-  "New Zealand":  "🇳🇿",
-  "Bangladesh":   "🇧🇩",
-  "Afghanistan":  "🇦🇫",
-  "Ireland":      "🇮🇪",
-};
 
 interface Props {
   option: DraftPickOption;
@@ -51,7 +50,7 @@ export function PlayerCard({ option, onPick }: Props) {
 
   const role      = player.role as string;
   const roleColor = ROLE_COLOR[role] ?? "bg-slate-700 text-slate-300 border-slate-600";
-  const flag      = COUNTRY_FLAG[player.country as string] ?? "🌍";
+  const flag      = COUNTRY_FLAG[player.country as string] ?? "?";
 
   const bestPosition = selectable
     ? option.eligiblePositions[Math.floor(option.eligiblePositions.length / 2)]
@@ -63,30 +62,32 @@ export function PlayerCard({ option, onPick }: Props) {
 
   return (
     <div
-      className={`
-        relative rounded-xl border p-3 transition-all select-none
-        ${selectable
-          ? "border-slate-600 bg-slate-800 hover:border-green-500 hover:bg-slate-800/90 cursor-pointer active:scale-95"
+      className={[
+        "relative rounded-xl border p-3 transition-all select-none",
+        selectable
+          ? "border-slate-600 bg-slate-800 hover:border-green-500 cursor-pointer active:scale-95"
           : mustFillMin
             ? "border-orange-800/40 bg-slate-800/30 opacity-60 cursor-not-allowed"
-            : "border-slate-700/50 bg-slate-800/40 opacity-40 cursor-not-allowed"
-        }
-      `}
+            : "border-slate-700/50 bg-slate-800/40 opacity-40 cursor-not-allowed",
+      ].join(" ")}
       onClick={() => selectable && bestPosition && onPick(bestPosition)}
     >
-      {/* Status badge */}
       {alreadyPicked && (
-        <div className="absolute top-2 right-2 text-xs bg-green-500/20 text-green-400 rounded px-1.5 py-0.5">✓</div>
+        <div className="absolute top-2 right-2 text-xs bg-green-500/20 text-green-400 rounded px-1.5 py-0.5">
+          picked
+        </div>
       )}
       {mustFillMin && (
-        <div className="absolute top-2 right-2 text-xs bg-orange-500/20 text-orange-400 rounded px-1.5 py-0.5">⚠</div>
+        <div className="absolute top-2 right-2 text-xs bg-orange-500/20 text-orange-400 rounded px-1.5 py-0.5">
+          locked
+        </div>
       )}
 
       <div className="flex items-start gap-2">
-        <div className="text-base leading-none mt-0.5">{flag}</div>
+        <div className="text-base leading-none mt-0.5 font-mono">{flag}</div>
         <div className="flex-1 min-w-0">
           <div className="font-semibold text-sm truncate text-white">{player.name}</div>
-          <div className="flex items-center gap-1.5 mt-1">
+          <div className="flex items-center gap-1.5 mt-1 flex-wrap">
             <span className={`text-xs px-1.5 py-0.5 rounded border font-mono font-bold ${roleColor}`}>
               {ROLE_LABEL[role] ?? role}
             </span>
@@ -96,7 +97,7 @@ export function PlayerCard({ option, onPick }: Props) {
               </span>
             )}
             {!selectable && !alreadyPicked && (
-              <span className="text-xs text-slate-600">{unavailableReason(option.status)}</span>
+              <span className="text-xs text-slate-600 italic">{unavailableReason(option.status)}</span>
             )}
           </div>
         </div>
