@@ -282,13 +282,32 @@ function DraftUI({ session, setSession, player1, player2, onMatchReady, onBack }
             </div>
           )}
 
-          {/* Minimum role warning */}
+          {/* Minimum role warning / fallback notice */}
           {(() => {
             const req = activeParticipant.squad.requiredRoles();
             const rem = 11 - activeParticipant.pickedCount();
             const forced = req.length > 0 && rem <= activeParticipant.squad.totalRequiredPicks();
-            if (!forced || req.length === 0) return null;
-            const ROLE_NAMES: Record<string, string> = { BATTER: "Batter", WICKET_KEEPER: "Wicket Keeper", ALL_ROUNDER: "All-Rounder", BOWLER: "Bowler" };
+            const ROLE_NAMES: Record<string, string> = {
+              BATTER: "Batter", WICKET_KEEPER: "Wicket Keeper",
+              ALL_ROUNDER: "All-Rounder", BOWLER: "Bowler",
+            };
+            if (req.length === 0) return null;
+
+            // Check if any required role has no selectable player in this round
+            const selectableRoles = new Set(
+              options.filter((o) => o.isSelectable()).map((o) => o.player.role as string)
+            );
+            const missingInRound = req.filter((r) => !selectableRoles.has(r));
+
+            if (missingInRound.length > 0) {
+              return (
+                <div className="mb-3 px-3 py-2 bg-blue-900/30 border border-blue-700/50 rounded-lg text-xs text-blue-300">
+                  🔄 Extra picks added: {missingInRound.map((r) => ROLE_NAMES[r] ?? r).join(", ")} players from global pool (no eligible player in this round)
+                </div>
+              );
+            }
+
+            if (!forced) return null;
             return (
               <div className="mb-3 px-3 py-2 bg-orange-900/30 border border-orange-700/50 rounded-lg text-xs text-orange-300">
                 ⚠ You must pick: {req.map((r) => ROLE_NAMES[r] ?? r).join(", ")} — other players are locked
@@ -296,7 +315,7 @@ function DraftUI({ session, setSession, player1, player2, onMatchReady, onBack }
             );
           })()}
 
-          {/* Player grid — sorted by role order */}
+          {/* Player grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {options.map((opt) => (
               <PlayerCard

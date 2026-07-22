@@ -75,6 +75,11 @@ export class DraftSessionEngine {
 
     const sessionId = `draft-${Date.now()}-${Math.floor(this.random.nextFloat() * 10_000)}`;
 
-    return DraftSession.create(sessionId, participantA, participantB);
+    return DraftSession.create(
+      sessionId,
+      participantA,
+      participantB,
+      this.pool.getPlayers(),  // pass full pool for fallback injection
+    );
   }
 }
