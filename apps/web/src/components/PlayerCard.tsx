@@ -1,9 +1,8 @@
-import type { PlayerData } from "@cricket-clash/data";
-import { PlayerRole } from "@cricket-clash/shared";
 import type { DraftPickOption } from "@cricket-clash/simulation/domain/draft/DraftPickOption";
 import { DraftPickStatus } from "@cricket-clash/simulation/domain/draft/DraftPickStatus";
-import { BattingPosition } from "@cricket-clash/simulation/domain/draft/BattingPosition";
+import type { BattingPosition } from "@cricket-clash/simulation/domain/draft/BattingPosition";
 
+// Use literal string keys — avoids ESM init order issues with PlayerRole enum
 const ROLE_COLOR: Record<string, string> = {
   BATTER:        "bg-blue-500/20 text-blue-300 border-blue-500/30",
   WICKET_KEEPER: "bg-purple-500/20 text-purple-300 border-purple-500/30",
@@ -16,9 +15,15 @@ const ROLE_LABEL: Record<string, string> = {
 };
 
 const COUNTRY_FLAG: Record<string, string> = {
-  "India": "🇮🇳", "Australia": "🇦🇺", "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-  "Pakistan": "🇵🇰", "South Africa": "🇿🇦", "New Zealand": "🇳🇿",
-  "Bangladesh": "🇧🇩", "Afghanistan": "🇦🇫", "Ireland": "🇮🇪",
+  "India":        "🇮🇳",
+  "Australia":    "🇦🇺",
+  "England":      "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+  "Pakistan":     "🇵🇰",
+  "South Africa": "🇿🇦",
+  "New Zealand":  "🇳🇿",
+  "Bangladesh":   "🇧🇩",
+  "Afghanistan":  "🇦🇫",
+  "Ireland":      "🇮🇪",
 };
 
 interface Props {
@@ -27,25 +32,31 @@ interface Props {
 }
 
 export function PlayerCard({ option, onPick }: Props) {
-  const p = option.player as unknown as PlayerData & { role: string; attributes: { batting: number; bowling: number } };
-  const selectable = option.isSelectable();
+  const player      = option.player;
+  const selectable  = option.isSelectable();
   const alreadyPicked = option.status === DraftPickStatus.ALREADY_PICKED;
 
-  const roleColor = ROLE_COLOR[p.role] ?? "bg-slate-700 text-slate-300 border-slate-600";
-  const flag = COUNTRY_FLAG[p.country] ?? "🌍";
+  const role      = player.role as string;
+  const roleColor = ROLE_COLOR[role] ?? "bg-slate-700 text-slate-300 border-slate-600";
+  const flag      = COUNTRY_FLAG[player.country as string] ?? "🌍";
 
-  // Best eligible position = middle of the eligible range
+  // Best eligible position: middle of the range
   const bestPosition = selectable
     ? option.eligiblePositions[Math.floor(option.eligiblePositions.length / 2)]
     : null;
 
+  // Get batting / bowling ratings from player attributes
+  const attrs = player.attributes as { batting?: number; bowling?: number } | undefined;
+  const batRating  = attrs?.batting  ?? 50;
+  const bowlRating = attrs?.bowling  ?? 50;
+
   return (
     <div
       className={`
-        relative rounded-xl border p-3 transition-all cursor-default select-none
+        relative rounded-xl border p-3 transition-all select-none
         ${selectable
-          ? "border-slate-600 bg-slate-800 hover:border-green-500 hover:bg-slate-750 cursor-pointer"
-          : "border-slate-700/50 bg-slate-800/40 opacity-50"
+          ? "border-slate-600 bg-slate-800 hover:border-green-500 hover:bg-slate-800/90 cursor-pointer active:scale-95"
+          : "border-slate-700/50 bg-slate-800/40 opacity-50 cursor-not-allowed"
         }
       `}
       onClick={() => selectable && bestPosition && onPick(bestPosition)}
@@ -53,21 +64,21 @@ export function PlayerCard({ option, onPick }: Props) {
       {/* Already picked badge */}
       {alreadyPicked && (
         <div className="absolute top-2 right-2 text-xs bg-green-500/20 text-green-400 rounded px-1.5 py-0.5">
-          ✓ Picked
+          ✓
         </div>
       )}
 
       <div className="flex items-start gap-2">
-        <div className="text-lg leading-none">{flag}</div>
+        <div className="text-base leading-none mt-0.5">{flag}</div>
         <div className="flex-1 min-w-0">
-          <div className="font-semibold text-sm truncate text-white">{p.name ?? (p as unknown as { longName?: string }).longName}</div>
+          <div className="font-semibold text-sm truncate text-white">{player.name}</div>
           <div className="flex items-center gap-1.5 mt-1">
             <span className={`text-xs px-1.5 py-0.5 rounded border font-mono font-bold ${roleColor}`}>
-              {ROLE_LABEL[p.role] ?? p.role}
+              {ROLE_LABEL[role] ?? role}
             </span>
-            {selectable && (
+            {selectable && option.eligiblePositions.length > 0 && (
               <span className="text-xs text-slate-500">
-                pos {option.eligiblePositions.map((p) => p.getValue()).join(",")}
+                #{option.eligiblePositions.map((p) => p.getValue()).join(",")}
               </span>
             )}
           </div>
@@ -76,12 +87,12 @@ export function PlayerCard({ option, onPick }: Props) {
 
       {/* Rating bars */}
       <div className="mt-2 grid grid-cols-2 gap-1">
-        <RatingBar label="BAT" value={p.attributes?.batting ?? (p as unknown as { dna?: { batting: number } }).dna?.batting ?? 50} color="bg-blue-400" />
-        <RatingBar label="BWL" value={p.attributes?.bowling ?? (p as unknown as { dna?: { bowling: number } }).dna?.bowling ?? 50} color="bg-red-400" />
+        <RatingBar label="BAT" value={batRating}  color="bg-blue-400" />
+        <RatingBar label="BWL" value={bowlRating} color="bg-red-400"  />
       </div>
 
       {selectable && (
-        <div className="mt-2 text-center text-xs font-semibold text-green-400">
+        <div className="mt-1.5 text-center text-xs font-semibold text-green-400/80">
           TAP TO PICK
         </div>
       )}
