@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { MatchResult } from "@cricket-clash/simulation/domain/match/MatchResult";
 import type { DraftSession } from "@cricket-clash/simulation/domain/draft/DraftSession";
 import { DraftSessionStatus } from "@cricket-clash/simulation/domain/draft/DraftSessionStatus";
@@ -9,13 +9,17 @@ import { createDraftSession, simulateMatchFromDraft } from "../services/GameServ
 import { PlayerCard } from "../components/PlayerCard";
 import { SquadPanel } from "../components/SquadPanel";
 
-const ROUND_COMPOSITION_LABEL = (comp: { batters: number; allRounders: number; bowlers: number; wicketKeepers: number }) =>
-  `${comp.batters}B  ${comp.allRounders}AR  ${comp.bowlers}BOW  ${comp.wicketKeepers}WK`;
+const ROUND_COMPOSITION_LABEL = (comp: {
+  batters: number; allRounders: number; bowlers: number; wicketKeepers: number;
+}) => `${comp.batters}B  ${comp.allRounders}AR  ${comp.bowlers}BOW  ${comp.wicketKeepers}WK`;
 
 const COUNTRY_FLAG: Record<string, string> = {
-  "India":"🇮🇳","Australia":"🇦🇺","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Pakistan":"🇵🇰",
-  "South Africa":"🇿🇦","New Zealand":"🇳🇿","Bangladesh":"🇧🇩","Afghanistan":"🇦🇫","Ireland":"🇮🇪",
+  "India": "🇮🇳", "Australia": "🇦🇺", "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Pakistan": "🇵🇰",
+  "South Africa": "🇿🇦", "New Zealand": "🇳🇿", "Bangladesh": "🇧🇩",
+  "Afghanistan": "🇦🇫", "Ireland": "🇮🇪",
 };
+
+// ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
   player1: string;
@@ -24,98 +28,148 @@ interface Props {
   onBack: () => void;
 }
 
+// ── Entry point — handles init errors gracefully ──────────────────────────────
+
 export default function DraftPage({ player1, player2, onMatchReady, onBack }: Props) {
-  // Each player gets their own draft session state
-  const [session, setSession] = useState<DraftSession>(() =>
-    createDraftSession(player1, player2, Date.now())
-  );
+  const [session, setSession] = useState<DraftSession | null>(null);
+  const [initError, setInitError] = useState<string | null>(null);
 
-  // Turn tracking: whose turn is it on this shared device?
-  const [activeTurn, setActiveTurn] = useState<"A" | "B">("A");
-  const [simulating, setSimulating] = useState(false);
-  const [positionPicker, setPositionPicker] = useState<{
-    player: Player; options: BattingPosition[];
-  } | null>(null);
-
-  const activeParticipant = activeTurn === "A" ? session.participantA : session.participantB;
-  const otherParticipant  = activeTurn === "A" ? session.participantB : session.participantA;
-  const activeName = activeTurn === "A" ? player1 : player2;
-
-  const currentRound = activeParticipant.getCurrentRound();
-  const options      = session.getOptionsFor(activeTurn === "A" ? session.participantA.userId : session.participantB.userId);
-
-  // ── Pick handler ────────────────────────────────────────────────────────────
-
-  const handleCardTap = useCallback((player: Player, positions: BattingPosition[]) => {
-    if (positions.length === 1) {
-      // Auto-assign if only one valid position
-      confirmPick(player, positions[0]);
-    } else {
-      setPositionPicker({ player, options: positions });
+  useEffect(() => {
+    try {
+      setSession(createDraftSession(player1, player2, Date.now()));
+    } catch (e) {
+      const msg = (e as Error).message;
+      setInitError(msg);
+      console.error("[DraftPage] Failed to create draft session:", e);
     }
-  }, [session, activeTurn]);
+  }, [player1, player2]);
 
-  const confirmPick = useCallback((player: Player, position: BattingPosition) => {
-    setPositionPicker(null);
-    const userId = activeTurn === "A" ? session.participantA.userId : session.participantB.userId;
-    const result = session.pick(userId, player, position);
+  if (initError) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-8">
+        <div className="max-w-lg text-center">
+          <div className="text-4xl mb-4">⚠️</div>
+          <h2 className="text-xl font-bold text-red-400 mb-2">Draft Setup Failed</h2>
+          <p className="text-slate-400 text-sm mb-6">{initError}</p>
+          <button
+            onClick={onBack}
+            className="bg-slate-700 hover:bg-slate-600 px-6 py-2 rounded-lg text-sm transition-colors"
+          >
+            ← Back
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-    if (result.success) {
-      const updated = result.session;
-      setSession(updated);
-
-      if (updated.status === DraftSessionStatus.COMPLETED) {
-        // Both squads done — simulate!
-        setSimulating(true);
-        setTimeout(() => {
-          const matchResult = simulateMatchFromDraft(updated, Date.now());
-          onMatchReady(matchResult);
-        }, 200);
-        return;
-      }
-
-      // Switch turn: A picked → now B's turn, or B picked → advance session (already done) → A's turn
-      if (activeTurn === "A") {
-        // If B already picked this round (shouldn't happen in turn-based), round already advanced
-        // In turn-based: A picks → now B's turn
-        if (!updated.participantA.hasMadePickThisRound || updated.currentRoundIndex !== session.currentRoundIndex) {
-          setActiveTurn("B");
-        } else {
-          setActiveTurn("B");
-        }
-      } else {
-        // B just picked → round advanced → A's turn
-        setActiveTurn("A");
-      }
-    }
-  }, [session, activeTurn, onMatchReady]);
-
-  const handlePass = useCallback(() => {
-    const userId = activeTurn === "A" ? session.participantA.userId : session.participantB.userId;
-    const result = session.pass(userId);
-    if (result.success) {
-      setSession(result.session);
-      setActiveTurn(activeTurn === "A" ? "B" : "A");
-    }
-  }, [session, activeTurn]);
-
-  if (simulating) {
+  if (!session) {
     return (
       <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
         <div className="text-center">
-          <div className="text-5xl mb-4 animate-bounce">🏏</div>
-          <h2 className="text-2xl font-bold text-white">Simulating Match…</h2>
-          <p className="text-slate-400 mt-2">Calculating ball by ball…</p>
+          <div className="text-3xl mb-3">⚙️</div>
+          <p className="text-slate-400">Loading player pool…</p>
         </div>
       </div>
     );
   }
 
   return (
+    <DraftUI
+      session={session}
+      setSession={setSession}
+      player1={player1}
+      player2={player2}
+      onMatchReady={onMatchReady}
+      onBack={onBack}
+    />
+  );
+}
+
+// ── Draft UI ──────────────────────────────────────────────────────────────────
+
+interface UIProps extends Props {
+  session:    DraftSession;
+  setSession: (s: DraftSession) => void;
+}
+
+function DraftUI({ session, setSession, player1, player2, onMatchReady, onBack }: UIProps) {
+  const [activeTurn, setActiveTurn]   = useState<"A" | "B">("A");
+  const [simulating, setSimulating]   = useState(false);
+  const [positionPicker, setPositionPicker] = useState<{
+    player: Player; options: BattingPosition[];
+  } | null>(null);
+
+  const activeParticipant = activeTurn === "A" ? session.participantA : session.participantB;
+  const activeName        = activeTurn === "A" ? player1 : player2;
+  const currentRound      = activeParticipant.getCurrentRound();
+  const activeUserId      = activeTurn === "A"
+    ? session.participantA.userId
+    : session.participantB.userId;
+  const options = session.getOptionsFor(activeUserId);
+
+  // ── Pick ───────────────────────────────────────────────────────────────────
+
+  const confirmPick = useCallback((player: Player, position: BattingPosition) => {
+    setPositionPicker(null);
+    const result = session.pick(activeUserId, player, position);
+
+    if (!result.success) {
+      console.warn("[DraftUI] Pick failed:", result.reason);
+      return;
+    }
+
+    const updated = result.session;
+    setSession(updated);
+
+    if (updated.status === DraftSessionStatus.COMPLETED) {
+      setSimulating(true);
+      setTimeout(() => {
+        try {
+          const matchResult = simulateMatchFromDraft(updated, Date.now());
+          onMatchReady(matchResult);
+        } catch (e) {
+          console.error("[DraftUI] Simulation failed:", e);
+          setSimulating(false);
+        }
+      }, 300);
+      return;
+    }
+
+    setActiveTurn(activeTurn === "A" ? "B" : "A");
+  }, [session, activeUserId, activeTurn, onMatchReady]);
+
+  const handlePass = useCallback(() => {
+    const result = session.pass(activeUserId);
+    if (result.success) {
+      setSession(result.session);
+      setActiveTurn(activeTurn === "A" ? "B" : "A");
+    }
+  }, [session, activeUserId, activeTurn]);
+
+  // ── Simulating overlay ─────────────────────────────────────────────────────
+
+  if (simulating) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-5xl mb-4 animate-bounce">🏏</div>
+          <h2 className="text-2xl font-bold">Simulating Match…</h2>
+          <p className="text-slate-400 mt-2">Calculating ball by ball…</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Draft UI ───────────────────────────────────────────────────────────────
+
+  return (
     <div className="min-h-screen bg-slate-950 text-white">
-      {/* ── Header ── */}
+      {/* Header */}
       <div className="border-b border-slate-800 px-4 py-3 flex items-center justify-between">
-        <button onClick={onBack} className="text-slate-500 hover:text-white text-sm transition-colors">
+        <button
+          onClick={onBack}
+          className="text-slate-500 hover:text-white text-sm transition-colors"
+        >
           ← Back
         </button>
         <div className="text-center">
@@ -123,7 +177,9 @@ export default function DraftPage({ player1, player2, onMatchReady, onBack }: Pr
             Round {activeParticipant.getRoundNumber()} / {activeParticipant.getTotalRounds()}
           </div>
           <div className="text-xs text-slate-500 mt-0.5">
-            {player1}: {session.participantA.pickedCount()}/11 &nbsp;|&nbsp; {player2}: {session.participantB.pickedCount()}/11
+            {player1}: {session.participantA.pickedCount()}/11
+            &nbsp;|&nbsp;
+            {player2}: {session.participantB.pickedCount()}/11
           </div>
         </div>
         <div className="text-sm font-semibold text-green-400">
@@ -133,14 +189,13 @@ export default function DraftPage({ player1, player2, onMatchReady, onBack }: Pr
 
       <div className="flex flex-col lg:flex-row gap-4 p-4 max-w-7xl mx-auto">
 
-        {/* ── Active player's round (main panel) ── */}
+        {/* Active player's round */}
         <div className="flex-1">
-          {/* Round header */}
           {currentRound && (
             <div className="flex items-center gap-3 mb-4">
               <div className="text-3xl">{COUNTRY_FLAG[currentRound.country] ?? "🌍"}</div>
               <div>
-                <h2 className="font-bold text-xl text-white">{currentRound.country}</h2>
+                <h2 className="font-bold text-xl">{currentRound.country}</h2>
                 <div className="text-xs text-slate-500">
                   {ROUND_COMPOSITION_LABEL(currentRound.composition)}
                 </div>
@@ -151,25 +206,23 @@ export default function DraftPage({ player1, player2, onMatchReady, onBack }: Pr
             </div>
           )}
 
-          {/* Player grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {options.map((opt) => (
               <PlayerCard
                 key={opt.player.id}
                 option={opt}
                 onPick={(pos) => {
-                  const positions = opt.eligiblePositions;
-                  if (positions.length <= 1) {
-                    confirmPick(opt.player, pos);
+                  const all = opt.eligiblePositions;
+                  if (all.length <= 1) {
+                    confirmPick(opt.player, all[0] ?? pos);
                   } else {
-                    setPositionPicker({ player: opt.player, options: [...positions] });
+                    setPositionPicker({ player: opt.player, options: [...all] });
                   }
                 }}
               />
             ))}
           </div>
 
-          {/* Pass button */}
           <button
             onClick={handlePass}
             className="mt-4 w-full rounded-lg border border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-600 py-2 text-sm transition-colors"
@@ -178,21 +231,19 @@ export default function DraftPage({ player1, player2, onMatchReady, onBack }: Pr
           </button>
         </div>
 
-        {/* ── Squad panels ── */}
+        {/* Squad panels */}
         <div className="w-full lg:w-72 flex flex-col gap-3">
           <SquadPanel participant={session.participantA} name={player1} isActive={activeTurn === "A"} />
           <SquadPanel participant={session.participantB} name={player2} isActive={activeTurn === "B"} />
         </div>
       </div>
 
-      {/* ── Position picker modal ── */}
+      {/* Position picker modal */}
       {positionPicker && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
           <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 w-full max-w-sm">
-            <h3 className="font-bold text-white text-lg mb-1">Choose batting position</h3>
-            <p className="text-slate-400 text-sm mb-4">
-              {positionPicker.player.name}
-            </p>
+            <h3 className="font-bold text-lg mb-1">Choose batting position</h3>
+            <p className="text-slate-400 text-sm mb-4">{positionPicker.player.name}</p>
             <div className="grid grid-cols-4 gap-2">
               {positionPicker.options.map((pos) => (
                 <button

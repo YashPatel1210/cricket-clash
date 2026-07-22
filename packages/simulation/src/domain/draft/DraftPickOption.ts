@@ -41,10 +41,21 @@ export function buildPickOptions(
     }
 
     // Role limit reached?
-    const rules       = squad.getRules();
-    const roleCount   = squad.roleCount(player.role);
-    const roleMax     = rules.limits[player.role].max;
-    if (roleCount >= roleMax) {
+    const rules      = squad.getRules();
+    const roleCount  = squad.roleCount(player.role);
+    const roleLimit  = rules.limits[player.role];
+
+    // Guard: if role isn't in the limits definition, treat as available
+    if (!roleLimit) {
+      console.warn(`[DraftPickOption] Unknown role: "${player.role}" for player ${player.name}`);
+      const eligible = squad.eligiblePositionsFor(player);
+      if (eligible.length === 0) {
+        return new DraftPickOption(player, DraftPickStatus.NO_ELIGIBLE_POSITION, []);
+      }
+      return new DraftPickOption(player, DraftPickStatus.AVAILABLE, eligible);
+    }
+
+    if (roleCount >= roleLimit.max) {
       return new DraftPickOption(player, DraftPickStatus.ROLE_LIMIT_REACHED, []);
     }
 
