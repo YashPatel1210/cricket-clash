@@ -115,6 +115,9 @@ interface OutputPlayer {
   id: string; name: string; country: string; role: string;
   handedness: string; battingStyle: string; bowlingStyle: string | null;
   archetype: string; dna: Record<string, number>; meta: Record<string, unknown>;
+  // Internal — removed before final output
+  _rawBatEff?: number;
+  _rawBowlEff?: number;
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -157,40 +160,86 @@ function mapRole(roles: string[]): "BATTER" | "WICKET_KEEPER" | "ALL_ROUNDER" | 
 // ── DNA formulas ───────────────────────────────────────────────────────────────
 
 /**
- * Batting rating from T20 strike rate + average.
+ * Raw batting efficiency score (used for two-pass normalisation).
  *
- * Real T20I calibration:
- *   Virat Kohli: SR 137, avg 49 → should be ~92-95
- *   Rohit Sharma: SR 140, avg 32 → should be ~86-89
- *   Bumrah batting: SR 86, avg 6 → should be ~15-20
+ * Returns null if insufficient data.
+ *
+ * Design: combine strike rate and average into a single "T20 batting quality"
+ * number. This raw score is normalised globally across all batters in pass 2.
+ *
+ * Using geometric-mean style: sqrt(SR * avg) captures both dimensions.
+ * A batter with SR 137 and avg 49 (Kohli): sqrt(137*49) = sqrt(6713) = 81.9
+ * A batter with SR 169 and avg 46 (SKY):   sqrt(169*46) = sqrt(7774) = 88.2
+ * A batter with SR 142 and avg 33 (Warner): sqrt(142*33) = sqrt(4686) = 68.5
+ * A tail-ender SR 67 avg 6:                 sqrt(67*6)  = sqrt(402)  = 20.1
  */
-function battingRating(b: Stat): number {
-  if (!b.sr || !b.avg || b.innings < 3) return 15;
-  // SR: 95→30, 120→55, 145→80, 165→95
-  const srScore  = clamp(30 + ((b.sr  - 95)  / 75)  * 70, 15, 97);
-  // Avg: 12→25, 30→60, 50→85, 65→95
-  const avgScore = clamp(25 + ((b.avg - 12)  / 55)  * 75, 15, 97);
-  const base     = srScore * 0.60 + avgScore * 0.40;
-  const conf     = clamp(b.innings / 60, 0.15, 1.0);
-  return r(clamp(50 + (base - 50) * conf, 10, 99));
+function battingEfficiency(b: Stat): number | null {
+  if (!b.sr || !b.avg || b.innings < 5) return null;
+  // Guard against negative/zero
+  if (b.sr <= 0 || b.avg <= 0) return null;
+
+  // Geometric mean of SR and avg scaled to a comparable range
+  // sqrt(SR * avg) gives ~68-90 for good T20I batters
+  const geoMean = Math.sqrt(b.sr * b.avg);
+
+  // Innings volume bonus (up to 8 points for 150+ innings)
+  const volumeBonus = clamp((b.innings / 150) * 8, 0, 8);
+
+  return geoMean + volumeBonus;
 }
 
 /**
- * Bowling rating from T20 economy + bowling strike rate.
- *
- * Bumrah: eco 6.4, SR 14.7 → should be ~93-96
- * Average spinner: eco 7.8, SR 22 → should be ~72-78
+ * Raw bowling efficiency score (used for two-pass normalisation).
  */
-function bowlingRating(b: Stat): number {
-  if (!b.economy || !b.wickets || b.wickets < 3) return 12;
-  // Economy: 5.5→96, 7.0→75, 8.5→50, 10.5→20
-  const ecoScore = clamp(96 - ((b.economy - 5.5) / 5.5) * 78, 15, 97);
-  // Bowling SR (balls/wkt): 13→95, 20→70, 30→45, 42→20
+function bowlingEfficiency(b: Stat): number | null {
+  if (!b.economy || !b.wickets || b.wickets < 5) return null;
+
+  // Economy (lower = better): invert so higher = better
+  const ecoQuality = clamp(12.0 - b.economy, 0, 8);  // eco 6=6, eco 7=5, eco 8=4, eco 9=3
+
+  // Bowling SR (lower = better): invert
   const bsr = b.bowlingSR ?? 30;
-  const srScore  = clamp(95 - ((bsr - 13) / 32) * 80, 15, 97);
-  const base     = ecoScore * 0.55 + srScore * 0.45;
-  const conf     = clamp((b.wickets) / 50, 0.15, 1.0);
-  return r(clamp(50 + (base - 50) * conf, 10, 99));
+  const srQuality = clamp(45 - bsr, 0, 35);  // bsr 14=31, bsr 20=25, bsr 30=15, bsr 40=5
+
+  // Wickets volume bonus
+  const volumeBonus = clamp((b.wickets / 100) * 5, 0, 5);
+
+  return ecoQuality * 2.5 + srQuality * 1.5 + volumeBonus;
+}
+
+/**
+ * Map a raw efficiency score to a 0-99 rating using the global pool
+ * of all players (percentile-based normalisation).
+ *
+ * The allScores array contains the raw efficiency scores of ALL players
+ * in the same category (e.g. all batters globally).
+ *
+ * Percentile → Rating mapping:
+ *   Top 3%   → 93-99  (Bumrah, Kohli, SKY tier)
+ *   Top 10%  → 85-93  (very good international player)
+ *   Top 25%  → 72-85  (solid international)
+ *   Top 50%  → 55-72  (average T20I player)
+ *   Bottom   → 10-55  (fringe/tail-ender)
+ */
+function normaliseRating(rawScore: number, allScores: number[]): number {
+  if (allScores.length === 0) return 50;
+
+  const sorted = [...allScores].sort((a, b) => a - b);
+  const rank   = sorted.filter((s) => s < rawScore).length;
+  const pct    = rank / sorted.length;  // 0.0 = worst, 1.0 = best
+
+  // Map percentile to rating curve:
+  // 0.0→10, 0.3→45, 0.5→60, 0.7→74, 0.85→83, 0.93→90, 0.97→95, 1.0→99
+  let rating: number;
+  if      (pct >= 0.97) rating = 93 + (pct - 0.97) / 0.03 * 6;
+  else if (pct >= 0.90) rating = 85 + (pct - 0.90) / 0.07 * 8;
+  else if (pct >= 0.80) rating = 76 + (pct - 0.80) / 0.10 * 9;
+  else if (pct >= 0.65) rating = 65 + (pct - 0.65) / 0.15 * 11;
+  else if (pct >= 0.50) rating = 55 + (pct - 0.50) / 0.15 * 10;
+  else if (pct >= 0.30) rating = 40 + (pct - 0.30) / 0.20 * 15;
+  else                  rating = 10 + (pct / 0.30)         * 30;
+
+  return r(clamp(rating, 8, 99));
 }
 
 function powerHitting(b: Stat): number | undefined {
@@ -310,19 +359,22 @@ function processPlayer(playerDir: string, folderCountry: string): OutputPlayer |
   if ((role === "BATTER" || role === "WICKET_KEEPER") && !hasBat) return null;
   if (role === "BOWLER" && !hasBowl) return null;
 
-  const batRating  = hasBat  ? battingRating(bat!)  : 15;
-  const bowlRating = hasBowl ? bowlingRating(bowl!) : 12;
+  // Raw efficiency scores — will be normalised globally in pass 2
+  const rawBatEff  = hasBat  ? (battingEfficiency(bat!) ?? undefined)  : undefined;
+  const rawBowlEff = hasBowl ? (bowlingEfficiency(bowl!) ?? undefined) : undefined;
 
   const t20Matches = Math.max(t20iBat?.matches ?? 0, t20iBowl?.matches ?? 0);
 
+  // Placeholder ratings — replaced in pass 2
   const dna: Record<string, number> = {
-    batting:    batRating,
-    bowling:    bowlRating,
+    batting:    rawBatEff  ? 50 : 15,
+    bowling:    rawBowlEff ? 50 : 12,
     fielding:   fielding(role),
     fitness:    fitness(raw.dateOfBirth?.year),
     experience: experience(t20Matches),
   };
 
+  // Derived batting DNA (from raw stats, not normalised)
   if (hasBat) {
     const ph = powerHitting(bat!);
     const tc = technique(bat!);
@@ -335,9 +387,9 @@ function processPlayer(playerDir: string, folderCountry: string): OutputPlayer |
   }
 
   if (hasBowl) {
-    const db = deathBowling(bowl!, bowlRating);
+    const db = deathBowling(bowl!, 50);  // recalculated in pass 2
     if (db != null) dna.deathBowling = db;
-    dna.variations = r(clamp(40 + (bowlRating - 40) * 0.7, 28, 92));
+    dna.variations = r(clamp(40 + ((rawBowlEff ?? 30) - 30) * 0.8, 28, 92));
   }
 
   for (const k of Object.keys(dna)) {
@@ -348,11 +400,13 @@ function processPlayer(playerDir: string, folderCountry: string): OutputPlayer |
 
   return {
     id, name: raw.longName, country, role,
-    handedness: "RIGHT",   // not directly exposed in crawled data
+    handedness: "RIGHT",
     battingStyle: batStyle,
     bowlingStyle: bStyle,
     archetype: archetype(role, bat ?? null, bowl ?? null, bStyle),
     dna,
+    _rawBatEff:  rawBatEff,
+    _rawBowlEff: rawBowlEff,
     meta: {
       espnId:      raw.objectId,
       age:         raw.dateOfBirth ? 2026 - raw.dateOfBirth.year : undefined,
@@ -417,23 +471,58 @@ for (const entry of readdirSync(SOURCE_DIR, { withFileTypes: true })) {
   console.log(`${count} included`);
 }
 
-console.log(`\n  Writing output files...\n`);
+console.log(`\n  ${total} players collected, ${skipped} skipped`);
+
+// ── Pass 2: Global percentile normalisation ──────────────────────────────────
+// Collect ALL raw efficiency scores globally (across all countries)
+const allPlayers    = [...byCountry.values()].flat();
+const allBatScores  = allPlayers.map((p) => p._rawBatEff).filter((s): s is number => s != null);
+const allBowlScores = allPlayers.map((p) => p._rawBowlEff).filter((s): s is number => s != null);
+
+console.log(`  Normalising: ${allBatScores.length} batters, ${allBowlScores.length} bowlers across all countries\n`);
+
+for (const players of byCountry.values()) {
+  for (const p of players) {
+    if (p._rawBatEff != null) {
+      p.dna.batting = normaliseRating(p._rawBatEff, allBatScores);
+    }
+    if (p._rawBowlEff != null) {
+      const normBowl = normaliseRating(p._rawBowlEff, allBowlScores);
+      p.dna.bowling  = normBowl;
+      // Recalculate death bowling from normalised base
+      const eco = p.meta.t20iBowlEco as number | undefined;
+      if (eco != null) {
+        const ecoBonus = eco < 7.2 ? 3 : eco > 8.8 ? -4 : 0;
+        p.dna.deathBowling = clamp(r(normBowl + ecoBonus), 1, 99);
+      }
+      p.dna.variations = clamp(r(normBowl * 0.85 + (p.dna.variations ?? 50) * 0.15), 1, 99);
+    }
+    // Scale derived batting DNA relative to normalised batting rating
+    const bat = p.dna.batting;
+    if (p.dna.powerHitting != null) p.dna.powerHitting = clamp(r(bat * 0.85 + (p.dna.powerHitting - 50) * 0.4), 1, 99);
+    if (p.dna.technique    != null) p.dna.technique    = clamp(r(bat * 0.80 + (p.dna.technique    - 50) * 0.3), 1, 99);
+    if (p.dna.timing       != null) p.dna.timing       = clamp(r(bat * 0.88 + (p.dna.timing       - 50) * 0.2), 1, 99);
+    if (p.dna.deathHitting != null) p.dna.deathHitting = clamp(r(bat * 0.75 + (p.dna.deathHitting - 50) * 0.35), 1, 99);
+    // Clamp all
+    for (const k of Object.keys(p.dna)) p.dna[k] = clamp(p.dna[k], 1, 99);
+  }
+}
+
+// ── Write output ───────────────────────────────────────────────────────────────
+console.log(`  Writing output files...\n`);
 
 for (const [country, players] of byCountry) {
   const fileName = COUNTRY_TO_FILE[country];
   if (!fileName) {
-    console.log(`  ⚠  No file mapping for: ${country} (${players.length} players) — skipped`);
+    console.log(`  ⚠  No mapping for: ${country} (${players.length} players) — skipped`);
     continue;
   }
 
-  // Sort: highest overall rating first
   players.sort((a, b) => (b.dna.batting + b.dna.bowling) - (a.dna.batting + a.dna.bowling));
 
   const file = join(OUTPUT_DIR, `${fileName}.json`);
   const output = {
-    version: VERSION,
-    country,
-    source:  "espncricinfo",
+    version: VERSION, country, source: "espncricinfo",
     players: players.map(({ id, name, country: c, role, handedness, battingStyle, bowlingStyle, archetype: a, dna, meta }) =>
       ({ id, name, country: c, role, handedness, battingStyle, bowlingStyle, archetype: a, dna, meta })
     ),
@@ -443,5 +532,4 @@ for (const [country, players] of byCountry) {
   console.log(`  ✓  ${fileName}.json  (${players.length} players)`);
 }
 
-console.log(`\n  Summary: ${total} players generated, ${skipped} skipped (< T20 threshold)\n`);
-console.log("  Done ✓\n");
+console.log(`\n  Done ✓  ${total} players written\n`);

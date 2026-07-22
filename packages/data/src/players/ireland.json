@@ -1,0 +1,654 @@
+{
+  "version": "2026-07",
+  "country": "Ireland",
+  "source": "espncricinfo",
+  "players": [
+    {
+      "id": "ireland-1099379",
+      "name": "Gareth Delany",
+      "country": "Ireland",
+      "role": "ALL_ROUNDER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Leg Spin",
+      "archetype": "spin-all-rounder",
+      "dna": {
+        "batting": 50,
+        "bowling": 77,
+        "fielding": 78,
+        "fitness": 84,
+        "experience": 58,
+        "powerHitting": 56,
+        "technique": 34,
+        "timing": 60,
+        "deathHitting": 58,
+        "deathBowling": 77,
+        "variations": 66
+      },
+      "meta": {
+        "espnId": 1099379,
+        "age": 29,
+        "t20iMatches": 93,
+        "t20iBatSR": 134.37,
+        "t20iBatAvg": 20.53,
+        "t20iBowlEco": 7.54,
+        "t20iWkts": 60,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-348037",
+      "name": "Graeme McCarter",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 42,
+        "bowling": 74,
+        "fielding": 68,
+        "fitness": 76,
+        "experience": 26,
+        "powerHitting": 51,
+        "technique": 29,
+        "timing": 57,
+        "deathHitting": 53,
+        "deathBowling": 74,
+        "variations": 64
+      },
+      "meta": {
+        "espnId": 348037,
+        "age": 34,
+        "t20iMatches": 3,
+        "t20iBatSR": 131.13,
+        "t20iBatAvg": 17.37,
+        "t20iBowlEco": 7.94,
+        "t20iWkts": 30,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-417381",
+      "name": "Andy McBrine",
+      "country": "Ireland",
+      "role": "ALL_ROUNDER",
+      "handedness": "RIGHT",
+      "battingStyle": "LEFT_HAND",
+      "bowlingStyle": "Right Arm Off Spin",
+      "archetype": "spin-all-rounder",
+      "dna": {
+        "batting": 32,
+        "bowling": 80,
+        "fielding": 78,
+        "fitness": 76,
+        "experience": 37,
+        "powerHitting": 41,
+        "technique": 23,
+        "timing": 44,
+        "deathHitting": 42,
+        "deathBowling": 83,
+        "variations": 68
+      },
+      "meta": {
+        "espnId": 417381,
+        "age": 33,
+        "t20iMatches": 32,
+        "t20iBatSR": 117.42,
+        "t20iBatAvg": 12.91,
+        "t20iBowlEco": 7.16,
+        "t20iWkts": 23,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-595921",
+      "name": "Curtis Campher",
+      "country": "Ireland",
+      "role": "ALL_ROUNDER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-all-rounder",
+      "dna": {
+        "batting": 43,
+        "bowling": 64,
+        "fielding": 78,
+        "fitness": 88,
+        "experience": 50,
+        "powerHitting": 48,
+        "technique": 34,
+        "timing": 51,
+        "deathHitting": 49,
+        "deathBowling": 64,
+        "variations": 57
+      },
+      "meta": {
+        "espnId": 595921,
+        "age": 27,
+        "t20iMatches": 70,
+        "t20iBatSR": 124.5,
+        "t20iBatAvg": 20.92,
+        "t20iBowlEco": 8.23,
+        "t20iWkts": 32,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1263361",
+      "name": "Matthew Humphreys",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Left Arm Orthodox",
+      "archetype": "left-arm-orthodox",
+      "dna": {
+        "batting": 22,
+        "bowling": 84,
+        "fielding": 68,
+        "fitness": 88,
+        "experience": 32,
+        "powerHitting": 32,
+        "technique": 18,
+        "timing": 29,
+        "deathHitting": 31,
+        "deathBowling": 87,
+        "variations": 71
+      },
+      "meta": {
+        "espnId": 1263361,
+        "age": 24,
+        "t20iMatches": 20,
+        "t20iBatSR": 101.76,
+        "t20iBatAvg": 8.84,
+        "t20iBowlEco": 7.08,
+        "t20iWkts": 29,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1094085",
+      "name": "David Delany",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "LEFT_HAND",
+      "bowlingStyle": "Right Arm Fast",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 36,
+        "bowling": 69,
+        "fielding": 68,
+        "fitness": 84,
+        "experience": 28,
+        "powerHitting": 46,
+        "technique": 25,
+        "timing": 49,
+        "deathHitting": 47,
+        "deathBowling": 69,
+        "variations": 60
+      },
+      "meta": {
+        "espnId": 1094085,
+        "age": 29,
+        "t20iMatches": 8,
+        "t20iBatSR": 122.64,
+        "t20iBatAvg": 13.92,
+        "t20iBowlEco": 8.27,
+        "t20iWkts": 41,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1005369",
+      "name": "Jacob Mulder",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Leg Spin",
+      "archetype": "leg-spinner",
+      "dna": {
+        "batting": 11,
+        "bowling": 87,
+        "fielding": 68,
+        "fitness": 84,
+        "experience": 28,
+        "powerHitting": 24,
+        "technique": 18,
+        "timing": 18,
+        "deathHitting": 22,
+        "deathBowling": 90,
+        "variations": 73
+      },
+      "meta": {
+        "espnId": 1005369,
+        "age": 31,
+        "t20iMatches": 8,
+        "t20iBatSR": 82.69,
+        "t20iBatAvg": 8.6,
+        "t20iBowlEco": 6.62,
+        "t20iWkts": 12,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1448923",
+      "name": "Jai Moondra",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "LEFT_HAND",
+      "bowlingStyle": "Left Arm Fast",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 15,
+        "bowling": 82,
+        "fielding": 68,
+        "fitness": 84,
+        "experience": 26,
+        "deathBowling": 82,
+        "variations": 69
+      },
+      "meta": {
+        "espnId": 1448923,
+        "age": 29,
+        "t20iMatches": 2,
+        "t20iBowlEco": 7.54,
+        "t20iWkts": 15,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-303508",
+      "name": "Shane Getkate",
+      "country": "Ireland",
+      "role": "ALL_ROUNDER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-all-rounder",
+      "dna": {
+        "batting": 29,
+        "bowling": 67,
+        "fielding": 78,
+        "fitness": 76,
+        "experience": 36,
+        "powerHitting": 44,
+        "technique": 22,
+        "timing": 38,
+        "deathHitting": 42,
+        "deathBowling": 67,
+        "variations": 59
+      },
+      "meta": {
+        "espnId": 303508,
+        "age": 35,
+        "t20iMatches": 30,
+        "t20iBatSR": 111.78,
+        "t20iBatAvg": 11.95,
+        "t20iBowlEco": 8.41,
+        "t20iWkts": 16,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1278203",
+      "name": "Liam McCarthy",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "LEFT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 47,
+        "bowling": 46,
+        "fielding": 68,
+        "fitness": 88,
+        "experience": 26,
+        "powerHitting": 53,
+        "technique": 34,
+        "timing": 61,
+        "deathHitting": 56,
+        "deathBowling": 42,
+        "variations": 44
+      },
+      "meta": {
+        "espnId": 1278203,
+        "age": 24,
+        "t20iMatches": 3,
+        "t20iBatSR": 135.37,
+        "t20iBatAvg": 20.66,
+        "t20iBowlEco": 10.37,
+        "t20iWkts": 25,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-364343",
+      "name": "Craig Young",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Fast",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 11,
+        "bowling": 79,
+        "fielding": 68,
+        "fitness": 65,
+        "experience": 51,
+        "powerHitting": 24,
+        "technique": 18,
+        "timing": 18,
+        "deathHitting": 22,
+        "deathBowling": 79,
+        "variations": 67
+      },
+      "meta": {
+        "espnId": 364343,
+        "age": 36,
+        "t20iMatches": 73,
+        "t20iBatSR": 75.22,
+        "t20iBatAvg": 6.83,
+        "t20iBowlEco": 8.12,
+        "t20iWkts": 87,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-928059",
+      "name": "Ben White",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Leg Spin",
+      "archetype": "leg-spinner",
+      "dna": {
+        "batting": 13,
+        "bowling": 71,
+        "fielding": 68,
+        "fitness": 84,
+        "experience": 39,
+        "powerHitting": 23,
+        "technique": 24,
+        "timing": 18,
+        "deathHitting": 21,
+        "deathBowling": 71,
+        "variations": 62
+      },
+      "meta": {
+        "espnId": 928059,
+        "age": 28,
+        "t20iMatches": 38,
+        "t20iBatSR": 52.94,
+        "t20iBatAvg": 13.5,
+        "t20iBowlEco": 8.21,
+        "t20iWkts": 36,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1229953",
+      "name": "Conor Olphert",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 15,
+        "bowling": 67,
+        "fielding": 68,
+        "fitness": 84,
+        "experience": 26,
+        "deathBowling": 63,
+        "variations": 59
+      },
+      "meta": {
+        "espnId": 1229953,
+        "age": 31,
+        "t20iMatches": 2,
+        "t20iBowlEco": 9,
+        "t20iWkts": 11,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1490554",
+      "name": "Matt Hollard",
+      "country": "Ireland",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 15,
+        "bowling": 67,
+        "fielding": 68,
+        "fitness": 88,
+        "experience": 26,
+        "deathBowling": 63,
+        "variations": 59
+      },
+      "meta": {
+        "espnId": 1490554,
+        "age": 27,
+        "t20iMatches": 2,
+        "t20iBowlEco": 9.62,
+        "t20iWkts": 23,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1195143",
+      "name": "Tim Tector",
+      "country": "Ireland",
+      "role": "BATTER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Off Spin",
+      "archetype": "360-batter",
+      "dna": {
+        "batting": 65,
+        "bowling": 12,
+        "fielding": 74,
+        "fitness": 88,
+        "experience": 28,
+        "powerHitting": 70,
+        "technique": 52,
+        "timing": 78,
+        "deathHitting": 73
+      },
+      "meta": {
+        "espnId": 1195143,
+        "age": 23,
+        "t20iMatches": 8,
+        "t20iBatSR": 152.92,
+        "t20iBatAvg": 34.23,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-961401",
+      "name": "Stephen Doheny",
+      "country": "Ireland",
+      "role": "BATTER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": null,
+      "archetype": "middle-order-batter",
+      "dna": {
+        "batting": 53,
+        "bowling": 12,
+        "fielding": 74,
+        "fitness": 84,
+        "experience": 26,
+        "powerHitting": 62,
+        "technique": 45,
+        "timing": 60,
+        "deathHitting": 61
+      },
+      "meta": {
+        "espnId": 961401,
+        "age": 28,
+        "t20iMatches": 3,
+        "t20iBatSR": 134.17,
+        "t20iBatAvg": 28.66,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-468573",
+      "name": "Ross Adair",
+      "country": "Ireland",
+      "role": "BATTER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Left Arm Orthodox",
+      "archetype": "aggressive-opener",
+      "dna": {
+        "batting": 51,
+        "bowling": 12,
+        "fielding": 74,
+        "fitness": 76,
+        "experience": 33,
+        "powerHitting": 67,
+        "technique": 37,
+        "timing": 67,
+        "deathHitting": 67
+      },
+      "meta": {
+        "espnId": 468573,
+        "age": 32,
+        "t20iMatches": 23,
+        "t20iBatSR": 141.6,
+        "t20iBatAvg": 23.08,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1193295",
+      "name": "Ben Calitz",
+      "country": "Ireland",
+      "role": "WICKET_KEEPER",
+      "handedness": "RIGHT",
+      "battingStyle": "LEFT_HAND",
+      "bowlingStyle": null,
+      "archetype": "aggressive-keeper-batter",
+      "dna": {
+        "batting": 48,
+        "bowling": 12,
+        "fielding": 88,
+        "fitness": 88,
+        "experience": 29,
+        "powerHitting": 61,
+        "technique": 32,
+        "timing": 67,
+        "deathHitting": 63
+      },
+      "meta": {
+        "espnId": 1193295,
+        "age": 24,
+        "t20iMatches": 11,
+        "t20iBatSR": 141.46,
+        "t20iBatAvg": 19.33,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-928057",
+      "name": "Lorcan Tucker",
+      "country": "Ireland",
+      "role": "WICKET_KEEPER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": null,
+      "archetype": "classical-keeper-batter",
+      "dna": {
+        "batting": 46,
+        "bowling": 12,
+        "fielding": 88,
+        "fitness": 84,
+        "experience": 58,
+        "powerHitting": 48,
+        "technique": 37,
+        "timing": 50,
+        "deathHitting": 49
+      },
+      "meta": {
+        "espnId": 928057,
+        "age": 30,
+        "t20iMatches": 93,
+        "t20iBatSR": 123.79,
+        "t20iBatAvg": 23.01,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-24249",
+      "name": "Ed Joyce",
+      "country": "Ireland",
+      "role": "BATTER",
+      "handedness": "RIGHT",
+      "battingStyle": "LEFT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "middle-order-batter",
+      "dna": {
+        "batting": 31,
+        "bowling": 12,
+        "fielding": 74,
+        "fitness": 65,
+        "experience": 31,
+        "powerHitting": 32,
+        "technique": 52,
+        "timing": 21,
+        "deathHitting": 28
+      },
+      "meta": {
+        "espnId": 24249,
+        "age": 48,
+        "t20iMatches": 18,
+        "t20iBatSR": 93.96,
+        "t20iBatAvg": 33.75,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "ireland-1112535",
+      "name": "Neil Rock",
+      "country": "Ireland",
+      "role": "WICKET_KEEPER",
+      "handedness": "RIGHT",
+      "battingStyle": "LEFT_HAND",
+      "bowlingStyle": null,
+      "archetype": "classical-keeper-batter",
+      "dna": {
+        "batting": 24,
+        "bowling": 12,
+        "fielding": 88,
+        "fitness": 88,
+        "experience": 34,
+        "powerHitting": 35,
+        "technique": 19,
+        "timing": 32,
+        "deathHitting": 34
+      },
+      "meta": {
+        "espnId": 1112535,
+        "age": 26,
+        "t20iMatches": 25,
+        "t20iBatSR": 105.22,
+        "t20iBatAvg": 10.06,
+        "lastUpdated": "2026-07"
+      }
+    }
+  ]
+}
