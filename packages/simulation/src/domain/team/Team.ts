@@ -68,12 +68,15 @@ export class Team {
   }
 
   private validateRoleLimit(selection: TeamSelection): OperationResult {
-    const role = selection.player.role;
-
-    const currentCount = this.roleCount(role);
-
+    const role  = selection.player.role as string;
     const limit = this.rules.roleLimits[role];
 
+    if (!limit) {
+      // Role not in rules — allow (permissive for simulation-created teams)
+      return { success: true };
+    }
+
+    const currentCount = this.roleCount(selection.player.role);
     if (currentCount >= limit.max) {
       return {
         success: false,
@@ -81,9 +84,7 @@ export class Team {
       };
     }
 
-    return {
-      success: true,
-    };
+    return { success: true };
   }
 
   private validateBattingPosition(selection: TeamSelection): OperationResult {

@@ -153,4 +153,17 @@ export class DraftSquad {
     }
     return required;
   }
+
+  /**
+   * Total number of players still required across all roles below minimum.
+   * Used to enforce minimum picks when slots are running low.
+   */
+  public totalRequiredPicks(): number {
+    let total = 0;
+    for (const [role, limit] of Object.entries(this.rules.limits)) {
+      const deficit = limit.min - this.roleCount(role as PlayerRole);
+      if (deficit > 0) total += deficit;
+    }
+    return total;
+  }
 }

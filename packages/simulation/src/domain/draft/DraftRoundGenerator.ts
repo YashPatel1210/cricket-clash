@@ -120,22 +120,8 @@ export class DraftRoundGenerator {
     pickRole("BATTER",        composition.batters);
     pickRole("ALL_ROUNDER",   composition.allRounders);
     pickRole("BOWLER",        composition.bowlers);
-          if (!usedIds.has(player.id)) {
-            selected.push(player);
-            usedIds.add(player.id);
-            picked++;
-          }
-        }
-      }
-    };
 
-    // Fill in this order: WK first (1-2, specific), then Batters, ARs, Bowlers
-    pickRole(PlayerRole.WICKET_KEEPER, composition.wicketKeepers);
-    pickRole(PlayerRole.BATTER,        composition.batters);
-    pickRole(PlayerRole.ALL_ROUNDER,   composition.allRounders);
-    pickRole(PlayerRole.BOWLER,        composition.bowlers);
-
-    // Pad to 11 if still short
+    // Pad to 11 if still short (e.g. country has few players of a role)
     for (const player of shuffled) {
       if (selected.length >= 11) break;
       if (!usedIds.has(player.id)) {

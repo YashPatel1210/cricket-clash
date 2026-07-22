@@ -15,9 +15,21 @@ const ROLE_LABEL: Record<string, string> = {
 };
 
 const COUNTRY_FLAG: Record<string, string> = {
-  "India":        "🇮🇳",
-  "Australia":    "🇦🇺",
-  "England":      "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+  "India": "🇮🇳", "Australia": "🇦🇺", "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Pakistan": "🇵🇰",
+  "South Africa": "🇿🇦", "New Zealand": "🇳🇿", "Bangladesh": "🇧🇩",
+  "Afghanistan": "🇦🇫", "Ireland": "🇮🇪",
+};
+
+function unavailableReason(status: DraftPickStatus): string {
+  switch (status) {
+    case DraftPickStatus.ALREADY_PICKED:         return "✓ picked";
+    case DraftPickStatus.ROLE_LIMIT_REACHED:     return "role full";
+    case DraftPickStatus.NO_ELIGIBLE_POSITION:   return "no position";
+    case DraftPickStatus.SQUAD_FULL:             return "squad full";
+    case DraftPickStatus.MUST_FILL_MINIMUM:      return "⚠ fill minimum first";
+    default: return "unavailable";
+  }
+}
   "Pakistan":     "🇵🇰",
   "South Africa": "🇿🇦",
   "New Zealand":  "🇳🇿",
@@ -32,21 +44,20 @@ interface Props {
 }
 
 export function PlayerCard({ option, onPick }: Props) {
-  const player      = option.player;
-  const selectable  = option.isSelectable();
+  const player        = option.player;
+  const selectable    = option.isSelectable();
   const alreadyPicked = option.status === DraftPickStatus.ALREADY_PICKED;
+  const mustFillMin   = option.status === DraftPickStatus.MUST_FILL_MINIMUM;
 
   const role      = player.role as string;
   const roleColor = ROLE_COLOR[role] ?? "bg-slate-700 text-slate-300 border-slate-600";
   const flag      = COUNTRY_FLAG[player.country as string] ?? "🌍";
 
-  // Best eligible position: middle of the range
   const bestPosition = selectable
     ? option.eligiblePositions[Math.floor(option.eligiblePositions.length / 2)]
     : null;
 
-  // Get batting / bowling ratings from player attributes
-  const attrs = player.attributes as { batting?: number; bowling?: number } | undefined;
+  const attrs      = player.attributes as { batting?: number; bowling?: number } | undefined;
   const batRating  = attrs?.batting  ?? 50;
   const bowlRating = attrs?.bowling  ?? 50;
 
@@ -56,16 +67,19 @@ export function PlayerCard({ option, onPick }: Props) {
         relative rounded-xl border p-3 transition-all select-none
         ${selectable
           ? "border-slate-600 bg-slate-800 hover:border-green-500 hover:bg-slate-800/90 cursor-pointer active:scale-95"
-          : "border-slate-700/50 bg-slate-800/40 opacity-50 cursor-not-allowed"
+          : mustFillMin
+            ? "border-orange-800/40 bg-slate-800/30 opacity-60 cursor-not-allowed"
+            : "border-slate-700/50 bg-slate-800/40 opacity-40 cursor-not-allowed"
         }
       `}
       onClick={() => selectable && bestPosition && onPick(bestPosition)}
     >
-      {/* Already picked badge */}
+      {/* Status badge */}
       {alreadyPicked && (
-        <div className="absolute top-2 right-2 text-xs bg-green-500/20 text-green-400 rounded px-1.5 py-0.5">
-          ✓
-        </div>
+        <div className="absolute top-2 right-2 text-xs bg-green-500/20 text-green-400 rounded px-1.5 py-0.5">✓</div>
+      )}
+      {mustFillMin && (
+        <div className="absolute top-2 right-2 text-xs bg-orange-500/20 text-orange-400 rounded px-1.5 py-0.5">⚠</div>
       )}
 
       <div className="flex items-start gap-2">
@@ -81,20 +95,20 @@ export function PlayerCard({ option, onPick }: Props) {
                 #{option.eligiblePositions.map((p) => p.getValue()).join(",")}
               </span>
             )}
+            {!selectable && !alreadyPicked && (
+              <span className="text-xs text-slate-600">{unavailableReason(option.status)}</span>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Rating bars */}
       <div className="mt-2 grid grid-cols-2 gap-1">
         <RatingBar label="BAT" value={batRating}  color="bg-blue-400" />
         <RatingBar label="BWL" value={bowlRating} color="bg-red-400"  />
       </div>
 
       {selectable && (
-        <div className="mt-1.5 text-center text-xs font-semibold text-green-400/80">
-          TAP TO PICK
-        </div>
+        <div className="mt-1.5 text-center text-xs font-semibold text-green-400/80">TAP TO PICK</div>
       )}
     </div>
   );

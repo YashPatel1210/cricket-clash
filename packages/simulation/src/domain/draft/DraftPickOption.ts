@@ -4,12 +4,6 @@ import { BattingPosition } from "./BattingPosition";
 import { DraftPickStatus } from "./DraftPickStatus";
 import { DraftSquad } from "./DraftSquad";
 
-/**
- * A single player-option in a draft round as seen by one participant.
- *
- * Carries the player, their eligible positions (where they CAN be placed),
- * and why they may or may not be selectable.
- */
 export class DraftPickOption {
   public constructor(
     public readonly player: Player,
@@ -24,30 +18,46 @@ export class DraftPickOption {
 
 /**
  * Builds DraftPickOptions for a round's players from one participant's perspective.
+ *
+ * Enforces:
+ *   1. Already picked → ALREADY_PICKED
+ *   2. Squad full → SQUAD_FULL
+ *   3. Role max reached → ROLE_LIMIT_REACHED
+ *   4. No valid position → NO_ELIGIBLE_POSITION
+ *   5. Minimum not met with few picks left → MUST_FILL_MINIMUM
+ *      (forces user to pick required roles only)
  */
 export function buildPickOptions(
   players: ReadonlyArray<Player>,
   squad: DraftSquad,
 ): ReadonlyArray<DraftPickOption> {
+  const rules         = squad.getRules();
+  const remaining     = rules.squadSize - squad.size();
+  const requiredRoles = squad.requiredRoles();
+  const totalRequired = squad.totalRequiredPicks();
+
+  // If remaining picks == required picks, force user to only pick required roles
+  const forceRequiredOnly = totalRequired > 0 && remaining <= totalRequired;
+
   return players.map((player) => {
-    // Already in this squad?
+    const role = player.role as string;
+
     if (squad.hasPlayer(player.id)) {
       return new DraftPickOption(player, DraftPickStatus.ALREADY_PICKED, []);
     }
 
-    // Squad already full?
     if (squad.isFull()) {
       return new DraftPickOption(player, DraftPickStatus.SQUAD_FULL, []);
     }
 
-    // Role limit reached?
-    const rules      = squad.getRules();
-    const roleCount  = squad.roleCount(player.role);
-    const roleLimit  = rules.limits[player.role];
+    // Forced minimum: must pick required roles before anything else
+    if (forceRequiredOnly && !requiredRoles.includes(role)) {
+      return new DraftPickOption(player, DraftPickStatus.MUST_FILL_MINIMUM, []);
+    }
 
-    // Guard: if role isn't in the limits definition, treat as available
+    const roleLimit = rules.limits[role];
     if (!roleLimit) {
-      console.warn(`[DraftPickOption] Unknown role: "${player.role}" for player ${player.name}`);
+      // Unknown role — allow but check positions
       const eligible = squad.eligiblePositionsFor(player);
       if (eligible.length === 0) {
         return new DraftPickOption(player, DraftPickStatus.NO_ELIGIBLE_POSITION, []);
@@ -55,11 +65,10 @@ export function buildPickOptions(
       return new DraftPickOption(player, DraftPickStatus.AVAILABLE, eligible);
     }
 
-    if (roleCount >= roleLimit.max) {
+    if (squad.roleCount(role as never) >= roleLimit.max) {
       return new DraftPickOption(player, DraftPickStatus.ROLE_LIMIT_REACHED, []);
     }
 
-    // Which positions can we actually place them?
     const eligible = squad.eligiblePositionsFor(player);
     if (eligible.length === 0) {
       return new DraftPickOption(player, DraftPickStatus.NO_ELIGIBLE_POSITION, []);

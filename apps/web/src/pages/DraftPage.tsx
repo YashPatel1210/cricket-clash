@@ -276,6 +276,20 @@ function DraftUI({ session, setSession, player1, player2, onMatchReady, onBack }
             </div>
           )}
 
+          {/* Minimum role warning */}
+          {(() => {
+            const req = activeParticipant.squad.requiredRoles();
+            const rem = 11 - activeParticipant.pickedCount();
+            const forced = req.length > 0 && rem <= activeParticipant.squad.totalRequiredPicks();
+            if (!forced || req.length === 0) return null;
+            const ROLE_NAMES: Record<string, string> = { BATTER: "Batter", WICKET_KEEPER: "Wicket Keeper", ALL_ROUNDER: "All-Rounder", BOWLER: "Bowler" };
+            return (
+              <div className="mb-3 px-3 py-2 bg-orange-900/30 border border-orange-700/50 rounded-lg text-xs text-orange-300">
+                ⚠ You must pick: {req.map((r) => ROLE_NAMES[r] ?? r).join(", ")} — other players are locked
+              </div>
+            );
+          })()}
+
           {/* Player grid — sorted by role order */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {options.map((opt) => (
