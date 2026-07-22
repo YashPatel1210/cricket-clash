@@ -1,3 +1,4 @@
-export * from "./models/Player";
-export * from "./types/PlayerRole";
-export * from "./SimulationEngine";
+export { SimulationEngine } from "./SimulationEngine";
+export * from "./domain/match";
+export * from "./domain/draft";
+export * from "./domain/player";

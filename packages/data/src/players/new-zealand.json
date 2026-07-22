@@ -13,15 +13,15 @@
       "bowlingStyle": null,
       "archetype": "aggressive-keeper-batter",
       "dna": {
-        "batting": 48,
+        "batting": 58,
         "bowling": 12,
         "fielding": 88,
         "fitness": 65,
         "experience": 37,
-        "powerHitting": 55,
-        "technique": 30,
-        "timing": 66,
-        "deathHitting": 59
+        "powerHitting": 51,
+        "technique": 40,
+        "timing": 54,
+        "deathHitting": 47
       },
       "meta": {
         "espnId": 7502,
