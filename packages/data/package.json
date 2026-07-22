@@ -7,12 +7,14 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:players": "tsx scripts/buildFromCrawler.ts"
   },
   "dependencies": {
     "@cricket-clash/shared": "workspace:*"
   },
   "devDependencies": {
+    "tsx": "^4.19.4",
     "typescript": "5.9.2"
   }
 }
