@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
   "dependencies": {
     "@cricket-clash/shared": "workspace:*",
     "@cricket-clash/data": "workspace:*"

@@ -14,7 +14,8 @@ export type DraftPickResult =
  * DraftSession — the complete two-player draft state.
  *
  * Each participant has their own independent queue of draft rounds.
- * Both advance in lock-step (turn-based).
+ * Each participant advances independently. This lets two remote players draft
+ * in parallel without one player's pick blocking the other player's next pack.
  *
  * FALLBACK GUARANTEE:
  *   If the current round contains no eligible players for a required role,
@@ -173,36 +174,22 @@ export class DraftSession {
   // ── Internal ─────────────────────────────────────────────────────────────
 
   private applyUpdate(userId: string, updated: DraftParticipant): DraftSession {
-    const newA = this.participantA.userId === userId ? updated : this.participantA;
-    const newB = this.participantB.userId === userId ? updated : this.participantB;
+    // A participant immediately moves to their next pack after acting. The
+    // opponent's state is intentionally untouched, enabling parallel drafting.
+    const nextParticipant = updated.isSquadComplete()
+      ? updated
+      : updated.advanceRound();
+    const newA = this.participantA.userId === userId ? nextParticipant : this.participantA;
+    const newB = this.participantB.userId === userId ? nextParticipant : this.participantB;
 
-    if (newA.hasMadePickThisRound && newB.hasMadePickThisRound) {
-      return this.advanceTurn(newA, newB);
-    }
-
+    const completed = newA.isSquadComplete() && newB.isSquadComplete();
     return new DraftSession(
-      this.id, newA, newB, this.turnNumber, this.status, this.playerPool,
-    );
-  }
-
-  private advanceTurn(
-    participantA: DraftParticipant,
-    participantB: DraftParticipant,
-  ): DraftSession {
-    const nextA = participantA.advanceRound();
-    const nextB = participantB.advanceRound();
-
-    const aDone = nextA.isSquadComplete() || !nextA.hasMoreRounds();
-    const bDone = nextB.isSquadComplete() || !nextB.hasMoreRounds();
-
-    if (aDone && bDone) {
-      return new DraftSession(
-        this.id, nextA, nextB, this.turnNumber + 1, DraftSessionStatus.COMPLETED, this.playerPool,
-      );
-    }
-
-    return new DraftSession(
-      this.id, nextA, nextB, this.turnNumber + 1, DraftSessionStatus.ACTIVE, this.playerPool,
+      this.id,
+      newA,
+      newB,
+      this.turnNumber + 1,
+      completed ? DraftSessionStatus.COMPLETED : DraftSessionStatus.ACTIVE,
+      this.playerPool,
     );
   }
 

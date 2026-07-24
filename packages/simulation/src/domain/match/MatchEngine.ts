@@ -22,7 +22,9 @@ export class MatchEngine {
 
   public simulate(match: Match): MatchResult {
     // ── Toss ──────────────────────────────────────────────────────────
-    const toss = this.tossEngine.conduct(match);
+    // A multiplayer room may have already conducted and announced the toss.
+    // Reuse that authoritative result instead of rolling a conflicting toss.
+    const toss = match.getToss() ?? this.tossEngine.conduct(match);
 
     const matchOrder = this.matchOrderResolver.resolve(match, toss);
 

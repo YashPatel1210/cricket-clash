@@ -6,6 +6,7 @@ import HomePage      from "./pages/HomePage";
 import DraftPage     from "./pages/DraftPage";
 import MatchPage     from "./pages/MatchPage";
 import ScorecardPage from "./pages/ScorecardPage";
+import RoomPage      from "./pages/RoomPage";
 
 // ── Error boundary ─────────────────────────────────────────────────────────────
 
@@ -52,6 +53,7 @@ class ErrorBoundary extends Component<
 type Screen =
   | { id: "home" }
   | { id: "draft"; player1: string; player2: string }
+  | { id: "room"; roomCode: string; accessToken: string }
   | { id: "match"; result: MatchResult; player1: string; player2: string }
   | { id: "scorecard"; result: MatchResult; player1: string; player2: string };
 
@@ -61,7 +63,7 @@ function AppContent() {
   if (screen.id === "home") {
     return (
       <HomePage
-        onStart={(p1, p2) => setScreen({ id: "draft", player1: p1, player2: p2 })}
+        onRoomReady={(roomCode, accessToken) => setScreen({ id: "room", roomCode, accessToken })}
       />
     );
   }
@@ -77,6 +79,10 @@ function AppContent() {
         onBack={() => setScreen({ id: "home" })}
       />
     );
+  }
+
+  if (screen.id === "room") {
+    return <RoomPage roomCode={screen.roomCode} accessToken={screen.accessToken} onLeave={() => setScreen({ id: "home" })} />;
   }
 
   if (screen.id === "match") {
