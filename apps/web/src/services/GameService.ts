@@ -5,7 +5,6 @@
  * Owns the lifecycle of a game session: draft → match simulation → result.
  */
 
-import { Country } from "@cricket-clash/shared";
 import type { PlayerData } from "@cricket-clash/data";
 
 import { PlayerFactory }      from "@cricket-clash/simulation/domain/player/PlayerFactory";
@@ -48,11 +47,11 @@ export function createDraftSession(
   const config = {
     ...DEFAULT_DRAFT_CONFIG,
     totalRounds: 16,
-    countries: [
-      Country.INDIA, Country.AUSTRALIA, Country.ENGLAND,
-      Country.BANGLADESH, Country.SOUTH_AFRICA, Country.AFGHANISTAN,
-      Country.IRELAND, Country.NEW_ZEALAND,
-    ].filter((c) => playerPool.playersFromCountry(c).length >= 11),
+    // Include every country represented in the browser player data. A country is
+    // only excluded when it cannot supply a complete 11-player draft round.
+    countries: playerPool.countries().filter(
+      (country) => playerPool.playersFromCountry(country).length >= 11,
+    ),
   };
   return engine.createSession(player1Name, player2Name, config);
 }

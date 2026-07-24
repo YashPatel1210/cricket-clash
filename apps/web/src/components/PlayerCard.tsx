@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { DraftPickOption } from "@cricket-clash/simulation/domain/draft/DraftPickOption";
 import { DraftPickStatus } from "@cricket-clash/simulation/domain/draft/DraftPickStatus";
 import type { BattingPosition } from "@cricket-clash/simulation/domain/draft/BattingPosition";
@@ -83,8 +84,8 @@ export function PlayerCard({ option, onPick }: Props) {
         </div>
       )}
 
-      <div className="flex items-start gap-2">
-        <div className="text-base leading-none mt-0.5 font-mono">{flag}</div>
+      <div className="flex items-start gap-3">
+        <PlayerAvatar name={player.name} imageUrl={player.imageUrl} />
         <div className="flex-1 min-w-0">
           <div className="font-semibold text-sm truncate text-white">{player.name}</div>
           <div className="flex items-center gap-1.5 mt-1 flex-wrap">
@@ -112,6 +113,37 @@ export function PlayerCard({ option, onPick }: Props) {
         <div className="mt-1.5 text-center text-xs font-semibold text-green-400/80">TAP TO PICK</div>
       )}
     </div>
+  );
+}
+
+function PlayerAvatar({ name, imageUrl }: { name: string; imageUrl?: string }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+  if (!imageUrl || imageFailed) {
+    return (
+      <div
+        aria-label={`${name} initials`}
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-700 text-sm font-bold text-slate-200 ring-1 ring-slate-600"
+      >
+        {initials}
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={imageUrl}
+      alt={`${name} profile`}
+      className="h-12 w-12 shrink-0 rounded-full object-cover bg-slate-700 ring-1 ring-slate-600"
+      onError={() => setImageFailed(true)}
+    />
   );
 }
 

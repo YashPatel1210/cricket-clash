@@ -28,6 +28,7 @@ export class PlayerFactory {
       data.battingStyle === "LEFT_HAND" ? BattingStyle.LEFT_HAND : BattingStyle.RIGHT_HAND,
       PlayerFactory.parseBowlingStyle(data.bowlingStyle),
       data.dna,
+      data.imageUrl,
     );
   }
 

@@ -82,9 +82,10 @@ export default function MatchPage({ result, player1, player2, onFinished }: Prop
   const currentRuns    = current?.runningRuns    ?? 0;
   const currentWickets = current?.runningWickets ?? 0;
 
-  // Get team names from the innings
-  const team1Name = result.getFirstInnings().getInnings().getBattingTeam().getSelections()[0]?.player.country ?? "Team 1";
-  const team2Name = result.getSecondInnings().getInnings().getBattingTeam().getSelections()[0]?.player.country ?? "Team 2";
+  // Draft squads belong to the people playing, not to the country of whichever
+  // player happens to be first in the selected XI.
+  const team1Name = player1;
+  const team2Name = player2;
 
   const firstScore = result.getFirstInnings().getInnings().getScore();
 

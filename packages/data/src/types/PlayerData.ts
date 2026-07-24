@@ -46,6 +46,8 @@ export interface PlayerMeta {
 export interface PlayerData {
   id:           string;
   name:         string;
+  /** CDN profile image URL sourced from the player crawler. */
+  imageUrl?:     string;
   /** Matches Country enum value, e.g. "India" */
   country:      string;
   /** Matches PlayerRole enum value, e.g. "BATTER" */

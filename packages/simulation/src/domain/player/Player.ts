@@ -18,5 +18,6 @@ export class Player {
     public readonly battingStyle: BattingStyle,
     public readonly bowlingStyle: BowlingStyle | null,
     public readonly attributes: PlayerAttributes,
+    public readonly imageUrl?: string,
   ) {}
 }

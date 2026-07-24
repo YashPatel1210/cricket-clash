@@ -6,6 +6,7 @@
     {
       "id": "afghanistan-793463",
       "name": "Rashid Khan",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383228.1.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -13,15 +14,15 @@
       "bowlingStyle": "Right Arm Leg Spin",
       "archetype": "spin-all-rounder",
       "dna": {
-        "batting": 53,
+        "batting": 54,
         "bowling": 98,
         "fielding": 78,
         "fitness": 84,
         "experience": 66,
-        "powerHitting": 46,
-        "technique": 35,
-        "timing": 48,
-        "deathHitting": 41,
+        "powerHitting": 47,
+        "technique": 36,
+        "timing": 49,
+        "deathHitting": 42,
         "deathBowling": 99,
         "variations": 94
       },
@@ -39,6 +40,7 @@
     {
       "id": "afghanistan-914171",
       "name": "Qais Ahmad",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/390000/390026.5.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -47,7 +49,7 @@
       "archetype": "leg-spinner",
       "dna": {
         "batting": 49,
-        "bowling": 95,
+        "bowling": 96,
         "fielding": 68,
         "fitness": 88,
         "experience": 29,
@@ -55,8 +57,8 @@
         "technique": 31,
         "timing": 44,
         "deathHitting": 37,
-        "deathBowling": 98,
-        "variations": 91
+        "deathBowling": 99,
+        "variations": 92
       },
       "meta": {
         "espnId": 914171,
@@ -72,6 +74,7 @@
     {
       "id": "afghanistan-533956",
       "name": "Rahmat Shah",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/320500/320505.1.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -79,14 +82,14 @@
       "bowlingStyle": "Right Arm Leg Spin",
       "archetype": "spin-all-rounder",
       "dna": {
-        "batting": 61,
+        "batting": 62,
         "bowling": 73,
         "fielding": 78,
         "fitness": 76,
         "experience": 25,
-        "powerHitting": 51,
-        "technique": 44,
-        "timing": 53,
+        "powerHitting": 52,
+        "technique": 45,
+        "timing": 54,
         "deathHitting": 45,
         "deathBowling": 73,
         "variations": 71
@@ -103,41 +106,9 @@
       }
     },
     {
-      "id": "afghanistan-974109",
-      "name": "Mujeeb Ur Rahman",
-      "country": "Afghanistan",
-      "role": "BOWLER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Off Spin",
-      "archetype": "off-spinner",
-      "dna": {
-        "batting": 34,
-        "bowling": 92,
-        "fielding": 68,
-        "fitness": 88,
-        "experience": 48,
-        "powerHitting": 24,
-        "technique": 18,
-        "timing": 28,
-        "deathHitting": 22,
-        "deathBowling": 95,
-        "variations": 88
-      },
-      "meta": {
-        "espnId": 974109,
-        "age": 25,
-        "t20iMatches": 65,
-        "t20iBatSR": 113.33,
-        "t20iBatAvg": 9.44,
-        "t20iBowlEco": 6.51,
-        "t20iWkts": 87,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-25913",
       "name": "Mohammad Nabi",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/381900/381920.2.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -145,17 +116,17 @@
       "bowlingStyle": "Right Arm Off Spin",
       "archetype": "spin-all-rounder",
       "dna": {
-        "batting": 75,
-        "bowling": 44,
+        "batting": 78,
+        "bowling": 46,
         "fielding": 78,
         "fitness": 65,
         "experience": 80,
-        "powerHitting": 67,
-        "technique": 56,
-        "timing": 68,
-        "deathHitting": 60,
-        "deathBowling": 44,
-        "variations": 46
+        "powerHitting": 70,
+        "technique": 58,
+        "timing": 71,
+        "deathHitting": 62,
+        "deathBowling": 46,
+        "variations": 48
       },
       "meta": {
         "espnId": 25913,
@@ -169,8 +140,43 @@
       }
     },
     {
+      "id": "afghanistan-974109",
+      "name": "Mujeeb Ur Rahman",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383240.1.png",
+      "country": "Afghanistan",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Off Spin",
+      "archetype": "off-spinner",
+      "dna": {
+        "batting": 32,
+        "bowling": 91,
+        "fielding": 68,
+        "fitness": 88,
+        "experience": 48,
+        "powerHitting": 22,
+        "technique": 16,
+        "timing": 26,
+        "deathHitting": 20,
+        "deathBowling": 94,
+        "variations": 87
+      },
+      "meta": {
+        "espnId": 974109,
+        "age": 25,
+        "t20iMatches": 65,
+        "t20iBatSR": 113.33,
+        "t20iBatAvg": 9.44,
+        "t20iBowlEco": 6.51,
+        "t20iWkts": 87,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
       "id": "afghanistan-1015437",
       "name": "Zubairullah Akbari",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/386600/386615.1.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -178,17 +184,17 @@
       "bowlingStyle": "Left Arm Orthodox",
       "archetype": "pace-all-rounder",
       "dna": {
-        "batting": 71,
-        "bowling": 47,
+        "batting": 73,
+        "bowling": 48,
         "fielding": 78,
         "fitness": 88,
         "experience": 26,
-        "powerHitting": 63,
-        "technique": 54,
-        "timing": 62,
-        "deathHitting": 54,
-        "deathBowling": 47,
-        "variations": 48
+        "powerHitting": 64,
+        "technique": 55,
+        "timing": 64,
+        "deathHitting": 56,
+        "deathBowling": 48,
+        "variations": 49
       },
       "meta": {
         "espnId": 1015437,
@@ -204,6 +210,7 @@
     {
       "id": "afghanistan-819429",
       "name": "Azmatullah Omarzai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383229.1.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -211,17 +218,17 @@
       "bowlingStyle": "Right Arm Medium",
       "archetype": "pace-all-rounder",
       "dna": {
-        "batting": 56,
-        "bowling": 58,
+        "batting": 57,
+        "bowling": 57,
         "fielding": 78,
         "fitness": 88,
         "experience": 49,
-        "powerHitting": 48,
-        "technique": 39,
-        "timing": 50,
+        "powerHitting": 49,
+        "technique": 40,
+        "timing": 51,
         "deathHitting": 43,
-        "deathBowling": 58,
-        "variations": 58
+        "deathBowling": 57,
+        "variations": 57
       },
       "meta": {
         "espnId": 819429,
@@ -235,74 +242,9 @@
       }
     },
     {
-      "id": "afghanistan-311427",
-      "name": "Hamid Hassan",
-      "country": "Afghanistan",
-      "role": "BOWLER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Fast",
-      "archetype": "death-pace-bowler",
-      "dna": {
-        "batting": 20,
-        "bowling": 89,
-        "fielding": 68,
-        "fitness": 65,
-        "experience": 34,
-        "powerHitting": 8,
-        "technique": 6,
-        "timing": 11,
-        "deathHitting": 6,
-        "deathBowling": 92,
-        "variations": 85
-      },
-      "meta": {
-        "espnId": 311427,
-        "age": 39,
-        "t20iMatches": 25,
-        "t20iBatSR": 91.2,
-        "t20iBatAvg": 5.92,
-        "t20iBowlEco": 6.39,
-        "t20iWkts": 35,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
-      "id": "afghanistan-568136",
-      "name": "Fareed Ahmad",
-      "country": "Afghanistan",
-      "role": "BOWLER",
-      "handedness": "RIGHT",
-      "battingStyle": "LEFT_HAND",
-      "bowlingStyle": "Left Arm Fast",
-      "archetype": "pace-bowler",
-      "dna": {
-        "batting": 31,
-        "bowling": 75,
-        "fielding": 68,
-        "fitness": 76,
-        "experience": 39,
-        "powerHitting": 20,
-        "technique": 15,
-        "timing": 23,
-        "deathHitting": 17,
-        "deathBowling": 75,
-        "variations": 73
-      },
-      "meta": {
-        "espnId": 568136,
-        "age": 32,
-        "t20iMatches": 38,
-        "t20iBatSR": 103.28,
-        "t20iBatAvg": 8.72,
-        "t20iBowlEco": 8.65,
-        "t20iWkts": 47,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-633366",
       "name": "Shahidullah",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/390400/390486.2.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -310,17 +252,17 @@
       "bowlingStyle": "Left Arm Orthodox",
       "archetype": "pace-all-rounder",
       "dna": {
-        "batting": 86,
-        "bowling": 20,
+        "batting": 89,
+        "bowling": 22,
         "fielding": 78,
         "fitness": 88,
         "experience": 28,
-        "powerHitting": 75,
-        "technique": 70,
-        "timing": 75,
-        "deathHitting": 65,
-        "deathBowling": 20,
-        "variations": 25
+        "powerHitting": 77,
+        "technique": 72,
+        "timing": 78,
+        "deathHitting": 67,
+        "deathBowling": 22,
+        "variations": 26
       },
       "meta": {
         "espnId": 633366,
@@ -334,41 +276,43 @@
       }
     },
     {
-      "id": "afghanistan-1326798",
-      "name": "AM Ghazanfar",
+      "id": "afghanistan-311427",
+      "name": "Hamid Hassan",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/217600/217619.3.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
       "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Off Spin",
-      "archetype": "off-spinner",
+      "bowlingStyle": "Right Arm Fast",
+      "archetype": "death-pace-bowler",
       "dna": {
-        "batting": 17,
-        "bowling": 85,
+        "batting": 19,
+        "bowling": 90,
         "fielding": 68,
-        "fitness": 88,
-        "experience": 27,
+        "fitness": 65,
+        "experience": 34,
         "powerHitting": 7,
-        "technique": 4,
-        "timing": 9,
-        "deathHitting": 4,
-        "deathBowling": 85,
-        "variations": 82
+        "technique": 6,
+        "timing": 10,
+        "deathHitting": 5,
+        "deathBowling": 93,
+        "variations": 86
       },
       "meta": {
-        "espnId": 1326798,
-        "age": 20,
-        "t20iMatches": 5,
-        "t20iBatSR": 90.26,
-        "t20iBatAvg": 4.63,
-        "t20iBowlEco": 7.21,
-        "t20iWkts": 98,
+        "espnId": 311427,
+        "age": 39,
+        "t20iMatches": 25,
+        "t20iBatSR": 91.2,
+        "t20iBatAvg": 5.92,
+        "t20iBowlEco": 6.39,
+        "t20iWkts": 35,
         "lastUpdated": "2026-07"
       }
     },
     {
       "id": "afghanistan-352048",
       "name": "Gulbadin Naib",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/381900/381925.2.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -376,17 +320,17 @@
       "bowlingStyle": "Right Arm Medium",
       "archetype": "pace-all-rounder",
       "dna": {
-        "batting": 61,
-        "bowling": 41,
+        "batting": 63,
+        "bowling": 43,
         "fielding": 78,
         "fitness": 76,
         "experience": 56,
-        "powerHitting": 52,
-        "technique": 44,
-        "timing": 53,
-        "deathHitting": 46,
-        "deathBowling": 41,
-        "variations": 43
+        "powerHitting": 54,
+        "technique": 46,
+        "timing": 55,
+        "deathHitting": 47,
+        "deathBowling": 43,
+        "variations": 45
       },
       "meta": {
         "espnId": 352048,
@@ -400,41 +344,9 @@
       }
     },
     {
-      "id": "afghanistan-793447",
-      "name": "Naveen-ul-Haq",
-      "country": "Afghanistan",
-      "role": "BOWLER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Medium",
-      "archetype": "pace-bowler",
-      "dna": {
-        "batting": 14,
-        "bowling": 88,
-        "fielding": 68,
-        "fitness": 88,
-        "experience": 42,
-        "powerHitting": 2,
-        "technique": 2,
-        "timing": 6,
-        "deathHitting": 1,
-        "deathBowling": 88,
-        "variations": 84
-      },
-      "meta": {
-        "espnId": 793447,
-        "age": 27,
-        "t20iMatches": 48,
-        "t20iBatSR": 67.69,
-        "t20iBatAvg": 4.88,
-        "t20iBowlEco": 7.78,
-        "t20iWkts": 67,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-440970",
       "name": "Hashmatullah Shahidi",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/320400/320495.1.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -442,15 +354,15 @@
       "bowlingStyle": "Right Arm Off Spin",
       "archetype": "classical-batter",
       "dna": {
-        "batting": 88,
+        "batting": 92,
         "bowling": 12,
         "fielding": 74,
         "fitness": 76,
         "experience": 27,
-        "powerHitting": 75,
-        "technique": 73,
-        "timing": 76,
-        "deathHitting": 66
+        "powerHitting": 79,
+        "technique": 76,
+        "timing": 80,
+        "deathHitting": 69
       },
       "meta": {
         "espnId": 440970,
@@ -464,6 +376,7 @@
     {
       "id": "afghanistan-318339",
       "name": "Samiullah Shinwari",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/289900/289939.1.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -471,17 +384,17 @@
       "bowlingStyle": "Right Arm Leg Spin",
       "archetype": "spin-all-rounder",
       "dna": {
-        "batting": 61,
-        "bowling": 38,
+        "batting": 63,
+        "bowling": 41,
         "fielding": 78,
         "fitness": 65,
         "experience": 48,
-        "powerHitting": 51,
-        "technique": 45,
-        "timing": 52,
-        "deathHitting": 44,
-        "deathBowling": 41,
-        "variations": 41
+        "powerHitting": 53,
+        "technique": 46,
+        "timing": 54,
+        "deathHitting": 46,
+        "deathBowling": 44,
+        "variations": 43
       },
       "meta": {
         "espnId": 318339,
@@ -495,8 +408,77 @@
       }
     },
     {
+      "id": "afghanistan-793447",
+      "name": "Naveen-ul-Haq",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383238.1.png",
+      "country": "Afghanistan",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 14,
+        "bowling": 89,
+        "fielding": 68,
+        "fitness": 88,
+        "experience": 42,
+        "powerHitting": 2,
+        "technique": 2,
+        "timing": 6,
+        "deathHitting": 1,
+        "deathBowling": 89,
+        "variations": 85
+      },
+      "meta": {
+        "espnId": 793447,
+        "age": 27,
+        "t20iMatches": 48,
+        "t20iBatSR": 67.69,
+        "t20iBatAvg": 4.88,
+        "t20iBowlEco": 7.78,
+        "t20iWkts": 67,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "afghanistan-568136",
+      "name": "Fareed Ahmad",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/381900/381923.2.png",
+      "country": "Afghanistan",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "LEFT_HAND",
+      "bowlingStyle": "Left Arm Fast",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 28,
+        "bowling": 74,
+        "fielding": 68,
+        "fitness": 76,
+        "experience": 39,
+        "powerHitting": 17,
+        "technique": 13,
+        "timing": 21,
+        "deathHitting": 15,
+        "deathBowling": 74,
+        "variations": 72
+      },
+      "meta": {
+        "espnId": 568136,
+        "age": 32,
+        "t20iMatches": 38,
+        "t20iBatSR": 103.28,
+        "t20iBatAvg": 8.72,
+        "t20iBowlEco": 8.65,
+        "t20iWkts": 47,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
       "id": "afghanistan-524049",
       "name": "Najibullah Zadran",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/381900/381935.2.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -504,15 +486,15 @@
       "bowlingStyle": "Right Arm Off Spin",
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 85,
+        "batting": 89,
         "bowling": 12,
         "fielding": 74,
         "fitness": 76,
         "experience": 64,
-        "powerHitting": 77,
-        "technique": 67,
-        "timing": 78,
-        "deathHitting": 68
+        "powerHitting": 80,
+        "technique": 70,
+        "timing": 81,
+        "deathHitting": 71
       },
       "meta": {
         "espnId": 524049,
@@ -524,41 +506,43 @@
       }
     },
     {
-      "id": "afghanistan-516561",
-      "name": "Dawlat Zadran",
+      "id": "afghanistan-1326798",
+      "name": "AM Ghazanfar",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/390500/390546.2.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
       "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Fast",
-      "archetype": "pace-bowler",
+      "bowlingStyle": "Right Arm Off Spin",
+      "archetype": "off-spinner",
       "dna": {
-        "batting": 38,
-        "bowling": 55,
+        "batting": 16,
+        "bowling": 83,
         "fielding": 68,
-        "fitness": 65,
-        "experience": 37,
-        "powerHitting": 37,
-        "technique": 21,
-        "timing": 41,
-        "deathHitting": 36,
-        "deathBowling": 55,
-        "variations": 55
+        "fitness": 88,
+        "experience": 27,
+        "powerHitting": 6,
+        "technique": 3,
+        "timing": 8,
+        "deathHitting": 4,
+        "deathBowling": 83,
+        "variations": 80
       },
       "meta": {
-        "espnId": 516561,
-        "age": 38,
-        "t20iMatches": 34,
-        "t20iBatSR": 161.9,
-        "t20iBatAvg": 7.55,
-        "t20iBowlEco": 7.93,
-        "t20iWkts": 40,
+        "espnId": 1326798,
+        "age": 20,
+        "t20iMatches": 5,
+        "t20iBatSR": 90.26,
+        "t20iBatAvg": 4.63,
+        "t20iBowlEco": 7.21,
+        "t20iWkts": 98,
         "lastUpdated": "2026-07"
       }
     },
     {
       "id": "afghanistan-419873",
       "name": "Mohammad Shahzad",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/320500/320500.1.png",
       "country": "Afghanistan",
       "role": "WICKET_KEEPER",
       "handedness": "RIGHT",
@@ -566,15 +550,15 @@
       "bowlingStyle": null,
       "archetype": "classical-keeper-batter",
       "dna": {
-        "batting": 81,
+        "batting": 84,
         "bowling": 12,
         "fielding": 88,
         "fitness": 65,
         "experience": 51,
-        "powerHitting": 72,
-        "technique": 64,
-        "timing": 73,
-        "deathHitting": 64
+        "powerHitting": 75,
+        "technique": 66,
+        "timing": 76,
+        "deathHitting": 66
       },
       "meta": {
         "espnId": 419873,
@@ -586,41 +570,39 @@
       }
     },
     {
-      "id": "afghanistan-974175",
-      "name": "Fazalhaq Farooqi",
+      "id": "afghanistan-921509",
+      "name": "Ibrahim Zadran",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383225.1.png",
       "country": "Afghanistan",
-      "role": "BOWLER",
+      "role": "BATTER",
       "handedness": "RIGHT",
       "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Left Arm Fast",
-      "archetype": "pace-bowler",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "middle-order-batter",
       "dna": {
-        "batting": 11,
-        "bowling": 81,
-        "fielding": 68,
+        "batting": 83,
+        "bowling": 12,
+        "fielding": 74,
         "fitness": 88,
-        "experience": 44,
-        "powerHitting": 1,
-        "technique": 1,
-        "timing": 3,
-        "deathHitting": 1,
-        "deathBowling": 84,
-        "variations": 78
+        "experience": 48,
+        "powerHitting": 69,
+        "technique": 67,
+        "timing": 71,
+        "deathHitting": 61
       },
       "meta": {
-        "espnId": 974175,
-        "age": 26,
-        "t20iMatches": 54,
-        "t20iBatSR": 45.94,
-        "t20iBatAvg": 4.25,
-        "t20iBowlEco": 7.02,
-        "t20iWkts": 66,
+        "espnId": 921509,
+        "age": 25,
+        "t20iMatches": 65,
+        "t20iBatSR": 114.83,
+        "t20iBatAvg": 33.3,
         "lastUpdated": "2026-07"
       }
     },
     {
       "id": "afghanistan-793467",
       "name": "Karim Janat",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383232.1.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -629,7 +611,7 @@
       "archetype": "pace-all-rounder",
       "dna": {
         "batting": 53,
-        "bowling": 39,
+        "bowling": 42,
         "fielding": 78,
         "fitness": 84,
         "experience": 52,
@@ -637,8 +619,8 @@
         "technique": 36,
         "timing": 45,
         "deathHitting": 38,
-        "deathBowling": 39,
-        "variations": 41
+        "deathBowling": 42,
+        "variations": 44
       },
       "meta": {
         "espnId": 793467,
@@ -652,35 +634,6 @@
       }
     },
     {
-      "id": "afghanistan-921509",
-      "name": "Ibrahim Zadran",
-      "country": "Afghanistan",
-      "role": "BATTER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Medium",
-      "archetype": "middle-order-batter",
-      "dna": {
-        "batting": 79,
-        "bowling": 12,
-        "fielding": 74,
-        "fitness": 88,
-        "experience": 48,
-        "powerHitting": 66,
-        "technique": 64,
-        "timing": 68,
-        "deathHitting": 58
-      },
-      "meta": {
-        "espnId": 921509,
-        "age": 25,
-        "t20iMatches": 65,
-        "t20iBatSR": 114.83,
-        "t20iBatAvg": 33.3,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-976445",
       "name": "Imran Mir",
       "country": "Afghanistan",
@@ -690,15 +643,15 @@
       "bowlingStyle": null,
       "archetype": "aggressive-opener",
       "dna": {
-        "batting": 79,
+        "batting": 82,
         "bowling": 12,
         "fielding": 74,
         "fitness": 88,
         "experience": 25,
-        "powerHitting": 76,
-        "technique": 61,
-        "timing": 74,
-        "deathHitting": 67
+        "powerHitting": 78,
+        "technique": 63,
+        "timing": 77,
+        "deathHitting": 69
       },
       "meta": {
         "espnId": 976445,
@@ -710,37 +663,9 @@
       }
     },
     {
-      "id": "afghanistan-974087",
-      "name": "Rahmanullah Gurbaz",
-      "country": "Afghanistan",
-      "role": "WICKET_KEEPER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Medium",
-      "archetype": "classical-keeper-batter",
-      "dna": {
-        "batting": 78,
-        "bowling": 12,
-        "fielding": 88,
-        "fitness": 88,
-        "experience": 56,
-        "powerHitting": 73,
-        "technique": 60,
-        "timing": 71,
-        "deathHitting": 63
-      },
-      "meta": {
-        "espnId": 974087,
-        "age": 25,
-        "t20iMatches": 87,
-        "t20iBatSR": 135.55,
-        "t20iBatAvg": 26.2,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-308235",
       "name": "Javed Ahmadi",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/150100/150121.3.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -748,15 +673,15 @@
       "bowlingStyle": "Right Arm Off Spin",
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 77,
+        "batting": 81,
         "bowling": 12,
         "fielding": 74,
         "fitness": 76,
         "experience": 26,
-        "powerHitting": 70,
-        "technique": 60,
-        "timing": 70,
-        "deathHitting": 61
+        "powerHitting": 73,
+        "technique": 63,
+        "timing": 73,
+        "deathHitting": 64
       },
       "meta": {
         "espnId": 308235,
@@ -768,41 +693,73 @@
       }
     },
     {
-      "id": "afghanistan-1304665",
-      "name": "Abdollah Ahmadzai",
+      "id": "afghanistan-974087",
+      "name": "Rahmanullah Gurbaz",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383237.1.png",
+      "country": "Afghanistan",
+      "role": "WICKET_KEEPER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "classical-keeper-batter",
+      "dna": {
+        "batting": 81,
+        "bowling": 12,
+        "fielding": 88,
+        "fitness": 88,
+        "experience": 56,
+        "powerHitting": 75,
+        "technique": 62,
+        "timing": 73,
+        "deathHitting": 66
+      },
+      "meta": {
+        "espnId": 974087,
+        "age": 25,
+        "t20iMatches": 87,
+        "t20iBatSR": 135.55,
+        "t20iBatAvg": 26.2,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "afghanistan-974175",
+      "name": "Fazalhaq Farooqi",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383236.1.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
       "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Medium",
+      "bowlingStyle": "Left Arm Fast",
       "archetype": "pace-bowler",
       "dna": {
-        "batting": 13,
-        "bowling": 75,
+        "batting": 11,
+        "bowling": 80,
         "fielding": 68,
         "fitness": 88,
-        "experience": 28,
+        "experience": 44,
         "powerHitting": 1,
         "technique": 1,
-        "timing": 5,
+        "timing": 3,
         "deathHitting": 1,
-        "deathBowling": 71,
-        "variations": 73
+        "deathBowling": 83,
+        "variations": 77
       },
       "meta": {
-        "espnId": 1304665,
-        "age": 23,
-        "t20iMatches": 9,
-        "t20iBatSR": 76.66,
-        "t20iBatAvg": 3.28,
-        "t20iBowlEco": 8.96,
-        "t20iWkts": 13,
+        "espnId": 974175,
+        "age": 26,
+        "t20iMatches": 54,
+        "t20iBatSR": 45.94,
+        "t20iBatAvg": 4.25,
+        "t20iBowlEco": 7.02,
+        "t20iWkts": 66,
         "lastUpdated": "2026-07"
       }
     },
     {
       "id": "afghanistan-793457",
       "name": "Hazratullah Zazai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383222.1.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -810,15 +767,15 @@
       "bowlingStyle": "Left Arm Orthodox",
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 76,
+        "batting": 79,
         "bowling": 12,
         "fielding": 74,
         "fitness": 84,
         "experience": 41,
-        "powerHitting": 71,
-        "technique": 59,
-        "timing": 69,
-        "deathHitting": 62
+        "powerHitting": 74,
+        "technique": 61,
+        "timing": 71,
+        "deathHitting": 64
       },
       "meta": {
         "espnId": 793457,
@@ -830,41 +787,9 @@
       }
     },
     {
-      "id": "afghanistan-712219",
-      "name": "Zahir Khan",
-      "country": "Afghanistan",
-      "role": "BOWLER",
-      "handedness": "RIGHT",
-      "battingStyle": "LEFT_HAND",
-      "bowlingStyle": "Left Arm Wrist Spin",
-      "archetype": "wrist-spinner",
-      "dna": {
-        "batting": 17,
-        "bowling": 71,
-        "fielding": 68,
-        "fitness": 84,
-        "experience": 26,
-        "powerHitting": 5,
-        "technique": 4,
-        "timing": 9,
-        "deathHitting": 3,
-        "deathBowling": 71,
-        "variations": 69
-      },
-      "meta": {
-        "espnId": 712219,
-        "age": 28,
-        "t20iMatches": 4,
-        "t20iBatSR": 86.25,
-        "t20iBatAvg": 4.52,
-        "t20iBowlEco": 7.51,
-        "t20iWkts": 160,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-976429",
       "name": "Farmanullah",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/290900/290926.1.jpg",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -872,17 +797,17 @@
       "bowlingStyle": "Right Arm Medium",
       "archetype": "pace-all-rounder",
       "dna": {
-        "batting": 70,
-        "bowling": 17,
+        "batting": 72,
+        "bowling": 18,
         "fielding": 78,
         "fitness": 88,
         "experience": 25,
-        "powerHitting": 63,
-        "technique": 53,
-        "timing": 62,
-        "deathHitting": 54,
-        "deathBowling": 13,
-        "variations": 22
+        "powerHitting": 64,
+        "technique": 55,
+        "timing": 64,
+        "deathHitting": 56,
+        "deathBowling": 14,
+        "variations": 23
       },
       "meta": {
         "espnId": 976429,
@@ -905,15 +830,15 @@
       "bowlingStyle": null,
       "archetype": "aggressive-opener",
       "dna": {
-        "batting": 75,
+        "batting": 78,
         "bowling": 12,
         "fielding": 74,
         "fitness": 82,
         "experience": 26,
-        "powerHitting": 70,
-        "technique": 57,
-        "timing": 69,
-        "deathHitting": 62
+        "powerHitting": 73,
+        "technique": 60,
+        "timing": 72,
+        "deathHitting": 64
       },
       "meta": {
         "espnId": 1364157,
@@ -925,8 +850,43 @@
       }
     },
     {
+      "id": "afghanistan-516561",
+      "name": "Dawlat Zadran",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/289900/289943.1.png",
+      "country": "Afghanistan",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Fast",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 35,
+        "bowling": 54,
+        "fielding": 68,
+        "fitness": 65,
+        "experience": 37,
+        "powerHitting": 34,
+        "technique": 18,
+        "timing": 38,
+        "deathHitting": 34,
+        "deathBowling": 54,
+        "variations": 55
+      },
+      "meta": {
+        "espnId": 516561,
+        "age": 38,
+        "t20iMatches": 34,
+        "t20iBatSR": 161.9,
+        "t20iBatAvg": 7.55,
+        "t20iBowlEco": 7.93,
+        "t20iWkts": 40,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
       "id": "afghanistan-1199434",
       "name": "Nangeyalia Kharote",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383233.3.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -934,17 +894,17 @@
       "bowlingStyle": "Left Arm Orthodox",
       "archetype": "pace-all-rounder",
       "dna": {
-        "batting": 44,
-        "bowling": 41,
+        "batting": 43,
+        "bowling": 44,
         "fielding": 78,
         "fitness": 88,
         "experience": 28,
-        "powerHitting": 35,
-        "technique": 27,
-        "timing": 38,
+        "powerHitting": 34,
+        "technique": 26,
+        "timing": 37,
         "deathHitting": 31,
-        "deathBowling": 44,
-        "variations": 43
+        "deathBowling": 47,
+        "variations": 46
       },
       "meta": {
         "espnId": 1199434,
@@ -958,8 +918,43 @@
       }
     },
     {
+      "id": "afghanistan-1304665",
+      "name": "Abdollah Ahmadzai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/405400/405442.1.png",
+      "country": "Afghanistan",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 12,
+        "bowling": 74,
+        "fielding": 68,
+        "fitness": 88,
+        "experience": 28,
+        "powerHitting": 1,
+        "technique": 1,
+        "timing": 4,
+        "deathHitting": 1,
+        "deathBowling": 70,
+        "variations": 72
+      },
+      "meta": {
+        "espnId": 1304665,
+        "age": 23,
+        "t20iMatches": 9,
+        "t20iBatSR": 76.66,
+        "t20iBatAvg": 3.28,
+        "t20iBowlEco": 8.96,
+        "t20iWkts": 13,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
       "id": "afghanistan-1276922",
       "name": "Ijaz Ahmad Ahmadzai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/347800/347816.1.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -967,15 +962,15 @@
       "bowlingStyle": "Right Arm Medium",
       "archetype": "pace-all-rounder",
       "dna": {
-        "batting": 72,
+        "batting": 74,
         "bowling": 12,
         "fielding": 78,
         "fitness": 88,
         "experience": 26,
-        "powerHitting": 66,
-        "technique": 54,
-        "timing": 65,
-        "deathHitting": 58
+        "powerHitting": 68,
+        "technique": 56,
+        "timing": 67,
+        "deathHitting": 59
       },
       "meta": {
         "espnId": 1276922,
@@ -987,8 +982,73 @@
       }
     },
     {
+      "id": "afghanistan-712219",
+      "name": "Zahir Khan",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/394300/394317.5.png",
+      "country": "Afghanistan",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "LEFT_HAND",
+      "bowlingStyle": "Left Arm Wrist Spin",
+      "archetype": "wrist-spinner",
+      "dna": {
+        "batting": 16,
+        "bowling": 70,
+        "fielding": 68,
+        "fitness": 84,
+        "experience": 26,
+        "powerHitting": 4,
+        "technique": 3,
+        "timing": 8,
+        "deathHitting": 3,
+        "deathBowling": 70,
+        "variations": 69
+      },
+      "meta": {
+        "espnId": 712219,
+        "age": 28,
+        "t20iMatches": 4,
+        "t20iBatSR": 86.25,
+        "t20iBatAvg": 4.52,
+        "t20iBowlEco": 7.51,
+        "t20iWkts": 160,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "afghanistan-320284",
+      "name": "Rais Ahmadzai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/303200/303286.jpg",
+      "country": "Afghanistan",
+      "role": "BATTER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Off Spin",
+      "archetype": "middle-order-batter",
+      "dna": {
+        "batting": 71,
+        "bowling": 12,
+        "fielding": 74,
+        "fitness": 65,
+        "experience": 28,
+        "powerHitting": 55,
+        "technique": 56,
+        "timing": 59,
+        "deathHitting": 48
+      },
+      "meta": {
+        "espnId": 320284,
+        "age": 42,
+        "t20iMatches": 8,
+        "t20iBatSR": 108.33,
+        "t20iBatAvg": 30.33,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
       "id": "afghanistan-524050",
       "name": "Sayed Shirzad",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/390400/390484.2.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -996,17 +1056,17 @@
       "bowlingStyle": "Left Arm Medium",
       "archetype": "pace-bowler",
       "dna": {
-        "batting": 39,
-        "bowling": 44,
+        "batting": 36,
+        "bowling": 46,
         "fielding": 68,
         "fitness": 76,
         "experience": 26,
-        "powerHitting": 28,
-        "technique": 22,
-        "timing": 32,
-        "deathHitting": 25,
-        "deathBowling": 44,
-        "variations": 46
+        "powerHitting": 26,
+        "technique": 20,
+        "timing": 30,
+        "deathHitting": 23,
+        "deathBowling": 46,
+        "variations": 48
       },
       "meta": {
         "espnId": 524050,
@@ -1020,37 +1080,9 @@
       }
     },
     {
-      "id": "afghanistan-320284",
-      "name": "Rais Ahmadzai",
-      "country": "Afghanistan",
-      "role": "BATTER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Off Spin",
-      "archetype": "middle-order-batter",
-      "dna": {
-        "batting": 68,
-        "bowling": 12,
-        "fielding": 74,
-        "fitness": 65,
-        "experience": 28,
-        "powerHitting": 52,
-        "technique": 54,
-        "timing": 57,
-        "deathHitting": 46
-      },
-      "meta": {
-        "espnId": 320284,
-        "age": 42,
-        "t20iMatches": 8,
-        "t20iBatSR": 108.33,
-        "t20iBatAvg": 30.33,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-420402",
       "name": "Afsar Zazai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/303200/303258.1.png",
       "country": "Afghanistan",
       "role": "WICKET_KEEPER",
       "handedness": "RIGHT",
@@ -1058,15 +1090,15 @@
       "bowlingStyle": null,
       "archetype": "classical-keeper-batter",
       "dna": {
-        "batting": 66,
+        "batting": 68,
         "bowling": 12,
         "fielding": 88,
         "fitness": 76,
         "experience": 28,
-        "powerHitting": 52,
-        "technique": 50,
-        "timing": 54,
-        "deathHitting": 45
+        "powerHitting": 54,
+        "technique": 52,
+        "timing": 56,
+        "deathHitting": 46
       },
       "meta": {
         "espnId": 420402,
@@ -1080,6 +1112,7 @@
     {
       "id": "afghanistan-703323",
       "name": "Ihsanullah",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/320400/320496.1.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -1087,15 +1120,15 @@
       "bowlingStyle": null,
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 65,
+        "batting": 67,
         "bowling": 12,
         "fielding": 74,
         "fitness": 84,
         "experience": 25,
-        "powerHitting": 57,
-        "technique": 48,
-        "timing": 57,
-        "deathHitting": 49
+        "powerHitting": 59,
+        "technique": 50,
+        "timing": 59,
+        "deathHitting": 51
       },
       "meta": {
         "espnId": 703323,
@@ -1107,35 +1140,9 @@
       }
     },
     {
-      "id": "afghanistan-1174726",
-      "name": "Bilal Sami",
-      "country": "Afghanistan",
-      "role": "BOWLER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Medium",
-      "archetype": "pace-bowler",
-      "dna": {
-        "batting": 15,
-        "bowling": 59,
-        "fielding": 68,
-        "fitness": 88,
-        "experience": 25,
-        "deathBowling": 55,
-        "variations": 59
-      },
-      "meta": {
-        "espnId": 1174726,
-        "age": 23,
-        "t20iMatches": 1,
-        "t20iBowlEco": 8.94,
-        "t20iWkts": 45,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-819441",
       "name": "Darwish Rasooli",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/411300/411322.1.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -1143,14 +1150,14 @@
       "bowlingStyle": "Right Arm Off Spin",
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 62,
+        "batting": 63,
         "bowling": 12,
         "fielding": 74,
         "fitness": 88,
         "experience": 35,
-        "powerHitting": 53,
-        "technique": 45,
-        "timing": 55,
+        "powerHitting": 54,
+        "technique": 46,
+        "timing": 56,
         "deathHitting": 47
       },
       "meta": {
@@ -1165,6 +1172,7 @@
     {
       "id": "afghanistan-1076579",
       "name": "Mohammad Ishaq",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383223.5.png",
       "country": "Afghanistan",
       "role": "WICKET_KEEPER",
       "handedness": "RIGHT",
@@ -1172,14 +1180,14 @@
       "bowlingStyle": null,
       "archetype": "classical-keeper-batter",
       "dna": {
-        "batting": 62,
+        "batting": 63,
         "bowling": 12,
         "fielding": 88,
         "fitness": 88,
         "experience": 28,
-        "powerHitting": 54,
-        "technique": 45,
-        "timing": 55,
+        "powerHitting": 55,
+        "technique": 46,
+        "timing": 56,
         "deathHitting": 48
       },
       "meta": {
@@ -1194,6 +1202,7 @@
     {
       "id": "afghanistan-711559",
       "name": "Usman Ghani",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/179000/179063.1.jpg",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -1201,15 +1210,15 @@
       "bowlingStyle": null,
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 61,
+        "batting": 63,
         "bowling": 12,
         "fielding": 74,
         "fitness": 84,
         "experience": 38,
-        "powerHitting": 49,
-        "technique": 46,
-        "timing": 50,
-        "deathHitting": 42
+        "powerHitting": 50,
+        "technique": 47,
+        "timing": 52,
+        "deathHitting": 43
       },
       "meta": {
         "espnId": 711559,
@@ -1221,37 +1230,9 @@
       }
     },
     {
-      "id": "afghanistan-320652",
-      "name": "Asghar Afghan",
-      "country": "Afghanistan",
-      "role": "BATTER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Medium",
-      "archetype": "middle-order-batter",
-      "dna": {
-        "batting": 60,
-        "bowling": 12,
-        "fielding": 74,
-        "fitness": 65,
-        "experience": 52,
-        "powerHitting": 51,
-        "technique": 44,
-        "timing": 50,
-        "deathHitting": 43
-      },
-      "meta": {
-        "espnId": 320652,
-        "age": 39,
-        "t20iMatches": 75,
-        "t20iBatSR": 110.82,
-        "t20iBatAvg": 21.93,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-318340",
       "name": "Noor Ali Zadran",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/320500/320503.1.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -1259,15 +1240,15 @@
       "bowlingStyle": "Right Arm Medium",
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 60,
+        "batting": 62,
         "bowling": 12,
         "fielding": 74,
         "fitness": 65,
         "experience": 33,
-        "powerHitting": 46,
-        "technique": 46,
-        "timing": 49,
-        "deathHitting": 39
+        "powerHitting": 47,
+        "technique": 48,
+        "timing": 50,
+        "deathHitting": 41
       },
       "meta": {
         "espnId": 318340,
@@ -1281,6 +1262,7 @@
     {
       "id": "afghanistan-1161050",
       "name": "Sediqullah Atal",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/390600/390614.2.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -1288,15 +1270,15 @@
       "bowlingStyle": null,
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 60,
+        "batting": 62,
         "bowling": 12,
         "fielding": 74,
         "fitness": 88,
         "experience": 35,
-        "powerHitting": 52,
-        "technique": 44,
-        "timing": 52,
-        "deathHitting": 45
+        "powerHitting": 54,
+        "technique": 46,
+        "timing": 53,
+        "deathHitting": 46
       },
       "meta": {
         "espnId": 1161050,
@@ -1308,8 +1290,67 @@
       }
     },
     {
+      "id": "afghanistan-320652",
+      "name": "Asghar Afghan",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/303200/303265.1.png",
+      "country": "Afghanistan",
+      "role": "BATTER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "middle-order-batter",
+      "dna": {
+        "batting": 61,
+        "bowling": 12,
+        "fielding": 74,
+        "fitness": 65,
+        "experience": 52,
+        "powerHitting": 52,
+        "technique": 45,
+        "timing": 51,
+        "deathHitting": 44
+      },
+      "meta": {
+        "espnId": 320652,
+        "age": 39,
+        "t20iMatches": 75,
+        "t20iBatSR": 110.82,
+        "t20iBatAvg": 21.93,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
+      "id": "afghanistan-1174726",
+      "name": "Bilal Sami",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/341000/341059.6.png",
+      "country": "Afghanistan",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 15,
+        "bowling": 58,
+        "fielding": 68,
+        "fitness": 88,
+        "experience": 25,
+        "deathBowling": 54,
+        "variations": 58
+      },
+      "meta": {
+        "espnId": 1174726,
+        "age": 23,
+        "t20iMatches": 1,
+        "t20iBowlEco": 8.94,
+        "t20iWkts": 45,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
       "id": "afghanistan-533953",
       "name": "Najeeb Tarakai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/181200/181275.jpg",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -1317,15 +1358,15 @@
       "bowlingStyle": "Right Arm Off Spin",
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 58,
+        "batting": 60,
         "bowling": 12,
         "fielding": 74,
         "fitness": 76,
         "experience": 29,
-        "powerHitting": 52,
-        "technique": 42,
-        "timing": 51,
-        "deathHitting": 45
+        "powerHitting": 53,
+        "technique": 44,
+        "timing": 53,
+        "deathHitting": 46
       },
       "meta": {
         "espnId": 533953,
@@ -1337,8 +1378,39 @@
       }
     },
     {
+      "id": "afghanistan-362603",
+      "name": "Shafiqullah",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/320500/320507.1.png",
+      "country": "Afghanistan",
+      "role": "WICKET_KEEPER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": null,
+      "archetype": "aggressive-keeper-batter",
+      "dna": {
+        "batting": 58,
+        "bowling": 12,
+        "fielding": 88,
+        "fitness": 65,
+        "experience": 42,
+        "powerHitting": 53,
+        "technique": 40,
+        "timing": 55,
+        "deathHitting": 48
+      },
+      "meta": {
+        "espnId": 362603,
+        "age": 37,
+        "t20iMatches": 46,
+        "t20iBatSR": 145.29,
+        "t20iBatAvg": 16.46,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
       "id": "afghanistan-402245",
       "name": "Amir Hamza",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/385600/385649.6.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -1346,17 +1418,17 @@
       "bowlingStyle": "Left Arm Orthodox",
       "archetype": "pace-all-rounder",
       "dna": {
-        "batting": 30,
-        "bowling": 39,
+        "batting": 28,
+        "bowling": 41,
         "fielding": 78,
         "fitness": 76,
         "experience": 37,
-        "powerHitting": 17,
-        "technique": 15,
-        "timing": 20,
-        "deathHitting": 13,
-        "deathBowling": 42,
-        "variations": 41
+        "powerHitting": 15,
+        "technique": 13,
+        "timing": 18,
+        "deathHitting": 12,
+        "deathBowling": 44,
+        "variations": 43
       },
       "meta": {
         "espnId": 402245,
@@ -1370,37 +1442,9 @@
       }
     },
     {
-      "id": "afghanistan-362603",
-      "name": "Shafiqullah",
-      "country": "Afghanistan",
-      "role": "WICKET_KEEPER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": null,
-      "archetype": "aggressive-keeper-batter",
-      "dna": {
-        "batting": 57,
-        "bowling": 12,
-        "fielding": 88,
-        "fitness": 65,
-        "experience": 42,
-        "powerHitting": 52,
-        "technique": 39,
-        "timing": 54,
-        "deathHitting": 48
-      },
-      "meta": {
-        "espnId": 362603,
-        "age": 37,
-        "t20iMatches": 46,
-        "t20iBatSR": 145.29,
-        "t20iBatAvg": 16.46,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-440968",
       "name": "Yamin Ahmadzai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/327600/327679.1.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1408,17 +1452,17 @@
       "bowlingStyle": "Right Arm Medium",
       "archetype": "pace-bowler",
       "dna": {
-        "batting": 28,
-        "bowling": 39,
+        "batting": 26,
+        "bowling": 41,
         "fielding": 68,
         "fitness": 76,
         "experience": 26,
-        "powerHitting": 14,
-        "technique": 13,
-        "timing": 18,
-        "deathHitting": 11,
-        "deathBowling": 35,
-        "variations": 41
+        "powerHitting": 12,
+        "technique": 12,
+        "timing": 16,
+        "deathHitting": 10,
+        "deathBowling": 37,
+        "variations": 43
       },
       "meta": {
         "espnId": 440968,
@@ -1434,6 +1478,7 @@
     {
       "id": "afghanistan-1015399",
       "name": "Ziaur Rahman",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/390600/390680.2.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1441,17 +1486,17 @@
       "bowlingStyle": "Right Arm Medium",
       "archetype": "pace-bowler",
       "dna": {
-        "batting": 16,
-        "bowling": 51,
+        "batting": 15,
+        "bowling": 52,
         "fielding": 68,
         "fitness": 84,
         "experience": 27,
-        "powerHitting": 6,
-        "technique": 3,
-        "timing": 9,
-        "deathHitting": 4,
-        "deathBowling": 47,
-        "variations": 52
+        "powerHitting": 5,
+        "technique": 2,
+        "timing": 8,
+        "deathHitting": 3,
+        "deathBowling": 48,
+        "variations": 53
       },
       "meta": {
         "espnId": 1015399,
@@ -1467,6 +1512,7 @@
     {
       "id": "afghanistan-319746",
       "name": "Shapoor Zadran",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/101300/101318.3.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1475,7 +1521,7 @@
       "archetype": "pace-bowler",
       "dna": {
         "batting": 11,
-        "bowling": 54,
+        "bowling": 53,
         "fielding": 68,
         "fitness": 65,
         "experience": 38,
@@ -1483,7 +1529,7 @@
         "technique": 1,
         "timing": 3,
         "deathHitting": 1,
-        "deathBowling": 54,
+        "deathBowling": 53,
         "variations": 54
       },
       "meta": {
@@ -1500,6 +1546,7 @@
     {
       "id": "afghanistan-318334",
       "name": "Nawroz Mangal",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/150100/150133.3.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -1507,15 +1554,15 @@
       "bowlingStyle": "Right Arm Off Spin",
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 52,
+        "batting": 51,
         "bowling": 12,
         "fielding": 74,
         "fitness": 65,
         "experience": 37,
-        "powerHitting": 42,
-        "technique": 36,
-        "timing": 43,
-        "deathHitting": 36,
+        "powerHitting": 41,
+        "technique": 35,
+        "timing": 42,
+        "deathHitting": 35,
         "variations": 40
       },
       "meta": {
@@ -1532,6 +1579,7 @@
     {
       "id": "afghanistan-440963",
       "name": "Aftab Alam",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/185500/185547.3.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1539,17 +1587,17 @@
       "bowlingStyle": "Right Arm Medium",
       "archetype": "pace-bowler",
       "dna": {
-        "batting": 34,
-        "bowling": 25,
+        "batting": 32,
+        "bowling": 27,
         "fielding": 68,
         "fitness": 76,
         "experience": 29,
-        "powerHitting": 24,
-        "technique": 18,
-        "timing": 28,
-        "deathHitting": 21,
-        "deathBowling": 25,
-        "variations": 29
+        "powerHitting": 22,
+        "technique": 16,
+        "timing": 26,
+        "deathHitting": 20,
+        "deathBowling": 27,
+        "variations": 31
       },
       "meta": {
         "espnId": 440963,
@@ -1565,6 +1613,7 @@
     {
       "id": "afghanistan-319758",
       "name": "Karim Sadiq",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/320400/320499.1.png",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -1572,15 +1621,15 @@
       "bowlingStyle": "Right Arm Off Spin",
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 46,
+        "batting": 45,
         "bowling": 12,
         "fielding": 74,
         "fitness": 65,
         "experience": 38,
-        "powerHitting": 34,
-        "technique": 30,
-        "timing": 38,
-        "deathHitting": 30,
+        "powerHitting": 33,
+        "technique": 29,
+        "timing": 37,
+        "deathHitting": 29,
         "deathBowling": 15,
         "variations": 17
       },
@@ -1598,6 +1647,7 @@
     {
       "id": "afghanistan-387420",
       "name": "Mirwais Ashraf",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/116600/116659.3.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1605,17 +1655,17 @@
       "bowlingStyle": "Right Arm Fast",
       "archetype": "death-pace-bowler",
       "dna": {
-        "batting": 40,
-        "bowling": 15,
+        "batting": 37,
+        "bowling": 16,
         "fielding": 68,
         "fitness": 65,
         "experience": 34,
-        "powerHitting": 30,
-        "technique": 23,
-        "timing": 33,
-        "deathHitting": 27,
-        "deathBowling": 18,
-        "variations": 20
+        "powerHitting": 28,
+        "technique": 21,
+        "timing": 30,
+        "deathHitting": 24,
+        "deathBowling": 19,
+        "variations": 21
       },
       "meta": {
         "espnId": 387420,
@@ -1631,6 +1681,7 @@
     {
       "id": "afghanistan-1174749",
       "name": "Mohammad Saleem",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/375400/375449.1.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1638,17 +1689,17 @@
       "bowlingStyle": "Right Arm Fast",
       "archetype": "pace-bowler",
       "dna": {
-        "batting": 22,
-        "bowling": 31,
+        "batting": 20,
+        "bowling": 33,
         "fielding": 68,
         "fitness": 88,
         "experience": 25,
-        "powerHitting": 12,
-        "technique": 8,
-        "timing": 15,
-        "deathHitting": 10,
-        "deathBowling": 31,
-        "variations": 34
+        "powerHitting": 10,
+        "technique": 6,
+        "timing": 13,
+        "deathHitting": 8,
+        "deathBowling": 33,
+        "variations": 36
       },
       "meta": {
         "espnId": 1174749,
@@ -1662,8 +1713,37 @@
       }
     },
     {
+      "id": "afghanistan-973945",
+      "name": "Wafadar Momand",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/277700/277738.1.jpg",
+      "country": "Afghanistan",
+      "role": "BOWLER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Medium",
+      "archetype": "pace-bowler",
+      "dna": {
+        "batting": 15,
+        "bowling": 37,
+        "fielding": 68,
+        "fitness": 88,
+        "experience": 26,
+        "deathBowling": 37,
+        "variations": 40
+      },
+      "meta": {
+        "espnId": 973945,
+        "age": 27,
+        "t20iMatches": 2,
+        "t20iBowlEco": 7.94,
+        "t20iWkts": 29,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
       "id": "afghanistan-1182529",
       "name": "Noor Ahmad",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/383200/383239.1.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1671,17 +1751,17 @@
       "bowlingStyle": "Left Arm Wrist Spin",
       "archetype": "wrist-spinner",
       "dna": {
-        "batting": 31,
-        "bowling": 21,
+        "batting": 28,
+        "bowling": 23,
         "fielding": 68,
         "fitness": 88,
         "experience": 34,
-        "powerHitting": 22,
-        "technique": 16,
-        "timing": 23,
-        "deathHitting": 18,
-        "deathBowling": 21,
-        "variations": 25
+        "powerHitting": 19,
+        "technique": 13,
+        "timing": 20,
+        "deathHitting": 15,
+        "deathBowling": 23,
+        "variations": 27
       },
       "meta": {
         "espnId": 1182529,
@@ -1697,6 +1777,7 @@
     {
       "id": "afghanistan-533949",
       "name": "Fazal Niazai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/273900/273934.1.jpg",
       "country": "Afghanistan",
       "role": "BATTER",
       "handedness": "RIGHT",
@@ -1704,17 +1785,17 @@
       "bowlingStyle": "Right Arm Medium",
       "archetype": "middle-order-batter",
       "dna": {
-        "batting": 35,
-        "bowling": 16,
+        "batting": 33,
+        "bowling": 17,
         "fielding": 74,
         "fitness": 65,
         "experience": 25,
-        "powerHitting": 22,
-        "technique": 20,
-        "timing": 24,
-        "deathHitting": 18,
-        "deathBowling": 12,
-        "variations": 21
+        "powerHitting": 20,
+        "technique": 18,
+        "timing": 23,
+        "deathHitting": 16,
+        "deathBowling": 13,
+        "variations": 22
       },
       "meta": {
         "espnId": 533949,
@@ -1728,64 +1809,9 @@
       }
     },
     {
-      "id": "afghanistan-973945",
-      "name": "Wafadar Momand",
-      "country": "Afghanistan",
-      "role": "BOWLER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Medium",
-      "archetype": "pace-bowler",
-      "dna": {
-        "batting": 15,
-        "bowling": 34,
-        "fielding": 68,
-        "fitness": 88,
-        "experience": 26,
-        "deathBowling": 34,
-        "variations": 37
-      },
-      "meta": {
-        "espnId": 973945,
-        "age": 27,
-        "t20iMatches": 2,
-        "t20iBowlEco": 7.94,
-        "t20iWkts": 29,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
-      "id": "afghanistan-307653",
-      "name": "Shabir Noori",
-      "country": "Afghanistan",
-      "role": "BATTER",
-      "handedness": "RIGHT",
-      "battingStyle": "RIGHT_HAND",
-      "bowlingStyle": "Right Arm Off Spin",
-      "archetype": "middle-order-batter",
-      "dna": {
-        "batting": 33,
-        "bowling": 12,
-        "fielding": 74,
-        "fitness": 76,
-        "experience": 25,
-        "powerHitting": 20,
-        "technique": 18,
-        "timing": 23,
-        "deathHitting": 16
-      },
-      "meta": {
-        "espnId": 307653,
-        "age": 34,
-        "t20iMatches": 1,
-        "t20iBatSR": 90.54,
-        "t20iBatAvg": 11.16,
-        "lastUpdated": "2026-07"
-      }
-    },
-    {
       "id": "afghanistan-913843",
       "name": "Nijat Masood",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/390600/390661.2.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1794,7 +1820,7 @@
       "archetype": "pace-bowler",
       "dna": {
         "batting": 11,
-        "bowling": 32,
+        "bowling": 35,
         "fielding": 68,
         "fitness": 84,
         "experience": 26,
@@ -1802,8 +1828,8 @@
         "technique": 1,
         "timing": 3,
         "deathHitting": 1,
-        "deathBowling": 28,
-        "variations": 35
+        "deathBowling": 31,
+        "variations": 38
       },
       "meta": {
         "espnId": 913843,
@@ -1817,8 +1843,39 @@
       }
     },
     {
+      "id": "afghanistan-307653",
+      "name": "Shabir Noori",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/148100/148136.1.jpg",
+      "country": "Afghanistan",
+      "role": "BATTER",
+      "handedness": "RIGHT",
+      "battingStyle": "RIGHT_HAND",
+      "bowlingStyle": "Right Arm Off Spin",
+      "archetype": "middle-order-batter",
+      "dna": {
+        "batting": 31,
+        "bowling": 12,
+        "fielding": 74,
+        "fitness": 76,
+        "experience": 25,
+        "powerHitting": 18,
+        "technique": 16,
+        "timing": 21,
+        "deathHitting": 15
+      },
+      "meta": {
+        "espnId": 307653,
+        "age": 34,
+        "t20iMatches": 1,
+        "t20iBatSR": 90.54,
+        "t20iBatAvg": 11.16,
+        "lastUpdated": "2026-07"
+      }
+    },
+    {
       "id": "afghanistan-633362",
       "name": "Sharafuddin Ashraf",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/320500/320508.1.png",
       "country": "Afghanistan",
       "role": "ALL_ROUNDER",
       "handedness": "RIGHT",
@@ -1826,17 +1883,17 @@
       "bowlingStyle": "Left Arm Orthodox",
       "archetype": "pace-all-rounder",
       "dna": {
-        "batting": 31,
-        "bowling": 11,
+        "batting": 29,
+        "bowling": 12,
         "fielding": 78,
         "fitness": 84,
         "experience": 33,
-        "powerHitting": 18,
-        "technique": 16,
-        "timing": 21,
-        "deathHitting": 15,
-        "deathBowling": 11,
-        "variations": 16
+        "powerHitting": 17,
+        "technique": 14,
+        "timing": 20,
+        "deathHitting": 13,
+        "deathBowling": 12,
+        "variations": 17
       },
       "meta": {
         "espnId": 633362,
@@ -1852,6 +1909,7 @@
     {
       "id": "afghanistan-1364163",
       "name": "Bashir Ahmad",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/393200/393223.2.png",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1860,12 +1918,12 @@
       "archetype": "pace-bowler",
       "dna": {
         "batting": 15,
-        "bowling": 18,
+        "bowling": 20,
         "fielding": 68,
         "fitness": 88,
         "experience": 25,
-        "deathBowling": 14,
-        "variations": 23
+        "deathBowling": 16,
+        "variations": 25
       },
       "meta": {
         "espnId": 1364163,
@@ -1879,6 +1937,7 @@
     {
       "id": "afghanistan-793907",
       "name": "Rokhan Barakzai",
+      "imageUrl": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50/lsci/db/PICTURES/CMS/228100/228127.1.jpg",
       "country": "Afghanistan",
       "role": "BOWLER",
       "handedness": "RIGHT",
@@ -1887,12 +1946,12 @@
       "archetype": "left-arm-orthodox",
       "dna": {
         "batting": 15,
-        "bowling": 13,
+        "bowling": 15,
         "fielding": 68,
         "fitness": 65,
         "experience": 26,
-        "deathBowling": 13,
-        "variations": 18
+        "deathBowling": 15,
+        "variations": 20
       },
       "meta": {
         "espnId": 793907,

@@ -14,9 +14,13 @@ import bangladeshRaw  from "@cricket-clash/data/players/bangladesh.json";
 import afghansitanRaw from "@cricket-clash/data/players/afghanistan.json";
 import irelandRaw     from "@cricket-clash/data/players/ireland.json";
 
-// Add South Africa, NZ, Pakistan from our hand-crafted files if available
+// Country files are statically imported so Vite includes their players in the browser bundle.
 import southAfricaRaw from "@cricket-clash/data/players/south-africa.json";
 import newZealandRaw  from "@cricket-clash/data/players/new-zealand.json";
+import pakistanRaw    from "@cricket-clash/data/players/pakistan.json";
+import sriLankaRaw    from "@cricket-clash/data/players/sri-lanka.json";
+import westIndiesRaw  from "@cricket-clash/data/players/west-indies.json";
+import zimbabweRaw    from "@cricket-clash/data/players/zimbabwe.json";
 
 type CountryFile = { players: PlayerData[] };
 
@@ -29,4 +33,8 @@ export const ALL_PLAYER_DATA: ReadonlyArray<PlayerData> = [
   ...(irelandRaw      as CountryFile).players,
   ...(southAfricaRaw  as CountryFile).players,
   ...(newZealandRaw   as CountryFile).players,
+  ...(pakistanRaw     as CountryFile).players,
+  ...(sriLankaRaw     as CountryFile).players,
+  ...(westIndiesRaw   as CountryFile).players,
+  ...(zimbabweRaw     as CountryFile).players,
 ];

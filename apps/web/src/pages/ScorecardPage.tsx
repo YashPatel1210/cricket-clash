@@ -15,16 +15,17 @@ export default function ScorecardPage({ result, player1, player2, onPlayAgain }:
   const second = result.getSecondInnings();
   const winner = result.getWinner();
 
-  const team1 = first.getInnings().getBattingTeam().getSelections()[0]?.player.country ?? player1;
-  const team2 = second.getInnings().getBattingTeam().getSelections()[0]?.player.country ?? player2;
+  // Teams are the players' drafted XIs, so label every result view with the
+  // participant names rather than a country from one randomly drafted player.
+  const team1 = player1;
+  const team2 = player2;
 
   const firstScore  = first.getInnings().getScore();
   const secondScore = second.getInnings().getScore();
 
-  const winnerCountry = winner
+  const winnerTeam = winner
     ? (winner === first.getInnings().getBattingTeam() ? team1 : team2)
     : null;
-  const winnerPlayer = winnerCountry === team1 ? player1 : player2;
 
   const margin = winner
     ? (winner === first.getInnings().getBattingTeam()
@@ -40,8 +41,8 @@ export default function ScorecardPage({ result, player1, player2, onPlayAgain }:
         <div className="text-4xl mb-3">🏆</div>
         {winner ? (
           <>
-            <h1 className="text-2xl font-black text-white">{winnerPlayer} wins!</h1>
-            <p className="text-slate-400 mt-1">{winnerCountry} {margin}</p>
+            <h1 className="text-2xl font-black text-white">{winnerTeam} wins!</h1>
+            <p className="text-slate-400 mt-1">{margin}</p>
           </>
         ) : (
           <h1 className="text-2xl font-black text-white">Match Tied!</h1>

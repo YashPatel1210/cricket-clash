@@ -14,6 +14,7 @@
     "@cricket-clash/shared": "workspace:*"
   },
   "devDependencies": {
+    "@types/node": "^24.13.2",
     "tsx": "^4.19.4",
     "typescript": "5.9.2"
   }

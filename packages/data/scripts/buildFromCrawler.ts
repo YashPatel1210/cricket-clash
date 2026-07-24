@@ -34,6 +34,7 @@ const VERSION    = new Date().toISOString().slice(0, 7);
 
 const MIN_BATTING_INNINGS = 10;
 const MIN_BOWLING_WICKETS = 10;
+const IMAGE_CDN_PREFIX = "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_320,q_50";
 
 const SUPPORTED_COUNTRIES: Record<string, string> = {
   "India": "India", "Australia": "Australia", "England": "England",
@@ -68,6 +69,8 @@ const COUNTRY_TO_FILE: Record<string, string> = {
 interface RawPlayer {
   objectId:     number;
   longName:     string;
+  imageUrl?:    string | null;
+  headshotImageUrl?: string | null;
   dateOfBirth?: { year: number; month: number; date: number };
   battingStyles:  string[];
   bowlingStyles:  string[];
@@ -113,6 +116,7 @@ interface Stat {
 
 interface OutputPlayer {
   id: string; name: string; country: string; role: string;
+  imageUrl?: string;
   handedness: string; battingStyle: string; bowlingStyle: string | null;
   archetype: string; dna: Record<string, number>; meta: Record<string, unknown>;
   // Internal — removed before final output
@@ -400,6 +404,9 @@ function processPlayer(playerDir: string, folderCountry: string): OutputPlayer |
 
   return {
     id, name: raw.longName, country, role,
+    imageUrl: raw.imageUrl || raw.headshotImageUrl
+      ? `${IMAGE_CDN_PREFIX}${raw.imageUrl ?? raw.headshotImageUrl}`
+      : undefined,
     handedness: "RIGHT",
     battingStyle: batStyle,
     bowlingStyle: bStyle,
@@ -523,8 +530,8 @@ for (const [country, players] of byCountry) {
   const file = join(OUTPUT_DIR, `${fileName}.json`);
   const output = {
     version: VERSION, country, source: "espncricinfo",
-    players: players.map(({ id, name, country: c, role, handedness, battingStyle, bowlingStyle, archetype: a, dna, meta }) =>
-      ({ id, name, country: c, role, handedness, battingStyle, bowlingStyle, archetype: a, dna, meta })
+    players: players.map(({ id, name, imageUrl, country: c, role, handedness, battingStyle, bowlingStyle, archetype: a, dna, meta }) =>
+      ({ id, name, imageUrl, country: c, role, handedness, battingStyle, bowlingStyle, archetype: a, dna, meta })
     ),
   };
 

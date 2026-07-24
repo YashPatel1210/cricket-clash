@@ -12,9 +12,15 @@ const COUNTRY_FILES = [
   "india",
   "australia",
   "england",
+  "bangladesh",
+  "afghanistan",
+  "ireland",
   "pakistan",
   "south-africa",
   "new-zealand",
+  "sri-lanka",
+  "west-indies",
+  "zimbabwe",
 ] as const;
 
 export type CountryFile = (typeof COUNTRY_FILES)[number];
